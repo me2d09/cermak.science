@@ -1,2 +1,0 @@
-# cermak.science
-Personal website
