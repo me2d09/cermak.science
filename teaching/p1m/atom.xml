@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Petr Čermák - scientific researcher</title>
+ <link href="https://cermak.science//atom.xml" rel="self"/>
+ <link href="https://cermak.science//"/>
+ <updated>2020-10-01T10:00:39+00:00</updated>
+ <id>https://cermak.science/</id>
+ <author>
+   <name></name>
+   <email></email>
+ </author>
+
+ 
+
+</feed>
