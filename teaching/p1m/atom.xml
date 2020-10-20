@@ -4,13 +4,35 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-10-12T12:21:55+00:00</updated>
+ <updated>2020-10-20T16:46:19+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>03: Seznamy</title>
+   <link href="https://cermak.science//2020/10/16/Seznamy"/>
+   <updated>2020-10-16T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/10/16/Seznamy</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/03-seznamy.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;programy&quot;&gt;Programy&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Vypsání čísel pozpátku: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/03-seznamy/seznam-pozpatku.py&quot;&gt;příklad z hodiny&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/03-seznamy/seznam-pozpatku-alt.py&quot;&gt;alternativní přístupy - slicing/reverse&lt;/a&gt;.
+    &lt;h3 id=&quot;úkoly&quot;&gt;Úkoly&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Úkol na hodinu: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/03-seznamy/fibonacci.py&quot;&gt;Fibonacciho čísla&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;ReCoDex: Uložte do seznamu prvočísla do N, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/03-seznamy/ukol.py&quot;&gt;šablona pro domácí úkol&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>02: Podmínky a cykly</title>
