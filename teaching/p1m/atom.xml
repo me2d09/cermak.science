@@ -4,13 +4,32 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-10-20T16:46:19+00:00</updated>
+ <updated>2020-10-24T08:18:36+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>04: Funkce</title>
+   <link href="https://cermak.science//2020/10/23/Funkce"/>
+   <updated>2020-10-23T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/10/23/Funkce</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/04-funkce.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/04-funkce/suda.py&quot;&gt;Sudá čísla&lt;/a&gt;, na konci je trikové řešení funkcí vyber_suda a kolik_sudych.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/04-funkce/kvadrov.py&quot;&gt;Kvadratická rovnice&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>03: Seznamy</title>
