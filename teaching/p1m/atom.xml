@@ -4,13 +4,37 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-10-24T08:18:36+00:00</updated>
+ <updated>2020-10-30T16:00:23+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>05: Třídění a vyhledávání</title>
+   <link href="https://cermak.science//2020/10/30/Trideni"/>
+   <updated>2020-10-30T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/10/30/Trideni</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/05-trideni.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;programy-z-přednášky&quot;&gt;Programy z přednášky&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/binarni-hledani.py&quot;&gt;Binární hledání (binary search)&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/trideni-vyberem.py&quot;&gt;Řazení výběrem (selection sort)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/odmocnina.py&quot;&gt;Výpočet odmocniny&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/trideni-bublinky.py&quot;&gt;Bublinkové řazení (Bubble sort)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>04: Funkce</title>

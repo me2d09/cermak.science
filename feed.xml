@@ -6,9 +6,35 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 24 Oct 2020 08:18:36 +0000</pubDate>
-    <lastBuildDate>Sat, 24 Oct 2020 08:18:36 +0000</lastBuildDate>
+    <pubDate>Fri, 30 Oct 2020 16:00:23 +0000</pubDate>
+    <lastBuildDate>Fri, 30 Oct 2020 16:00:23 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
+    
+      <item>
+        <title>05: Třídění a vyhledávání</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/05-trideni.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;programy-z-přednášky&quot;&gt;Programy z přednášky&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/binarni-hledani.py&quot;&gt;Binární hledání (binary search)&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/trideni-vyberem.py&quot;&gt;Řazení výběrem (selection sort)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/odmocnina.py&quot;&gt;Výpočet odmocniny&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/05-trideni/trideni-bublinky.py&quot;&gt;Bublinkové řazení (Bubble sort)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://cermak.science//2020/10/30/Trideni</link>
+        <guid isPermaLink="true">https://cermak.science//2020/10/30/Trideni</guid>
+        
+        
+      </item>
     
       <item>
         <title>04: Funkce</title>
