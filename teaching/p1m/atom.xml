@@ -4,7 +4,7 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-11-06T09:36:22+00:00</updated>
+ <updated>2020-11-08T09:38:37+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
@@ -18,8 +18,8 @@
    <updated>2020-11-06T00:00:00+00:00</updated>
    <id>https://cermak.science//2020/11/06/Rezy</id>
    <content type="html">&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/06-rezy.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;
-&lt;!-- - [video/audio z přednášek](https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#) --&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/06-rezy.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
@@ -28,6 +28,7 @@
   &lt;li&gt;otočte číslo v desítkové soustavě (1024 → 4201)&lt;/li&gt;
   &lt;li&gt;kolik různých slov v řetězci&lt;/li&gt;
   &lt;li&gt;vyhodnoťte výraz se sčítáním (12+34+1 → 47)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/06-rezy/priklady.py&quot;&gt;řešení všech úkolů&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
  </entry>

@@ -6,15 +6,15 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 06 Nov 2020 09:36:22 +0000</pubDate>
-    <lastBuildDate>Fri, 06 Nov 2020 09:36:22 +0000</lastBuildDate>
+    <pubDate>Sun, 08 Nov 2020 09:38:37 +0000</pubDate>
+    <lastBuildDate>Sun, 08 Nov 2020 09:38:37 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
     
       <item>
         <title>06: Řezy</title>
         <description>&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/06-rezy.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;
-&lt;!-- - [video/audio z přednášek](https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#) --&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/06-rezy.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
@@ -23,6 +23,7 @@
   &lt;li&gt;otočte číslo v desítkové soustavě (1024 → 4201)&lt;/li&gt;
   &lt;li&gt;kolik různých slov v řetězci&lt;/li&gt;
   &lt;li&gt;vyhodnoťte výraz se sčítáním (12+34+1 → 47)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/06-rezy/priklady.py&quot;&gt;řešení všech úkolů&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
