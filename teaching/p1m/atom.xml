@@ -4,13 +4,34 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-11-08T09:38:37+00:00</updated>
+ <updated>2020-11-13T07:37:18+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>06: Dictionaries / Slovníky</title>
+   <link href="https://cermak.science//2020/11/13/Slovniky"/>
+   <updated>2020-11-13T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/11/13/Slovniky</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/07-dictionaries.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;vytvoří tabulku násobilky (a×b pro všechna a, b od 1 do daného čísla)&lt;/li&gt;
+  &lt;li&gt;zjistí průnik dvou (neuspořádaných) seznamů&lt;/li&gt;
+  &lt;li&gt;vybere z textu slova, která jsou palindromická (např. kajak)&lt;/li&gt;
+  &lt;li&gt;spočítá skalární součin dvou vektorů&lt;/li&gt;
+  &lt;li&gt;seřadí slova na řádku podle jejich délky (hint: (1) slova převést na dvojice (délka, slovo), (2) setřídit, (3) vypsat slova)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/07-dictionaries/ukoly_template.py&quot;&gt;template&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>06: Řezy</title>
