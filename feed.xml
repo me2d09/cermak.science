@@ -6,14 +6,15 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 13 Nov 2020 07:37:18 +0000</pubDate>
-    <lastBuildDate>Fri, 13 Nov 2020 07:37:18 +0000</lastBuildDate>
+    <pubDate>Sun, 15 Nov 2020 10:28:40 +0000</pubDate>
+    <lastBuildDate>Sun, 15 Nov 2020 10:28:40 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
     
       <item>
         <title>06: Dictionaries / Slovníky</title>
         <description>&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/07-dictionaries.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
@@ -23,7 +24,7 @@
   &lt;li&gt;vybere z textu slova, která jsou palindromická (např. kajak)&lt;/li&gt;
   &lt;li&gt;spočítá skalární součin dvou vektorů&lt;/li&gt;
   &lt;li&gt;seřadí slova na řádku podle jejich délky (hint: (1) slova převést na dvojice (délka, slovo), (2) setřídit, (3) vypsat slova)&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/07-dictionaries/ukoly_template.py&quot;&gt;template&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/07-dictionaries/priklady.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
