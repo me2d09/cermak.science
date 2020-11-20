@@ -4,13 +4,31 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-11-15T10:28:40+00:00</updated>
+ <updated>2020-11-20T08:59:12+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>08: Generátory</title>
+   <link href="https://cermak.science//2020/11/20/Generatory"/>
+   <updated>2020-11-20T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/11/20/Generatory</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/08-generatory.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Napište generátor mujrange, který bude pracovat stejně jako range (s jedním parametrem)&lt;/li&gt;
+  &lt;li&gt;Napište generátor, který dostane dva seznamy a bude generovat jejich kartézský součin.&lt;/li&gt;
+  &lt;li&gt;Spočítejte frekvence všech k-gramů (k-tic znaků) v textu. K-gramy vypište uspořádaně podle frekvence.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>06: Dictionaries / Slovníky</title>

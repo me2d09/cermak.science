@@ -6,9 +6,29 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 15 Nov 2020 10:28:40 +0000</pubDate>
-    <lastBuildDate>Sun, 15 Nov 2020 10:28:40 +0000</lastBuildDate>
+    <pubDate>Fri, 20 Nov 2020 08:59:12 +0000</pubDate>
+    <lastBuildDate>Fri, 20 Nov 2020 08:59:12 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
+    
+      <item>
+        <title>08: Generátory</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/08-generatory.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Napište generátor mujrange, který bude pracovat stejně jako range (s jedním parametrem)&lt;/li&gt;
+  &lt;li&gt;Napište generátor, který dostane dva seznamy a bude generovat jejich kartézský součin.&lt;/li&gt;
+  &lt;li&gt;Spočítejte frekvence všech k-gramů (k-tic znaků) v textu. K-gramy vypište uspořádaně podle frekvence.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+        <link>https://cermak.science//2020/11/20/Generatory</link>
+        <guid isPermaLink="true">https://cermak.science//2020/11/20/Generatory</guid>
+        
+        
+      </item>
     
       <item>
         <title>06: Dictionaries / Slovníky</title>
