@@ -6,9 +6,33 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 27 Nov 2020 06:29:23 +0000</pubDate>
-    <lastBuildDate>Fri, 27 Nov 2020 06:29:23 +0000</lastBuildDate>
+    <pubDate>Fri, 27 Nov 2020 09:04:19 +0000</pubDate>
+    <lastBuildDate>Fri, 27 Nov 2020 09:04:19 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
+    
+      <item>
+        <title>09: Lambda funkce</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/09-lambda.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Napište funkci compose(f,g), která pro dvě funkce f a g (obě s jedním parametrem) vrátí funkci, jež je jejich složením (f(g(x))).&lt;/li&gt;
+  &lt;li&gt;Napište funkci red(s,f), která dostane seznam s a funkci f(x,y) a spočítá f(f(f(s[0], s[1]), s[3]), s[4]).&lt;/li&gt;
+  &lt;li&gt;Zapište pomocí redukce součet prvků seznamu.&lt;/li&gt;
+  &lt;li&gt;Zapište pomocí redukce nalezení maxima seznamu.&lt;/li&gt;
+  &lt;li&gt;Zapište pomocí redukce nalezení prvního nenulového prvku (není-li, vraťte 0).&lt;/li&gt;
+  &lt;li&gt;Co redukce udělá pro operátor -?&lt;/li&gt;
+  &lt;li&gt;Co udělá red(s, lambda x, y: (x,y))?&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+        <link>https://cermak.science//2020/11/27/Lambda</link>
+        <guid isPermaLink="true">https://cermak.science//2020/11/27/Lambda</guid>
+        
+        
+      </item>
     
       <item>
         <title>08: Generátory</title>
