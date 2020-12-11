@@ -4,7 +4,7 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-12-11T07:07:26+00:00</updated>
+ <updated>2020-12-11T13:15:14+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>09: Lambda funkce</title>
+   <title>10: Objekty</title>
    <link href="https://cermak.science//2020/12/04/Objekty"/>
    <updated>2020-12-04T00:00:00+00:00</updated>
    <id>https://cermak.science//2020/12/04/Objekty</id>
