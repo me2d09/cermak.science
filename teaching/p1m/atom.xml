@@ -4,7 +4,7 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2020-11-27T09:04:19+00:00</updated>
+ <updated>2020-12-11T07:07:26+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
@@ -14,11 +14,37 @@
  
  <entry>
    <title>09: Lambda funkce</title>
+   <link href="https://cermak.science//2020/12/04/Objekty"/>
+   <updated>2020-12-04T00:00:00+00:00</updated>
+   <id>https://cermak.science//2020/12/04/Objekty</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/10-objekty.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;programy-z-přednášky&quot;&gt;Programy z přednášky&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/10-objekty/trida.py&quot;&gt;zvířecí třída pro úkoly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Naučte každé zvíře slyšet navíc na jméno potvůrka.&lt;/li&gt;
+  &lt;li&gt;Doplňte atribut pozice a zařiďte, aby zvíře slyšelo na jméno jenom tehdy, když pozice je doma.&lt;/li&gt;
+  &lt;li&gt;Vytvořte odvozenou třídu Pes, jehož metoda ozvi_se na každé druhé zavolání zaštěká a jinak zavrčí.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>09: Lambda funkce</title>
    <link href="https://cermak.science//2020/11/27/Lambda"/>
    <updated>2020-11-27T00:00:00+00:00</updated>
    <id>https://cermak.science//2020/11/27/Lambda</id>
    <content type="html">&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/09-lambda.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
