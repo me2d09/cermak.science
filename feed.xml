@@ -6,9 +6,34 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 11 Dec 2020 13:15:14 +0000</pubDate>
-    <lastBuildDate>Fri, 11 Dec 2020 13:15:14 +0000</lastBuildDate>
+    <pubDate>Fri, 18 Dec 2020 07:58:55 +0000</pubDate>
+    <lastBuildDate>Fri, 18 Dec 2020 07:58:55 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
+    
+      <item>
+        <title>11: Soubory a váýjimky</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/11-soubory.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Vánoční úloha v recodexu (5 bodů, do konce hodiny, první vyhrává vánoční pivo)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;nebo:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spočítejte, kolik je v souboru řádků, slov a viditelných znaků (tedy bez mezer a konců řádků)&lt;/li&gt;
+  &lt;li&gt;Zkopíruje soubor do jiného souboru, aby řádky šly v opačném pořadí&lt;/li&gt;
+  &lt;li&gt;Najděte na každém řádku všechna čísla (oddělená mezerami) a vypíše jejich součet; slova, která nejsou čísly, ignoruje.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
+        <link>https://cermak.science//2020/12/18/Soubory</link>
+        <guid isPermaLink="true">https://cermak.science//2020/12/18/Soubory</guid>
+        
+        
+      </item>
     
       <item>
         <title>10: Objekty</title>
@@ -230,32 +255,6 @@
         <pubDate>Fri, 09 Oct 2020 00:00:00 +0000</pubDate>
         <link>https://cermak.science//2020/10/09/Cykly</link>
         <guid isPermaLink="true">https://cermak.science//2020/10/09/Cykly</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>01: Úvod do Pythonu a programování</title>
-        <description>&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/25563/artifacts/file/01-uvod.pdf&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;programy&quot;&gt;Programy&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;První program: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/first.py&quot;&gt;vypisování čísel&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/first-even.py&quot;&gt;jen lichá&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/first-input.py&quot;&gt;se vstupem&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/first-comments.py&quot;&gt;s komentáři&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Druhý program: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/euclid.py&quot;&gt;Euklidův algoritmus&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/01-uvod/euclid-fast.py&quot;&gt;rychlejší verze&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;úkoly&quot;&gt;Úkoly&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Založte si účet v &lt;a href=&quot;https://recodex.mff.cuni.cz/&quot;&gt;ReCodExu&lt;/a&gt;, připojte se do skupiny našeho cvičení a vyřešte si ukázkovou úlohu.&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Fri, 02 Oct 2020 00:00:00 +0000</pubDate>
-        <link>https://cermak.science//2020/10/02/Uvod</link>
-        <guid isPermaLink="true">https://cermak.science//2020/10/02/Uvod</guid>
         
         
       </item>
