@@ -6,19 +6,21 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 18 Dec 2020 07:58:55 +0000</pubDate>
-    <lastBuildDate>Fri, 18 Dec 2020 07:58:55 +0000</lastBuildDate>
+    <pubDate>Mon, 21 Dec 2020 10:47:42 +0000</pubDate>
+    <lastBuildDate>Mon, 21 Dec 2020 10:47:42 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
     
       <item>
-        <title>11: Soubory a váýjimky</title>
+        <title>11: Soubory a výjimky</title>
         <description>&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/11-soubory.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Vánoční úloha v recodexu (5 bodů, do konce hodiny, první vyhrává vánoční pivo)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/11-soubory/vanocni.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;nebo:&lt;/p&gt;
@@ -26,6 +28,7 @@
   &lt;li&gt;Spočítejte, kolik je v souboru řádků, slov a viditelných znaků (tedy bez mezer a konců řádků)&lt;/li&gt;
   &lt;li&gt;Zkopíruje soubor do jiného souboru, aby řádky šly v opačném pořadí&lt;/li&gt;
   &lt;li&gt;Najděte na každém řádku všechna čísla (oddělená mezerami) a vypíše jejich součet; slova, která nejsou čísly, ignoruje.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/11-soubory/reseni.py&quot;&gt;řešení&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/11-soubory/lipsum.txt&quot;&gt;testovací soubor&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 18 Dec 2020 00:00:00 +0000</pubDate>
