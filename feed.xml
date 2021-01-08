@@ -6,9 +6,31 @@
 </description>
     <link>https://cermak.science//</link>
     <atom:link href="https://cermak.science//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 21 Dec 2020 10:47:42 +0000</pubDate>
-    <lastBuildDate>Mon, 21 Dec 2020 10:47:42 +0000</lastBuildDate>
+    <pubDate>Fri, 08 Jan 2021 07:54:26 +0000</pubDate>
+    <lastBuildDate>Fri, 08 Jan 2021 07:54:26 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
+    
+      <item>
+        <title>12: (Ne)Standardní knihovny</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/12-knihovny.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Simulujte 1000 hodů kostkou. Spočítejte výskyty každého čísla. Kolik jich je nejméně a kolik nejvíce?&lt;/li&gt;
+  &lt;li&gt;Generujte náhodně body ve čtverci [-1,1] × [-1,1]. Počítejte, kolik z nich padlo do jednotkového kruhu, a tím aproximujte π.&lt;/li&gt;
+  &lt;li&gt;Generujte náhodně permutace slov věty “Kobyla má malý bok”.&lt;/li&gt;
+  &lt;li&gt;Pomocí &lt;a href=&quot;https://cs.wikipedia.org/wiki/Mal%C3%A1_Fermatova_v%C4%9Bta&quot;&gt;Malé Fermatovy věty&lt;/a&gt; testujte, zda je nějaké velké číslo pravděpodobně prvočíslem. Hodí se tříparametrová funkce pow(a, b, c), která efektivně spočítá &lt;em&gt;a&lt;/em&gt;^&lt;em&gt;b&lt;/em&gt; mod &lt;em&gt;c&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Simulujte náhodnou procházku po celých číslech od 0 do N. Začínáme v 0, v každém kroku náhodně buď zvýšíme nebo snížíme o 1 (v 0 jen zvyšujeme). Po kolika krocích se dostaneme do N?&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+        <link>https://cermak.science//2021/01/08/Knihovny</link>
+        <guid isPermaLink="true">https://cermak.science//2021/01/08/Knihovny</guid>
+        
+        
+      </item>
     
       <item>
         <title>11: Soubory a výjimky</title>
@@ -231,33 +253,6 @@
         <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
         <link>https://cermak.science//2020/10/16/Seznamy</link>
         <guid isPermaLink="true">https://cermak.science//2020/10/16/Seznamy</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>02: Podmínky a cykly</title>
-        <description>&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/02-cykly.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;programy&quot;&gt;Programy&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;První program: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/prvocisla-test.py&quot;&gt;testování prvočísel&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/prvocisla-else.py&quot;&gt;použití while/else&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/prvocisla-vypis.py&quot;&gt;vnořené cykly (nebylo na přednášce)&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Druhý program: &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/posloupnost-soucet.py&quot;&gt;sečti zadávaná čísla&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/posloupnost-soucet-break.py&quot;&gt;test na konci cyklu s použitím break&lt;/a&gt;, &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/posloupnost-soucet-mroz.py&quot;&gt;použití mrožího operátoru (Python 3.8 needed!)&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;úkoly&quot;&gt;Úkoly&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Spočítejte, kolik má zadané číslo cifer. &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/02-cykly/pocet-cifer.py&quot;&gt;5 možných řešení&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Rozklad na prvočinitele (viz &lt;a href=&quot;https://recodex.mff.cuni.cz/&quot;&gt;ReCodEx&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Fri, 09 Oct 2020 00:00:00 +0000</pubDate>
-        <link>https://cermak.science//2020/10/09/Cykly</link>
-        <guid isPermaLink="true">https://cermak.science//2020/10/09/Cykly</guid>
         
         
       </item>
