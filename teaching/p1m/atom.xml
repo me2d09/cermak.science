@@ -4,7 +4,7 @@
  <title>Petr Čermák - scientific researcher</title>
  <link href="https://cermak.science//atom.xml" rel="self"/>
  <link href="https://cermak.science//"/>
- <updated>2021-01-08T07:56:34+00:00</updated>
+ <updated>2021-01-10T13:06:59+00:00</updated>
  <id>https://cermak.science/</id>
  <author>
    <name></name>
@@ -19,15 +19,16 @@
    <id>https://cermak.science//2021/01/08/Knihovny</id>
    <content type="html">&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/jobs/artifacts/master/file/12-knihovna.pdf?job=build&quot;&gt;slidy k přednášce&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://owncloud.cesnet.cz/index.php/s/xgwXrNMWRX21nDI#&quot;&gt;video/audio z přednášek&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;úkoly-v-hodině&quot;&gt;Úkoly v hodině&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Simulujte 1000 hodů kostkou. Spočítejte výskyty každého čísla. Kolik jich je nejméně a kolik nejvíce?&lt;/li&gt;
-  &lt;li&gt;Generujte náhodně body ve čtverci [-1,1] × [-1,1]. Počítejte, kolik z nich padlo do jednotkového kruhu, a tím aproximujte π.&lt;/li&gt;
-  &lt;li&gt;Generujte náhodně permutace slov věty “Kobyla má malý bok”.&lt;/li&gt;
-  &lt;li&gt;Pomocí &lt;a href=&quot;https://cs.wikipedia.org/wiki/Mal%C3%A1_Fermatova_v%C4%9Bta&quot;&gt;Malé Fermatovy věty&lt;/a&gt; testujte, zda je nějaké velké číslo pravděpodobně prvočíslem. Hodí se tříparametrová funkce pow(a, b, c), která efektivně spočítá &lt;em&gt;a&lt;/em&gt;^&lt;em&gt;b&lt;/em&gt; mod &lt;em&gt;c&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;Simulujte náhodnou procházku po celých číslech od 0 do N. Začínáme v 0, v každém kroku náhodně buď zvýšíme nebo snížíme o 1 (v 0 jen zvyšujeme). Po kolika krocích se dostaneme do N?&lt;/li&gt;
+  &lt;li&gt;Simulujte 1000 hodů kostkou. Spočítejte výskyty každého čísla. Kolik jich je nejméně a kolik nejvíce? &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/12-knihovna/kostky.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Generujte náhodně body ve čtverci [-1,1] × [-1,1]. Počítejte, kolik z nich padlo do jednotkového kruhu, a tím aproximujte π. &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/12-knihovna/pi.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Generujte náhodně permutace slov věty “Kobyla má malý bok”. &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/12-knihovna/permutace.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Pomocí &lt;a href=&quot;https://cs.wikipedia.org/wiki/Mal%C3%A1_Fermatova_v%C4%9Bta&quot;&gt;Malé Fermatovy věty&lt;/a&gt; testujte, zda je nějaké velké číslo pravděpodobně prvočíslem. Hodí se tříparametrová funkce pow(a, b, c), která efektivně spočítá &lt;em&gt;a&lt;/em&gt;^&lt;em&gt;b&lt;/em&gt; mod &lt;em&gt;c&lt;/em&gt;. &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/12-knihovna/prvocislo.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Simulujte náhodnou procházku po celých číslech od 0 do N. Začínáme v 0, v každém kroku náhodně buď zvýšíme nebo snížíme o 1 (v 0 jen zvyšujeme). Po kolika krocích se dostaneme do N? &lt;a href=&quot;https://gitlab.mff.cuni.cz/cermp5am/prm1/-/blob/master/12-knihovna/walk.py&quot;&gt;řešení&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
  </entry>
