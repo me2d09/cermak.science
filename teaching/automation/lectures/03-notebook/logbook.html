@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Petr Čermák">
+<meta name="dcterms.date" content="2023-10-20">
+<meta name="keywords" content="Automation, Physics">
+
+<title>Susceptibility measurement</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="logbook_files/libs/clipboard/clipboard.min.js"></script>
+<script src="logbook_files/libs/quarto-html/quarto.js"></script>
+<script src="logbook_files/libs/quarto-html/popper.min.js"></script>
+<script src="logbook_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="logbook_files/libs/quarto-html/anchor.min.js"></script>
+<link href="logbook_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="logbook_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="logbook_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="logbook_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="logbook_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.26.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Susceptibility measurement</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+                      </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://cermak.science/">Petr Čermák</a> <a href="https://orcid.org/0000-0002-4176-6905" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://kfkl.mff.cuni.cz/">
+              Charles University
+              </a>
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 20, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      <p>Ukázka měřícího protokolu.</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-collecting" id="toc-data-collecting" class="nav-link active" data-scroll-target="#data-collecting"><span class="header-section-number">1</span> Data collecting</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">2</span> NumPy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">3</span> Pandas</a></li>
+  <li><a href="#ukázka-plotly-na-rawdata" id="toc-ukázka-plotly-na-rawdata" class="nav-link" data-scroll-target="#ukázka-plotly-na-rawdata"><span class="header-section-number">4</span> Ukázka plotly na rawdata</a></li>
+  <li><a href="#více-sloupců" id="toc-více-sloupců" class="nav-link" data-scroll-target="#více-sloupců"><span class="header-section-number">5</span> Více sloupců</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="..\logbook.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<section id="data-collecting" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="data-collecting"><span class="header-section-number">1</span> Data collecting</h2>
+<p>Stažení dat - využití command line pomocí ipython magic.</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>curl https:<span class="op">//</span>user.mgml.eu<span class="op">/</span>automation<span class="op">/</span>vsm<span class="op">/</span><span class="fl">00000001.</span><span class="er">dat</span> <span class="op">--</span>output <span class="fl">01.</span><span class="er">dat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 32937  100 32937    0     0   256k      0 --:--:-- --:--:-- --:--:--  261k</code></pre>
+</div>
+</div>
+</section>
+<section id="numpy" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">2</span> NumPy</h2>
+<p>Budeme využívat znalosti ze článku v <strong>Nature</strong> o magnetizaci <span class="citation" data-cites="hallas">&nbsp;[<a href="#ref-hallas" role="doc-biblioref">1</a>]</span>.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">15</span>).reshape(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])</code></pre>
+</div>
+</div>
+</section>
+<section id="pandas" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">3</span> Pandas</h2>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">"matplotlib"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> {}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"01.dat"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> f:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> r <span class="op">:=</span> re.match(<span class="vs">r'^INFO,([^,]*),([^,]*)$'</span>, line):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        header[r[<span class="dv">2</span>].strip()] <span class="op">=</span> r[<span class="dv">1</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> line.strip() <span class="op">==</span> <span class="st">"[Data]"</span>:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f, delimiter<span class="op">=</span><span class="st">","</span>, index_col<span class="op">=</span><span class="st">"Temperature (K)"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(header)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Moment (emu)'</span>]].plot(ylabel<span class="op">=</span><span class="st">'Moment (emu)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'APPNAME': 'PPMS VSM Option Release 1.4.10 Build 3', 'MOTOR_MODULE_NAME': 'Quantum Design Linear Motor Servo Controller', 'MOTOR_HW_VERSION': '3101-100 N0', 'MOTOR_SERIAL_NUMBER': 'MMC963', 'MOTOR_SOFTWARE_VERSION': 'SRV No X-over 01.03.11', 'VSM_MODULE_NAME': 'Quantum Design VSM Detection Module', 'VSM_HW_VERSION': '3101-150 F0', 'VSM_SERIAL_NUMBER': 'VSM693', 'VSM_SOFTWARE_VERSION': 'VSM No X-over 01.02.05 May 20 2008 13:51:47', 'PREAMP_SERIAL_NUMBER': '702', 'OVEN_MODULE_NAME': 'Quantum Design VSM Oven Module', 'OVEN_HW_VERSION': 'unknown', 'OVEN_SERIAL_NUMBER': 'OVN299', 'OVEN_SOFTWARE_VERSION': 'unknown', 'COIL_SERIAL_NUMBER': '794', 'MOMENT_UNITS': '0', 'SAMPLE_MATERIAL': 'RnAc5Mn5Nb', 'SAMPLE_COMMENT': '', 'SAMPLE_MASS': '5.265143272970622', 'SAMPLE_VOLUME': '', 'SAMPLE_MOLECULAR_WEIGHT': '', 'SAMPLE_SIZE': '', 'SAMPLE_SHAPE': ''}</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;Axes: xlabel='Temperature (K)', ylabel='Moment (emu)'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="logbook_files/figure-html/cell-4-output-3.png" width="576" height="443"></p>
+</div>
+</div>
+</section>
+<section id="ukázka-plotly-na-rawdata" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ukázka-plotly-na-rawdata"><span class="header-section-number">4</span> Ukázka plotly na rawdata</h2>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">"plotly"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Moment (emu)'</span>]].plot(y<span class="op">=</span><span class="st">'Moment (emu)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="5af82e55-c64a-462e-90f0-f00a0e1b6d0e" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5af82e55-c64a-462e-90f0-f00a0e1b6d0e")) {                    Plotly.newPlot(                        "5af82e55-c64a-462e-90f0-f00a0e1b6d0e",                        [{"hovertemplate":"Temperature (K)=%{x}\u003cbr\u003eMoment (emu)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":[1.8948093429447053,3.078117682316993,4.010035190194746,5.069257708306981,5.995225368733906,7.106094650867281,8.005135100279952,8.952150673978727,10.026512902017782,10.98731726316232,12.04079982139424,12.971271028854868,13.945272256437518,15.00471455260656,15.973853735182262,17.04982640519469,18.00834148160376,19.051059209059886,19.953818158574837,20.974487056955244,22.0136184478741,22.92780311135417,24.049883061521665,25.038652492504625,25.92807459941332,27.034746854059904,27.987121926510056,28.97867616232364,30.05173981224644,31.0515144683408,32.02634243418694,33.05299409734647,34.050006440107616,35.04065339266015,36.03392808595167,37.01348526407162,37.9937157614652,38.95504711008211,39.982445637859946,41.054725142203296,42.038508321678,42.95967553761909,43.97351409257271,45.08011474793408,46.038592930038206,46.98256036173291,48.00220615103978,49.01637946594663,50.01268825298762,51.08848118775816,51.99097341655223,52.99550770865204,54.02680607004305,54.94603988767601,55.99025486343929,56.98257781961975,58.03100981611425,58.953188144136,60.01548340805215,61.02463055817702,62.05460845858824,62.9284383495492,63.93694789511397,64.93576806196833,65.97290753452582,66.93184797971493,68.05296505375883,68.98001850274149,70.00047356179626,71.08110671853557,71.87668473537732,72.9485233336298,74.03060342122224,74.98689041978335,76.09307147897854,76.96493631835928,77.93884507679715,79.08207357744269,79.94817088801962,81.12865693637296,82.0989280489565,82.99771959578757,84.01975880502587,84.97740089483067,86.05396352411528,86.93152014670096,87.91524892817289,89.03318099899714,89.99607971413226,90.9916403862192,92.05522423419217,93.04275581086662,93.95996152940296,95.05124214984367,95.99571149276012,96.96236130815036,98.00288472593785,99.03675290139869,99.998736906521,101.0330302959382,102.053627738133,102.96927159351156,104.03078613731822,104.94721723594272,105.98538634955447,107.06983851363783,108.048322883454,108.96742980659928,109.98711281074242,110.95333567272884,112.0673906186303,112.9986996012756,113.94528601999282,115.00899508275934,115.97361303890992,117.02720651259092,117.96199338549094,119.0120301191999,119.9168546465841,120.9845172528522,121.93973834462368,122.97421187211724,123.9539689479373,125.01378920396763,125.92528638671,126.99437514917211,128.0291089257148,129.06238552745623,129.9946691212664,130.9264090719117,132.04720187418957,133.13668612607069,134.02833364928347,135.0132781038768,135.9377490015647,136.987229224388,138.002237172926,138.9336991072685,140.0023084538128,140.9086857440441,142.00801655791153,142.98317493418247,143.97162830461437,145.01357699789668,145.96885928917942,146.91088602074092,148.00928958418015,148.9896715837488,150.0138455553969,150.97297993114267,151.9742835209964,153.0309425484997,154.04252965351225,155.02525041997418,155.95698541608573,157.0969424592438,158.00512533566322,159.0110723085945,159.99964718879312,161.06267163553068,162.12190443290285,162.95552533022123,163.93466711839685,165.06046788735998,165.91914578239823,166.9828207397769,168.00410339020405,169.0781937905207,169.9909629678499,171.04358454386474,172.017018962375,173.0864048562311,173.9795328509492,175.0182055420582,176.01522791841023,176.92230097018972,178.01783670754904,178.92980786412815,180.17322193496145,180.9852164568229,181.92942436259247,183.06728212646036,184.1693303803219,185.01735156992152,185.94859166499663,187.00061299451264,187.9819389785331,188.9700714066584,189.93060199045615,190.9800856112436,191.88711817501184,192.9808443605993,194.02277379844776,195.03203811810573,195.94126693581944,197.02243558862716,198.07273196252245,199.0120867819155,199.89097450396676,201.05951076672577,202.02507422301943,202.90202417402548,204.02217435722775,204.9258704706884,206.038362189548,207.0481264626856,207.97740346338244,208.9417935170859,209.9197883131909,211.00946297414507,211.9684766128952,213.04694101076865,213.99092021629605,214.9639473899002,216.04115411578923,216.999853083085,217.99758660005003,218.9755048439464,219.93570856812605,221.0416614987665,221.96976217227837,222.8948764686406,224.0336688701809,224.9775293405919,226.0394570488511,226.94807985266468,228.1039105160341,228.9572481708625,230.04648950927395,231.06984281951205,231.9512896716145,233.02407363771857,234.04957300414983,234.99310489461183,235.9917805090429,237.10860355038943,238.036252814072,239.0235891635845,240.01028833432463,240.9861634276777,241.9985903666534,243.07969239251943,243.96428958034943,244.99083538026656,246.00218926103585,246.9520249965672,247.99673429918792,248.9326219801472,249.9678865489835,250.98516691592735,251.9915073187924,252.97431241695057,253.9763260223238,255.05937375469173,256.0015893813867,257.0416004008422,258.01431183715664,259.04076772453413,259.955544779555,261.035750576678,261.9219163785584,262.89929338420274,263.89069622812366,264.9731579914019,266.0084517892979,267.1372200811189,268.0548435353547,268.9695102215942,269.9997170157284,270.9642706624476,272.02950941871416,273.0567916328394,273.994922923562,274.9981749422903,276.04370523235883,277.01719060870187,278.06941036623755,279.0067225241664,279.97452872919695,281.04702829637085,282.01684258912377,283.0633246235266,284.07408781682943,285.03857186914314,285.9386587723262,286.89165795964385,288.0162575547943,288.8918783605806,290.0428636637399,291.0561597078301,291.95922205741846,293.080048951827,293.91723794152944,294.99050363090066,295.992689767143,297.02101704699805,298.0437180228716,298.9506991660573,299.9896531842416,301.094156836479],"xaxis":"x","y":[6.70674878151169e-05,6.972776010251511e-05,6.822376959610374e-05,6.96268513940234e-05,6.942445653622526e-05,7.004878689064126e-05,6.858545360762197e-05,6.930919716501427e-05,7.117236717851302e-05,6.950781510562794e-05,7.156396409237686e-05,7.083123197524748e-05,7.137781466710764e-05,7.002710791198921e-05,7.018511278828169e-05,7.244362183819453e-05,6.747802922666591e-05,7.348596582728816e-05,6.9993740250972e-05,7.321101877791237e-05,6.987000113225456e-05,7.140837056452651e-05,7.097055205708481e-05,7.10260080386046e-05,7.086819865475329e-05,7.24578912797013e-05,6.985515156879426e-05,7.112576397277554e-05,7.179472951552786e-05,6.993363789022097e-05,7.116161796623804e-05,7.182239514859157e-05,7.16915672480835e-05,7.25076867873283e-05,7.301045519549338e-05,7.031720157572577e-05,7.002012199069772e-05,7.214237808054907e-05,6.848550059180384e-05,6.963215747620113e-05,7.112761465209356e-05,7.089704875364337e-05,6.942092108895013e-05,6.82298359216338e-05,6.861051592792521e-05,6.841724366643201e-05,7.191974892222826e-05,7.107572658532825e-05,7.070873585074911e-05,7.004289542873029e-05,7.021683694792842e-05,6.910577285799735e-05,6.773431124672282e-05,6.860257537640863e-05,7.079437566368415e-05,6.960977212953512e-05,6.876247746036644e-05,6.742936787680394e-05,6.393760506396922e-05,6.68013598685906e-05,6.586966598188661e-05,6.78024386363293e-05,6.394414087694e-05,6.248611835033338e-05,6.691088362772143e-05,6.743848477734429e-05,6.418333590917192e-05,6.62653263972161e-05,6.59959626979928e-05,6.615503301818941e-05,6.660622792469288e-05,6.395813880086278e-05,6.555219774224154e-05,6.427590383944349e-05,6.545252641751171e-05,6.315290842339739e-05,6.54823912889707e-05,6.0797897063460536e-05,6.193265502873766e-05,6.188769195130405e-05,6.270372732501758e-05,6.34563642154089e-05,6.140049858848948e-05,6.21956019128522e-05,6.048830875934906e-05,6.101214594759164e-05,6.063945130933431e-05,6.029196960855698e-05,6.247293541128667e-05,6.223851051781698e-05,5.8682398439859175e-05,5.8983843290595314e-05,5.92126986727078e-05,5.981906834092721e-05,5.846162096039397e-05,5.833768358285374e-05,5.749025923670911e-05,5.904110411843069e-05,5.901678041913435e-05,5.713421238637176e-05,5.788626311438932e-05,5.846521898020854e-05,5.478814767357857e-05,5.647863076278725e-05,5.8293802065675065e-05,5.752668507891618e-05,5.823273574371764e-05,5.694029940589661e-05,5.723809175593964e-05,5.679797545326036e-05,5.305973749839973e-05,5.554259594032713e-05,5.771378510410233e-05,5.6471255776301386e-05,5.669285035752232e-05,5.24556473704574e-05,5.573961790591386e-05,5.452203535686499e-05,5.560078628135378e-05,5.510324367143032e-05,5.185557527724653e-05,5.38018547986602e-05,5.288528424278831e-05,5.477305863090975e-05,5.556558032456998e-05,5.172665306734525e-05,5.554944289868184e-05,5.3780359466946406e-05,5.17941305380637e-05,5.3865696969193656e-05,5.459200700932249e-05,5.2220915930364416e-05,5.147512354533165e-05,5.471146499989062e-05,5.047680742761631e-05,5.062787882371314e-05,5.15593165406169e-05,5.251492688560322e-05,5.068085455010456e-05,4.985778388399266e-05,4.857586886623639e-05,5.205999804642904e-05,5.0522624611277016e-05,4.940289229739255e-05,4.98075865724316e-05,4.8402050017851e-05,4.720985795908232e-05,4.793409661166022e-05,5.13931569391093e-05,4.837816411899517e-05,4.974970071671156e-05,4.977196144962696e-05,4.950738478238624e-05,4.844899438769231e-05,4.901645756139161e-05,5.013879069482611e-05,5.174064504192854e-05,4.951020548824365e-05,5.171826926457808e-05,4.9865808222125366e-05,4.982314577887213e-05,4.662448586348664e-05,4.907403253032271e-05,4.840958606592688e-05,4.9995595908434365e-05,4.686409482278025e-05,4.6955553704397735e-05,4.864849896007068e-05,4.6130220625797424e-05,4.714312422698485e-05,4.318518544539445e-05,4.6051454420500506e-05,4.725836121951832e-05,4.646143458225375e-05,4.883109338526466e-05,4.782046338494348e-05,4.618200620841551e-05,4.408569123938224e-05,4.619397680422215e-05,4.710539476784735e-05,4.688563184333701e-05,4.787206886616316e-05,4.581067341100789e-05,4.499161376786255e-05,4.728499916919528e-05,4.335867782966832e-05,4.3644816540847216e-05,4.3955421340309175e-05,4.591994072623747e-05,4.40596133216606e-05,4.4563160704822605e-05,4.501147052135587e-05,4.356012271544045e-05,4.420884855935595e-05,4.5616255776019605e-05,4.389810910805666e-05,4.448131801656542e-05,4.466634930706051e-05,4.240725878581303e-05,4.593133936351695e-05,4.445080238399198e-05,4.017015958545465e-05,4.409583486658086e-05,4.349154680278875e-05,4.349680197264983e-05,4.086798401947842e-05,4.29667149183544e-05,4.28773670299534e-05,4.4119737647112855e-05,4.241579551761869e-05,4.1623771312852365e-05,4.418505462833447e-05,4.117311512881604e-05,4.358985648486803e-05,4.12483858206468e-05,4.03861189819254e-05,4.315360990929885e-05,4.1807226958643504e-05,4.1186015188549415e-05,3.949664727644047e-05,4.2088411387887786e-05,4.314496973154892e-05,4.349170125879508e-05,4.1268322475898285e-05,4.0140608241591776e-05,4.2298224837828965e-05,3.808900039086715e-05,3.969317563944707e-05,4.1636306081124455e-05,3.983820380249086e-05,4.059442242747518e-05,4.013872006388893e-05,4.159759114803473e-05,4.1043767290137175e-05,4.241165902205184e-05,4.118430489853648e-05,3.9159195494670544e-05,3.771363503447674e-05,4.033409203978324e-05,4.073558049225216e-05,4.07344706340511e-05,3.839849390898318e-05,4.136375279524175e-05,3.982975410488688e-05,3.729967987279001e-05,4.1853272708221165e-05,3.905001945763277e-05,3.932702991395814e-05,3.683113185319283e-05,3.705235645113935e-05,3.658112658452934e-05,3.67329042900068e-05,3.938927233313606e-05,3.818215931689308e-05,3.711966762694258e-05,3.730722176900979e-05,3.874043790503002e-05,3.929257365402386e-05,3.857105068266784e-05,3.733723797624628e-05,3.740697258857144e-05,3.941165556273811e-05,3.787147760234267e-05,3.767474592694788e-05,3.8164831849570816e-05,3.961620577090004e-05,3.5519576166997525e-05,3.740014606131362e-05,3.790695247340165e-05,3.580468901313858e-05,3.649964066377878e-05,3.886840253750159e-05,3.657234643680335e-05,3.6064340107797495e-05,3.560246925926381e-05,3.6058451546684815e-05,3.5700745465880506e-05,3.6048294338916336e-05,3.600741380452306e-05,3.865544068746223e-05,3.852553266336032e-05,3.8376291216893055e-05,3.633518733672643e-05,3.366120485498245e-05,3.547260438582151e-05,3.724971302043566e-05,3.451202726542587e-05,3.364256773712637e-05,3.728861642875108e-05,3.4830564358264565e-05,3.440828156224752e-05,3.732897587392816e-05,3.618510935636345e-05,3.557071911732835e-05,3.690398262182563e-05,3.366163789512912e-05,3.336649885631142e-05,3.435379762087438e-05,3.209062098200689e-05,3.37731039035181e-05],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Temperature (K)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Moment (emu)"}},"legend":{"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('5af82e55-c64a-462e-90f0-f00a0e1b6d0e');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+</section>
+<section id="více-sloupců" class="level2 page-columns page-full" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="více-sloupců"><span class="header-section-number">5</span> Více sloupců</h2>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<p>Provedli jsme měření na sloučenine RnAc5Mn5Nb a výsledek vidíte na <a href="#fig-susc">Figure&nbsp;1</a>. Konkrétně na <a href="#fig-susc-1">Figure&nbsp;1 (a)</a> je vidět magnetická susceptibilita a na dalším <a href="#fig-susc-2">Figure&nbsp;1 (b)</a> je její inverzní hodnota.</p>
+</div>
+</div>
+<div id="fig-susc" class="cell column-screen-inset quarto-layout-panel" data-execution_count="7">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-susc-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="logbook_files/figure-html/fig-susc-output-1.png" class="img-fluid figure-img" data-ref-parent="fig-susc" width="571"></p>
+<figcaption class="figure-caption">(a) Susceptibilita</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-susc-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="logbook_files/figure-html/fig-susc-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-susc" width="571"></p>
+<figcaption class="figure-caption">(b) Inverzní susceptibilita</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Naměřená data</figcaption><p></p>
+</figure>
+</div>
+<!-- -->
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-hallas" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Mugiraneza and A. M. Hallas, <em>Tutorial: A Beginner’s Guide to Interpreting Magnetic Susceptibility Data with the Curie-Weiss Law</em>, Communications Physics <strong>5</strong>, 95 (2022).</div>
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div id="quarto-reuse" class="quarto-appendix-contents"><div>CC 0</div></div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Susceptibility measurement"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023-10-20</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Petr Čermák</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-4176-6905</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    email: petr.cermak@matfyz.cuni.cz</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    url: https://cermak.science/</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Charles University</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">        city: Prague</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">        state: Czech republic</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">        url: https://kfkl.mff.cuni.cz/</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> &gt; </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">  Ukázka měřícího protokolu.</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="an">keywords:</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">  - Automation</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">  - Physics</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="an">license:</span><span class="co"> "CC 0"</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="an">number-sections:</span><span class="co"> true</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="an">csl:</span><span class="co"> ../aps.csl</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="an">highlight-style:</span><span class="co"> pygments</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">    geometry: </span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">      - top=30mm</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">      - left=30mm</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data collecting</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>Stažení dat - využití command line pomocí ipython magic.</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>curl https:<span class="op">//</span>user.mgml.eu<span class="op">/</span>automation<span class="op">/</span>vsm<span class="op">/</span><span class="fl">00000001.</span><span class="er">dat</span> <span class="op">--</span>output <span class="fl">01.</span><span class="er">dat</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## NumPy</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>Budeme využívat znalosti ze článku v **Nature** o magnetizaci <span class="co">[</span><span class="ot">@hallas</span><span class="co">]</span>.</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">15</span>).reshape(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pandas</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">"matplotlib"</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> {}</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"01.dat"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> f:</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> r <span class="op">:=</span> re.match(<span class="vs">r'^INFO,([^,]*),([^,]*)$'</span>, line):</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>        header[r[<span class="dv">2</span>].strip()] <span class="op">=</span> r[<span class="dv">1</span>]</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> line.strip() <span class="op">==</span> <span class="st">"[Data]"</span>:</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f, delimiter<span class="op">=</span><span class="st">","</span>, index_col<span class="op">=</span><span class="st">"Temperature (K)"</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(header)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Moment (emu)'</span>]].plot(ylabel<span class="op">=</span><span class="st">'Moment (emu)'</span>)</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Ukázka plotly na rawdata</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">"plotly"</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Moment (emu)'</span>]].plot(y<span class="op">=</span><span class="st">'Moment (emu)'</span>)</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Více sloupců</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="ss">f"""</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="ss">Provedli jsme měření na sloučenine </span><span class="sc">{</span>header[<span class="st">"SAMPLE_MATERIAL"</span>]<span class="sc">}</span><span class="ss"> a výsledek vidíte na @fig-susc. Konkrétně na @fig-susc-1 je vidět magnetická susceptibilita a na dalším @fig-susc-2 je její inverzní hodnota.</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span>))</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">"matplotlib"</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE</span></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-susc</span></span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Naměřená data"</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap:</span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Susceptibilita"</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Inverzní susceptibilita"</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset</span></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a><span class="co">##pd.options.plotting.backend = "matplotlib"</span></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>molarmass <span class="op">=</span> <span class="fl">1724.6</span></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Chi'</span>] <span class="op">=</span> df[<span class="st">"Moment (emu)"</span>] <span class="op">/</span> df[<span class="st">"Magnetic Field (Oe)"</span>]</span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'1/Chi'</span>] <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> df[<span class="st">"Chi"</span>]</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Chi'</span>]].plot()</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'1/Chi'</span>]].plot()</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
