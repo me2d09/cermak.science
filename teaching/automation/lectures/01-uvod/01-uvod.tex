@@ -1,0 +1,170 @@
+\documentclass{beamer}
+ 
+\input ../slidemac.tex
+
+\title[NFPL242]{Automatizce ve fyzice: úvodní hodina}
+
+\begin{document}
+   
+\maketitle
+
+
+% ----------------------------------------------------------------------
+
+\begin{markdown}
+%%begin novalidate
+### Úvodní informace
+
+- Web cvičení: [cermak.science/teaching/automation/](https://cermak.science/teaching/automation/)
+- Podmínky zápočtu: 
+    - Překonání hard problému, nebo
+    - Vyřešení 4 / 6 domácích úkolů
+    \pause
+- Konzultace: 
+    - discord (nejrychlejší)
+    - mail (klasika)  
+    - osobní setkání (kancelář mám na Karlově)
+
+\end{frame}
+
+### Automatizace - proč?
+
+- Zjednodušení práce - od kdy je to efektivní?
+- Reprodukovatelnost
+- Přenositelnost
+- F.A.I.R. principy \pause
+
+\end{frame}
+
+### Programovací jazyk?
+ 
+- Strojový kód je pro člověka nečitelný
+- Závisí na procesoru
+- Programovací jazyk je čitelný, *překladač* ho zkompiluje do zdrojového kódu
+- Dynamické programovací jazyky - překládají se za běhu \pause
+
+**Python**
+
+- Snadno čitelný kód
+- Populární ve vědě, AI, statistice
+- Mnoho dostupných knihoven
+- Triky, urychlení
+
+**Excel**
+
+- Nezatracujte ho - je to programování?
+- Python binding!!
+
+**Julia, R**
+
+\end{frame}
+
+### Git?
+    
+- Ukládání kódu
+- Verzování
+- https://gitlab.mff.cuni.cz/cermp5am/automation
+
+### CI/CD ?
+
+- Continuous Integration / Continuous Deployment
+- Naměřím výsledky
+- script je automaticky zpracuje
+- gitlab!
+    
+\end{frame}
+
+%%novalidate
+\end{markdown}
+% ----------------------------------------------------------------------
+
+\begin{frame}{Software, cloud, [C,G,T]PU}
+
+    \={Editor: VS Code.}
+    
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 1}
+
+\py{1+1}{2}
+
+\py{2+3*4+1}{15}
+
+\py{2+3 * 4+1}{15} 
+
+\py{(2+3)*(4+1)}{25}
+
+\py{2**10}{1024}
+
+\py{2**100}{1267650600228229401496703205376}
+
+\end{frame}
+
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 2}
+ 
+    \pycode{e1.py}
+    
+    \bigskip
+    
+    Výsledek je a+b=8
+    
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 3}
+ 
+    \pycode{e2.py}
+    
+    \bigskip
+    
+    Průměr: 54.0
+    
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 4}
+ 
+    \pycode{e3a.py}
+    
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 4}
+ 
+    \pycode{e3b.py}
+    
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Co umíme? 4}
+ 
+    \pycode{e3c.py}
+    
+\end{frame}
+    
+
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+
+\begin{frame}{Navažujeme prvky}
+ 
+ \pycode{first.py}
+ 
+ \bigskip
+ 
+ Znáte rychlejší způsob?
+ 
+\end{frame}
+
+
+\end{document}
