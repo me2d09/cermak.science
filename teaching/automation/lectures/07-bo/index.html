@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Petr Čermák">
+<meta name="dcterms.date" content="2023-11-24">
+
+<title>Automatizce ve fyzice: Bayesovská optimalizace</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="07-bo_files/libs/clipboard/clipboard.min.js"></script>
+<script src="07-bo_files/libs/quarto-html/quarto.js"></script>
+<script src="07-bo_files/libs/quarto-html/popper.min.js"></script>
+<script src="07-bo_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="07-bo_files/libs/quarto-html/anchor.min.js"></script>
+<link href="07-bo_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="07-bo_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="07-bo_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="07-bo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="07-bo_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="presentation.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="07-bo.ipynb" download="07-bo.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Automatizce ve fyzice: Bayesovská optimalizace</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Petr Čermák </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 24, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="připojte-se" class="level2">
+<h2 class="anchored" data-anchor-id="připojte-se">Připojte se</h2>
+<p></p>
+<p><a href="https://cermak.science/teaching/automation/lectures/07-bo/presentation.html">cermak.science/teaching/automation/lectures/07-bo/presentation.html</a></p>
+</section>
+<section id="statistika-v-kostce" class="level1">
+<h1>Statistika v kostce</h1>
+<section id="obecné-pojmy---pravděpodobnostní-model" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="obecné-pojmy---pravděpodobnostní-model">Obecné pojmy - pravděpodobnostní model</h2>
+<p>Likehood funkce</p>
+<ul>
+<li>funkce věrohodnosti</li>
+<li><span class="math inline">\(\mathcal{L}(\theta; D)\)</span></li>
+<li>vyjadřuje pravděpodobnost, že by daná sada parametrů <span class="math inline">\(\theta\)</span> generovala pozorovaná data <span class="math inline">\(D\)</span>.</li>
+</ul>
+<p>Náhodný proces</p>
+<ul>
+<li>výsledkem je funkce</li>
+</ul>
+<p>Modely</p>
+<ul>
+<li>parametrické (konečný/malý počet parametrů)</li>
+<li>non-parametric (nekonečně/hodně) parametrů</li>
+</ul>
+<div class="notes">
+<p>non-parametric: Savitzky–Golay filter (lokální aproximace polynomy)</p>
+</div>
+</section>
+<section id="obecné-pojmy" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="obecné-pojmy">Obecné pojmy</h2>
+<p>Metoda maximální věrohodnosti</p>
+<ul>
+<li>MLE (Maximum likelihood estimation)</li>
+<li>hledám parametry modelu, které vygenerují naměřená data s největší pravděpodobností</li>
+</ul>
+<p><span class="math display">\[ \hat{\theta}_{\text{MLE}} = \arg \max_{\theta} \mathcal{L}(\theta; D) \]</span></p>
+<p>Maximální aposteriorní odhad</p>
+<ul>
+<li>MAP (Maximum a Posteriori Estimation)</li>
+<li>Parametry nejsou náhodné, známe jejich distribuci</li>
+<li>Kombinace likehood funkce a apriorní informace o parametrech</li>
+</ul>
+<p><span class="math display">\[
+P(\theta | D) = \frac{P(D | \theta) \cdot P(\theta)}{P(D)}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\theta}_{\text{MAP}} = \arg \max_{\theta} P(\theta | D)
+\]</span></p>
+</section>
+</section>
+<section id="gaussovské-procesy" class="level1">
+<h1>Gaussovské procesy</h1>
+<section id="gaussovský-proces" class="level2">
+<h2 class="anchored" data-anchor-id="gaussovský-proces">Gaussovský proces</h2>
+<ul>
+<li>model náhodného procesu</li>
+<li>neparametrický</li>
+<li>hodnoty jsou náhodné proměné, vzájemně korelované</li>
+<li>popisuje ho střední hodnota a kovarianční funkce (určuje hladkost)</li>
+<li>pro dva blízké body <span class="math inline">\(x_j\)</span> a <span class="math inline">\(x_i\)</span> platí, že jejich <span class="math inline">\(f(x_n\)</span>)$ jsou také blízké</li>
+<li>za pomoci tréninkového datasetu umí predikovat další hodnoty</li>
+</ul>
+</section>
+<section id="příklad-jádra-kovarianční-fce-rbf" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="příklad-jádra-kovarianční-fce-rbf">Příklad jádra (kovarianční fce): RBF</h2>
+<p>RBF (Radial Basis Function, jádro exponentu kvadratického) <span class="math display">\[
+\kappa(\mathbf{x}_i,\mathbf{x}_j) = \sigma^2 \exp\left(-\frac{\|\mathbf{x}_i - \mathbf{x}_j\|^2}{2l^2}\right)
+\]</span></p>
+<p>kde <span class="math inline">\(l\)</span> ovlivňuje jak rychle korelace klesá a <span class="math inline">\(\sigma\)</span> určuje škálování jádra.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kernel(X1, X2, l<span class="op">=</span><span class="fl">1.0</span>, sigma<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Isotropic squared exponential kernel.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">        X1,2: Array of m points (m x d).</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">        X2: Array of n points (n x d).</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">        (m x n) matrix.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sqdist <span class="op">=</span> np.<span class="bu">sum</span>(X1<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">+</span> np.<span class="bu">sum</span>(X2<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(X1, X2.T)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sigma<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">/</span> l<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> sqdist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="prior-nevíme-nic" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="prior-nevíme-nic">Prior (nevíme nic)</h2>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">from</span> helper <span class="im">import</span> plot_gp</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># Vygeneruji body (konečný počet)</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>X <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="co">#počet sloupců dopočítá</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a>mu <span class="op">=</span> np.zeros(X.shape)   <span class="co"># střední hodnota</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>cov <span class="op">=</span> kernel(X, X)       <span class="co"># spočtu kovarianci (nenormovaná korelace)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># Vygeneruji 5 funkcí jako výsledek náhodného gaussovského procesu</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu.ravel(), cov, <span class="dv">5</span>)</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># Vykreslí střední hodnotu, oblast nejistoty a funkce </span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>plot_gp(mu, cov, X, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-3-output-1.png" width="569" height="411"></p>
+</div>
+</div>
+</section>
+<section id="posterior" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="posterior">Posterior</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> inv</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">def</span> posterior(X, X_train, Y_train, l<span class="op">=</span><span class="fl">1.0</span>, sigma<span class="op">=</span><span class="fl">1.0</span>, sigma_y<span class="op">=</span><span class="fl">1e-8</span>):</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="co">"""</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">    Spočítá novou střední hodnotu a kovarianci při znalosti train dat</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">    </span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">    Args:</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">        X: osa x</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">        X_train, Y_train: známá data (m x 1)</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">        l, sigma: Parametry jádra</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">        sigma_y: šum</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">    </span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">    Returns:</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">        Posterior střední hodnota (n x d) a kovariance (n x n).</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">    """</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    K <span class="op">=</span> kernel(X_train, X_train, l, sigma) <span class="op">+</span> sigma_y<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))  <span class="co"># jádro s šumem</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>    K_s <span class="op">=</span> kernel(X_train, X, l, sigma)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    K_ss <span class="op">=</span> kernel(X, X, l, sigma) <span class="op">+</span> <span class="fl">1e-8</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X))</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    </span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="co"># Equation (7)</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    mu_s <span class="op">=</span> K_s.T.dot(inv(K)).dot(Y_train)</span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="co"># Equation (8)</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>    cov_s <span class="op">=</span> K_ss <span class="op">-</span> K_s.T.dot(inv(K)).dot(K_s)</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    <span class="cf">return</span> mu_s, cov_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment absolute" data-bottom="0" data-right="10" width="400" height="300">
+<div style="background-color:white; color: black; margin: 30px">
+<p><span class="math display">\[
+\mathbf{\mu_*} = \mathbf{K}_*^T \mathbf{K}_y^{-1} \mathbf{y}
+\]</span> <span class="math display">\[
+\mathbf{\Sigma_*} = \mathbf{K}_{**} - \mathbf{K}_*^T \mathbf{K}_y^{-1} \mathbf{K}_*
+\]</span></p>
+<p>Odvození <a href="https://krasserm.github.io/2018/03/19/gaussian-processes/">zde</a>.</p>
+</div>
+</div>
+</section>
+<section id="zadáme-data-bez-šumu" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="zadáme-data-bez-šumu">Zadáme data (bez šumu)</h2>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Zadáme data</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>X_train <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>]).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>Y_train <span class="op">=</span> np.sin(X_train)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Spočteme novou (posterior) střední hodnotu a kovarianci</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu_s.ravel(), cov_s, <span class="dv">3</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-5-output-1.png" width="569" height="411"></p>
+</div>
+</div>
+<div class="fragment absolute" data-bottom="0" data-right="10" width="400" height="300">
+<div style="background-color:white; color: black; padding: 30px; border: 2px black solid">
+<p>To není dokonalé - ta data nejsou z principu přesná.</p>
+</div>
+</div>
+</section>
+<section id="zadáme-data-se-šumem" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="zadáme-data-se-šumem">Zadáme data (se šumem)</h2>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Zašuměná data</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>noise <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>X_train <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>Y_train <span class="op">=</span> np.sin(X_train) <span class="op">+</span> noise <span class="op">*</span> np.random.randn(<span class="op">*</span>X_train.shape)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, sigma_y<span class="op">=</span>noise)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu_s.ravel(), cov_s, <span class="dv">3</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-6-output-1.png" width="569" height="411"></p>
+</div>
+</div>
+<div class="fragment absolute" data-bottom="0" data-right="10" width="400" height="300">
+<div style="background-color:white; color: black; padding: 30px; border: 2px black solid">
+<p>Fajn, jak nastavit ty parametry?</p>
+</div>
+</div>
+</section>
+<section id="vliv-parametrů" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="vliv-parametrů">Vliv parametrů</h2>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Ukaž kód</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> [</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">3.0</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">3.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.05</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="fl">2.5</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (l, sigma, sigma_y) <span class="kw">in</span> <span class="bu">enumerate</span>(params):</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, l<span class="op">=</span>l, </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                            sigma<span class="op">=</span>sigma, </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                            sigma_y<span class="op">=</span>sigma_y)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    plt.subplots_adjust(top<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'l = </span><span class="sc">{</span>l<span class="sc">}</span><span class="ss">, sigma = </span><span class="sc">{</span>sigma<span class="sc">}</span><span class="ss">, sigma_y = </span><span class="sc">{</span>sigma_y<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-7-output-1.png" width="1016" height="515"></p>
+</div>
+</div>
+</section>
+<section id="optimální-parametry" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="optimální-parametry">Optimální parametry</h2>
+<p>Lze nalézt optimální parametry</p>
+<p><span class="math display">\[
+\log p(\mathbf{y} \lvert \mathbf{X}) =
+\log \mathcal{N}(\mathbf{y} \lvert \mathbf{0},\mathbf{K}_y) =
+-\frac{1}{2} \mathbf{y}^T \mathbf{K}_y^{-1} \mathbf{y}
+-\frac{1}{2} \log \begin{vmatrix}\mathbf{K}_y\end{vmatrix}
+-\frac{N}{2} \log(2\pi)
+\]</span></p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> cholesky, det</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.linalg <span class="im">import</span> solve_triangular</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nll_fn(X_train, Y_train, noise, naive<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a function that computes the negative log marginal</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    likelihood for training data X_train and Y_train and given</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    noise level.</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">        X_train: training locations (m x d).</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Y_train: training targets (m x 1).</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">        noise: known noise level of Y_train.</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">        naive: if True use a naive implementation of Eq. (11), if</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">               False use a numerically more stable implementation.</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Minimization objective.</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    Y_train <span class="op">=</span> Y_train.ravel()</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> nll_naive(theta):</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Naive implementation of Eq. (11). Works well for the examples </span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># in this article but is numerically less stable compared to </span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the implementation in nll_stable below.</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        K <span class="op">=</span> kernel(X_train, X_train, l<span class="op">=</span>theta[<span class="dv">0</span>], sigma<span class="op">=</span>theta[<span class="dv">1</span>]) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>            noise<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> np.log(det(K)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.5</span> <span class="op">*</span> Y_train.dot(inv(K).dot(Y_train)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.5</span> <span class="op">*</span> <span class="bu">len</span>(X_train) <span class="op">*</span> np.log(<span class="dv">2</span><span class="op">*</span>np.pi)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> nll_stable(theta):</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Numerically more stable implementation of Eq. (11) as described</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># in http://www.gaussianprocess.org/gpml/chapters/RW2.pdf, Section</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 2.2, Algorithm 2.1.</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        K <span class="op">=</span> kernel(X_train, X_train, l<span class="op">=</span>theta[<span class="dv">0</span>], sigma<span class="op">=</span>theta[<span class="dv">1</span>]) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>            noise<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        L <span class="op">=</span> cholesky(K)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        S1 <span class="op">=</span> solve_triangular(L, Y_train, lower<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        S2 <span class="op">=</span> solve_triangular(L.T, S1, lower<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.<span class="bu">sum</span>(np.log(np.diagonal(L))) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.5</span> <span class="op">*</span> Y_train.dot(S2) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.5</span> <span class="op">*</span> <span class="bu">len</span>(X_train) <span class="op">*</span> np.log(<span class="dv">2</span><span class="op">*</span>np.pi)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naive:</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nll_naive</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nll_stable</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimize the negative log-likelihood w.r.t. parameters l and sigma_f.</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="co"># We should actually run the minimization several times with different</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co"># initializations to avoid local minima but this is skipped here for</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="co"># simplicity.</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(nll_fn(X_train, Y_train, noise), [<span class="dv">1</span>, <span class="dv">1</span>], </span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>               bounds<span class="op">=</span>((<span class="fl">1e-5</span>, <span class="va">None</span>), (<span class="fl">1e-5</span>, <span class="va">None</span>)),</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>               method<span class="op">=</span><span class="st">'L-BFGS-B'</span>)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the optimization results in global variables so that we can</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="co"># compare it later with the results from other implementations.</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>l_opt, sigma_f_opt <span class="op">=</span> res.x</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute posterior mean and covariance with optimized kernel parameters and plot the results</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, l<span class="op">=</span>l_opt, sigma<span class="op">=</span>sigma_f_opt, sigma_y<span class="op">=</span>noise)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-8-output-1.png" width="1028" height="339"></p>
+</div>
+</div>
+</section>
+<section id="více-rozměrů" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="více-rozměrů">Více rozměrů</h2>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> helper <span class="im">import</span> plot_gp_2D</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>noise_2D <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>rx, ry <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.3</span>), np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.3</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>gx, gy <span class="op">=</span> np.meshgrid(rx, rx)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>X_2D <span class="op">=</span> np.c_[gx.ravel(), gy.ravel()]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>X_2D_train <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, (<span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>Y_2D_train <span class="op">=</span> np.sin(<span class="fl">0.5</span> <span class="op">*</span> np.linalg.norm(X_2D_train, axis<span class="op">=</span><span class="dv">1</span>)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>             noise_2D <span class="op">*</span> np.random.randn(<span class="bu">len</span>(X_2D_train))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">7</span>))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>mu_s, _ <span class="op">=</span> posterior(X_2D, X_2D_train, Y_2D_train, sigma_y<span class="op">=</span>noise_2D)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plot_gp_2D(gx, gy, mu_s, X_2D_train, Y_2D_train, </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>           <span class="ss">f'Before parameter optimization: l=</span><span class="sc">{</span><span class="fl">1.00</span><span class="sc">}</span><span class="ss"> sigma_f=</span><span class="sc">{</span><span class="fl">1.00</span><span class="sc">}</span><span class="ss">'</span>, <span class="dv">1</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> minimize(nll_fn(X_2D_train, Y_2D_train, noise_2D), [<span class="dv">1</span>, <span class="dv">1</span>], </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>               bounds<span class="op">=</span>((<span class="fl">1e-5</span>, <span class="va">None</span>), (<span class="fl">1e-5</span>, <span class="va">None</span>)),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>               method<span class="op">=</span><span class="st">'L-BFGS-B'</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>mu_s, _ <span class="op">=</span> posterior(X_2D, X_2D_train, Y_2D_train, <span class="op">*</span>res.x, sigma_y<span class="op">=</span>noise_2D)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plot_gp_2D(gx, gy, mu_s, X_2D_train, Y_2D_train,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>           <span class="ss">f'After parameter optimization: l=</span><span class="sc">{</span>res<span class="sc">.</span>x[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss"> sigma_f=</span><span class="sc">{</span>res<span class="sc">.</span>x[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">'</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-9-output-1.png" width="1061" height="537"></p>
+</div>
+</div>
+</section>
+<section id="jsou-na-to-knihovny" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="jsou-na-to-knihovny">Jsou na to knihovny</h2>
+<p>Scikit-learn</p>
+<ul>
+<li><code>GaussianProcessRegressor</code> vytváří posterior data (“fituje hodnoty”)</li>
+<li>Připravená jádra</li>
+</ul>
+<div class="cell" data-output-location="slide" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> ConstantKernel, RBF</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>rbf <span class="op">=</span> ConstantKernel(<span class="fl">1.0</span>) <span class="op">*</span> RBF(length_scale<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>rbf, alpha<span class="op">=</span>noise<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># Použiju stará data</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>gpr.fit(X_train, Y_train)</span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co"># Výpočet posterior parametrů</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>mu_s, cov_s <span class="op">=</span> gpr.predict(X, return_cov<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co"># Optimalizované parametry Gausse</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>l <span class="op">=</span> gpr.kernel_.k2.get_params()[<span class="st">'length_scale'</span>]</span>
+<span id="cb9-15"><a href="#cb9-15"></a>sigma <span class="op">=</span> np.sqrt(gpr.kernel_.k1.get_params()[<span class="st">'constant_value'</span>])</span>
+<span id="cb9-16"><a href="#cb9-16"></a></span>
+<span id="cb9-17"><a href="#cb9-17"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-10-output-1.png" width="582" height="412"></p>
+</div>
+</div>
+</section>
+<section id="knihovna-gpy" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="knihovna-gpy">Knihovna GPy</h2>
+<ul>
+<li>Vyvíjeno Sheffield machine learning group.</li>
+<li>Hezčí grafy</li>
+</ul>
+<div class="cell" data-output-location="slide" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">import</span> GPy</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>rbf <span class="op">=</span> GPy.kern.RBF(input_dim<span class="op">=</span><span class="dv">1</span>, variance<span class="op">=</span><span class="fl">1.0</span>, lengthscale<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>gpr <span class="op">=</span> GPy.models.GPRegression(X_train, Y_train, rbf)</span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># Zafixovat šum</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>gpr.Gaussian_noise.variance <span class="op">=</span> noise<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>gpr.Gaussian_noise.variance.fix()</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co"># Optimalizovat parametry</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>gpr.optimize()</span>
+<span id="cb10-12"><a href="#cb10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co"># Výsledky</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>l <span class="op">=</span> gpr.rbf.lengthscale.values[<span class="dv">0</span>]</span>
+<span id="cb10-15"><a href="#cb10-15"></a>sigma <span class="op">=</span> np.sqrt(gpr.rbf.variance.values[<span class="dv">0</span>])</span>
+<span id="cb10-16"><a href="#cb10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co"># Zobraz parametry a graf</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>display(gpr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<style type="text/css">
+.pd{
+    font-family: "Courier New", Courier, monospace !important;
+    width: 100%;
+    padding: 3px;
+}
+</style>
+
+<p class="pd">
+<b>Model</b>: GP regression<br>
+<b>Objective</b>: 4.995149536755294<br>
+<b>Number of Parameters</b>: 3<br>
+<b>Number of Optimization Parameters</b>: 2<br>
+<b>Updates</b>: True<br>
+</p>
+<style type="text/css">
+.tg  {font-family:"Courier New", Courier, monospace !important;padding:2px 3px;word-break:normal;border-collapse:collapse;border-spacing:0;border-color:#DCDCDC;margin:0px auto;width:100%;}
+.tg td{font-family:"Courier New", Courier, monospace !important;font-weight:bold;color:#444;background-color:#F7FDFA;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg th{font-family:"Courier New", Courier, monospace !important;font-weight:normal;color:#fff;background-color:#26ADE4;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg .tg-left{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:left;}
+.tg .tg-center{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:center;}
+.tg .tg-right{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:right;}
+</style>
+
+<table class="tg table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"><strong>GP_regression.</strong></td>
+<td data-quarto-table-cell-role="th"><strong>value</strong></td>
+<td data-quarto-table-cell-role="th"><strong>constraints</strong></td>
+<td data-quarto-table-cell-role="th"><strong>priors</strong></td>
+</tr>
+<tr class="even">
+<td class="tg-left">rbf.variance</td>
+<td class="tg-right">0.49551218683435144</td>
+<td class="tg-center">+ve</td>
+<td class="tg-center"></td>
+</tr>
+<tr class="odd">
+<td class="tg-left">rbf.lengthscale</td>
+<td class="tg-right">0.8486916858822241</td>
+<td class="tg-center">+ve</td>
+<td class="tg-center"></td>
+</tr>
+<tr class="even">
+<td class="tg-left">Gaussian_noise.variance</td>
+<td class="tg-right">0.04000000000000001</td>
+<td class="tg-center">+ve fixed</td>
+<td class="tg-center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="knihovna-gpy-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="knihovna-gpy-1">Knihovna GPy</h2>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gpr.plot()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-12-output-1.png" width="662" height="470"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="bayesovská-optimalizace" class="level1">
+<h1>Bayesovská optimalizace</h1>
+<section id="co-optimalizovat" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="co-optimalizovat">Co optimalizovat?</h2>
+<p>Funkce typu “black-box”</p>
+<ul>
+<li>neznáme jaká funkce to je</li>
+<li>nevíme její derivace</li>
+<li>měření v bodě –&gt; zašuměná odpověď</li>
+</ul>
+<p>Co když měření trvá dlouho?</p>
+<ul>
+<li>najít minimum za pomocí nejmenšího počtu měření</li>
+</ul>
+<p>–&gt; Bayesovská optimalizace! Potřebujeme:</p>
+<ul>
+<li><strong>Náhradní (Surrogate) model</strong> (GP!!)</li>
+<li><strong>Akviziční funkce</strong> - vymyslí na základě modelu, kde dále měřit</li>
+</ul>
+</section>
+<section id="akviziční-funkce" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="akviziční-funkce">Akviziční funkce</h2>
+<ul>
+<li>hledá kompromis mezi
+<ul>
+<li><em>průzkumem</em> (exploration) - měřit tam, kde nic nevíme</li>
+<li><em>vytěžováním</em> (exploitation) - měřit tom, kde se odhaduje minimum/maximum</li>
+</ul></li>
+<li>používané funkce:
+<ul>
+<li>“maximum probability of improvement” (MPI)</li>
+<li>“upper confidence bound” (UCB)</li>
+<li><strong>“expected improvement” (EI)</strong></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+\mathrm{EI}(\mathbf{x}) = \mathbb{E}\max(f(\mathbf{x}) - \mathbf{y}^+, 0)
+\]</span></p>
+<p>kde <span class="math inline">\(\mathbf{y}\)</span> je zatím nejlepší hodnota, <span class="math inline">\(f(\mathbf{x})\)</span> je náš gp model a <span class="math inline">\(\mathbb{E}\)</span> značí očekávání.</p>
+</section>
+<section id="scikit-optimize" class="level2">
+<h2 class="anchored" data-anchor-id="scikit-optimize">Scikit-optimize</h2>
+<div class="cell" data-output-location="slide" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="im">from</span> sklearn.base <span class="im">import</span> clone</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="im">from</span> skopt <span class="im">import</span> gp_minimize</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="im">from</span> skopt.learning <span class="im">import</span> GaussianProcessRegressor</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="im">from</span> skopt.learning.gaussian_process.kernels <span class="im">import</span> ConstantKernel, Matern</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="im">from</span> helper <span class="im">import</span> plot_approximation, plot_acquisition</span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a>bounds <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
+<span id="cb12-9"><a href="#cb12-9"></a>noise <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="kw">def</span> f(X, noise<span class="op">=</span>noise):</span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="cf">return</span> <span class="op">-</span>np.sin(<span class="dv">3</span><span class="op">*</span>X) <span class="op">-</span> X<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.7</span><span class="op">*</span>X <span class="op">+</span> noise <span class="op">*</span> np.random.randn(<span class="op">*</span>X.shape)</span>
+<span id="cb12-13"><a href="#cb12-13"></a></span>
+<span id="cb12-14"><a href="#cb12-14"></a>X_init <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">0.9</span>], [<span class="fl">1.1</span>]])</span>
+<span id="cb12-15"><a href="#cb12-15"></a>Y_init <span class="op">=</span> f(X_init)</span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co"># pro plotování:</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>X <span class="op">=</span> np.arange(bounds[:, <span class="dv">0</span>], bounds[:, <span class="dv">1</span>], <span class="fl">0.01</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>Y <span class="op">=</span> f(X,<span class="dv">0</span>)</span>
+<span id="cb12-19"><a href="#cb12-19"></a></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co"># Definice jádra</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a>m52 <span class="op">=</span> ConstantKernel(<span class="fl">1.0</span>) <span class="op">*</span> Matern(length_scale<span class="op">=</span><span class="fl">1.0</span>, nu<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb12-22"><a href="#cb12-22"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>m52, alpha<span class="op">=</span>noise<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a>r <span class="op">=</span> gp_minimize(<span class="kw">lambda</span> x: <span class="op">-</span>f(np.array(x))[<span class="dv">0</span>], </span>
+<span id="cb12-25"><a href="#cb12-25"></a>                bounds.tolist(),</span>
+<span id="cb12-26"><a href="#cb12-26"></a>                base_estimator<span class="op">=</span>gpr,</span>
+<span id="cb12-27"><a href="#cb12-27"></a>                acq_func<span class="op">=</span><span class="st">'EI'</span>,      <span class="co"># expected improvement</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a>                xi<span class="op">=</span><span class="fl">0.01</span>,            <span class="co"># exploitation-exploration trade-off</span></span>
+<span id="cb12-29"><a href="#cb12-29"></a>                n_calls<span class="op">=</span><span class="dv">10</span>,         <span class="co"># number of iterations</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a>                n_random_starts<span class="op">=</span><span class="dv">0</span>,  <span class="co"># initial samples are provided</span></span>
+<span id="cb12-31"><a href="#cb12-31"></a>                x0<span class="op">=</span>X_init.tolist(), <span class="co"># initial samples</span></span>
+<span id="cb12-32"><a href="#cb12-32"></a>                y0<span class="op">=-</span>Y_init.ravel())</span>
+<span id="cb12-33"><a href="#cb12-33"></a></span>
+<span id="cb12-34"><a href="#cb12-34"></a><span class="co"># Fit GP model to samples for plotting results</span></span>
+<span id="cb12-35"><a href="#cb12-35"></a>gpr.fit(r.x_iters, <span class="op">-</span>r.func_vals)</span>
+<span id="cb12-36"><a href="#cb12-36"></a></span>
+<span id="cb12-37"><a href="#cb12-37"></a><span class="co"># Plot the fitted model and the noisy samples</span></span>
+<span id="cb12-38"><a href="#cb12-38"></a>plot_approximation(gpr, X, Y, r.x_iters, <span class="op">-</span>r.func_vals, show_legend<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-bo_files/figure-html/cell-13-output-1.png" width="582" height="411"></p>
+</div>
+</div>
+</section>
+<section id="gpyopt" class="level2">
+<h2 class="anchored" data-anchor-id="gpyopt">GPyOpt</h2>
+<div class="cell" data-output-location="slide" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> GPy</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="im">import</span> GPyOpt</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="im">from</span> GPyOpt.methods <span class="im">import</span> BayesianOptimization</span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a>kernel <span class="op">=</span> GPy.kern.Matern52(input_dim<span class="op">=</span><span class="dv">1</span>, variance<span class="op">=</span><span class="fl">1.0</span>, lengthscale<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb13-7"><a href="#cb13-7"></a>bds <span class="op">=</span> [{<span class="st">'name'</span>: <span class="st">'X'</span>, <span class="st">'type'</span>: <span class="st">'continuous'</span>, <span class="st">'domain'</span>: bounds.ravel()}]</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>optimizer <span class="op">=</span> BayesianOptimization(f<span class="op">=</span>f, </span>
+<span id="cb13-10"><a href="#cb13-10"></a>                                 domain<span class="op">=</span>bds,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>                                 model_type<span class="op">=</span><span class="st">'GP'</span>,</span>
+<span id="cb13-12"><a href="#cb13-12"></a>                                 kernel<span class="op">=</span>kernel,</span>
+<span id="cb13-13"><a href="#cb13-13"></a>                                 acquisition_type <span class="op">=</span><span class="st">'EI'</span>,</span>
+<span id="cb13-14"><a href="#cb13-14"></a>                                 acquisition_jitter <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span id="cb13-15"><a href="#cb13-15"></a>                                 X<span class="op">=</span>X_init,</span>
+<span id="cb13-16"><a href="#cb13-16"></a>                                 Y<span class="op">=-</span>Y_init,</span>
+<span id="cb13-17"><a href="#cb13-17"></a>                                 noise_var <span class="op">=</span> noise<span class="op">**</span><span class="dv">2</span>,</span>
+<span id="cb13-18"><a href="#cb13-18"></a>                                 exact_feval<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-19"><a href="#cb13-19"></a>                                 normalize_Y<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-20"><a href="#cb13-20"></a>                                 maximize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-21"><a href="#cb13-21"></a></span>
+<span id="cb13-22"><a href="#cb13-22"></a>optimizer.run_optimization(max_iter<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb13-23"><a href="#cb13-23"></a>optimizer.plot_acquisition()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

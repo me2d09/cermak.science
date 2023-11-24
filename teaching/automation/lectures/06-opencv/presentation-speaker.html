@@ -439,6 +439,7 @@ Petr Čermák
 <section id="colab-and-kaggle" class="slide level2">
 <h2>Colab and kaggle</h2>
 <ul>
+<li><a href="https://colab.research.google.com/">colab.research.google.com</a></li>
 <li>jen malé rozdíly</li>
 <li>~ 12 GB RAM, ~ 100GB space, ~2x CPU</li>
 <li>Kaggle obsahuje datasety, soutěže</li>
@@ -514,10 +515,16 @@ Petr Čermák
 </div>
 </div>
 <pre><code>- je to mnohem rychlejší</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> math</span>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> math</span>
 <span id="cb8-2"><a href="#cb8-2"></a>x <span class="op">=</span> np.arange(<span class="bu">int</span>(<span class="fl">1e6</span>))</span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="op">%</span>timeit np.sqrt(x)</span>
 <span id="cb8-4"><a href="#cb8-4"></a><span class="op">%</span>timeit [math.sqrt(xx) <span class="cf">for</span> xx <span class="kw">in</span> x]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.68 ms ± 30.6 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+117 ms ± 232 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+</div>
+</div>
 </section>
 <section id="numba" class="slide level2 smaller">
 <h2>Numba</h2>
@@ -530,58 +537,58 @@ Petr Čermák
 <li>snadno přepne na GPU</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>npoints <span class="op">=</span> <span class="bu">int</span>(<span class="fl">1e7</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>a <span class="op">=</span> np.arange(npoints, dtype<span class="op">=</span>np.float32)</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="im">from</span> numba <span class="im">import</span> vectorize </span>
-<span id="cb9-5"><a href="#cb9-5"></a></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="at">@vectorize</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="kw">def</span> cpu_sqrt(x):</span>
-<span id="cb9-8"><a href="#cb9-8"></a>  <span class="cf">return</span> math.sqrt(x)</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a>cpu_sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">import</span> math</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="im">from</span> numba <span class="im">import</span> vectorize</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>npoints <span class="op">=</span> <span class="bu">int</span>(<span class="fl">1e7</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>a <span class="op">=</span> np.arange(npoints, dtype<span class="op">=</span>np.float32)</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32)'</span>], target<span class="op">=</span><span class="st">'cuda'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">def</span> gpu_sqrt(x):</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    <span class="cf">return</span> math.sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="op">%</span>timeit gpu_sqrt(a)</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="op">%</span>timeit np.sqrt(a)</span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="op">%</span>timeit cpu_sqrt(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="im">from</span> numba <span class="im">import</span> vectorize </span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="at">@vectorize</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">def</span> cpu_sqrt(x):</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="cf">return</span> math.sqrt(x)</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a>cpu_sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">import</span> math</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="im">from</span> numba <span class="im">import</span> vectorize</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32)'</span>], target<span class="op">=</span><span class="st">'cuda'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="kw">def</span> gpu_sqrt(x):</span>
+<span id="cb11-6"><a href="#cb11-6"></a>    <span class="cf">return</span> math.sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="op">%</span>timeit gpu_sqrt(a)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="op">%</span>timeit np.sqrt(a)</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="op">%</span>timeit cpu_sqrt(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="komplikovanější-výpočet" class="slide level2 smaller">
 <h2>Komplikovanější výpočet</h2>
 <ul>
 <li>Multivariabilní normálně rozdělená náhodná veličina.</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>points <span class="op">=</span> np.random.multivariate_normal([<span class="dv">0</span>,<span class="dv">0</span>], [[<span class="fl">1.</span>,<span class="fl">0.9</span>], [<span class="fl">0.9</span>,<span class="fl">1.</span>]], <span class="dv">1000</span>).astype(np.float32)</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb12-3"><a href="#cb12-3"></a>plt.scatter(points[:,<span class="dv">0</span>], points[:,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>points <span class="op">=</span> np.random.multivariate_normal([<span class="dv">0</span>,<span class="dv">0</span>], [[<span class="fl">1.</span>,<span class="fl">0.9</span>], [<span class="fl">0.9</span>,<span class="fl">1.</span>]], <span class="dv">1000</span>).astype(np.float32)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-3"><a href="#cb13-3"></a>plt.scatter(points[:,<span class="dv">0</span>], points[:,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>převod do radiálních souřednic</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>theta <span class="op">=</span> np.arctan2(points[:,<span class="dv">1</span>], points[:,<span class="dv">0</span>]) </span>
-<span id="cb13-2"><a href="#cb13-2"></a>_ <span class="op">=</span> plt.hist(theta, bins<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>theta <span class="op">=</span> np.arctan2(points[:,<span class="dv">1</span>], points[:,<span class="dv">0</span>]) </span>
+<span id="cb14-2"><a href="#cb14-2"></a>_ <span class="op">=</span> plt.hist(theta, bins<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>to samé na GPU:</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32, float32)'</span>],target<span class="op">=</span><span class="st">'cuda'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">def</span> gpu_arctan2(y, x): </span>
-<span id="cb14-3"><a href="#cb14-3"></a>    theta <span class="op">=</span> math.atan2(y,x)</span>
-<span id="cb14-4"><a href="#cb14-4"></a>    <span class="cf">return</span> theta</span>
-<span id="cb14-5"><a href="#cb14-5"></a></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co"># malý trik kvůli GPU:</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>x <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">0</span>])</span>
-<span id="cb14-8"><a href="#cb14-8"></a>y <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">1</span>])</span>
-<span id="cb14-9"><a href="#cb14-9"></a>theta <span class="op">=</span> gpu_arctan2(y, x)</span>
-<span id="cb14-10"><a href="#cb14-10"></a>plt.hist(theta, bins<span class="op">=</span><span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32, float32)'</span>],target<span class="op">=</span><span class="st">'cuda'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">def</span> gpu_arctan2(y, x): </span>
+<span id="cb15-3"><a href="#cb15-3"></a>    theta <span class="op">=</span> math.atan2(y,x)</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="cf">return</span> theta</span>
+<span id="cb15-5"><a href="#cb15-5"></a></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co"># malý trik kvůli GPU:</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>x <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">0</span>])</span>
+<span id="cb15-8"><a href="#cb15-8"></a>y <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">1</span>])</span>
+<span id="cb15-9"><a href="#cb15-9"></a>theta <span class="op">=</span> gpu_arctan2(y, x)</span>
+<span id="cb15-10"><a href="#cb15-10"></a>plt.hist(theta, bins<span class="op">=</span><span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Porovnání</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="op">%</span>timeit gpu_arctan2(y, x) <span class="co"># compiled for the GPU </span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="op">%</span>timeit np.arctan2(y, x) <span class="co"># compiled for the CPU</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="op">%</span>timeit [math.atan2(point[<span class="dv">1</span>], point[<span class="dv">0</span>]) <span class="cf">for</span> point <span class="kw">in</span> points] <span class="co"># plain python</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="op">%</span>timeit gpu_arctan2(y, x) <span class="co"># compiled for the GPU </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="op">%</span>timeit np.arctan2(y, x) <span class="co"># compiled for the CPU</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="op">%</span>timeit [math.atan2(point[<span class="dv">1</span>], point[<span class="dv">0</span>]) <span class="cf">for</span> point <span class="kw">in</span> points] <span class="co"># plain python</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
 <section id="detekce-objektů" class="title-slide slide level1 center">
@@ -657,7 +664,7 @@ Petr Čermák
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"16996037422441205156","id":"5d38f44239f8b0a0","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17008148989838928855","id":"4b59568f3e5fc705","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
