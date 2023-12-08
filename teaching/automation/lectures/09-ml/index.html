@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Petr Čermák">
+<meta name="author" content="Tomáš Červeň + Petr Čermák">
 <meta name="dcterms.date" content="2023-12-01">
 
 <title>Automatizce ve fyzice: ML</title>
@@ -94,7 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Petr Čermák </p>
+             <p>Tomáš Červeň + Petr Čermák </p>
           </div>
   </div>
     
@@ -147,9 +147,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="smaller anchored" data-anchor-id="maybe-attention-is-not-always-all-you-need">Maybe Attention Is Not Always All You Need</h2>
 <ul>
 <li>závisí na forme vstupu, spracovaní dát</li>
-<li>klasické modely ako lineárna či logistická regresia, perceptron, kNN, SVM, DT, PCA …</li>
-<li>konvolučné a rekurentné siete, transformery, generatívne siete, DM, NF …</li>
-<li>DRL</li>
+<li>klasické modely ako
+<ul>
+<li>lineárna či logistická regresia,</li>
+<li>perceptron,</li>
+<li>kNN (<em>K-Nearest Neighbors Algorithm</em>),</li>
+<li>SVM (<em>support vector machine</em>),</li>
+<li>DT (<em>Decision tree</em>),</li>
+<li>PCA (<em>Principal Component Analysis</em>) …</li>
+</ul></li>
+<li>konvolučné a rekurentné siete, transformery, generatívne siete, DM (<em>data mining</em>), NF …</li>
+<li>DRL (<em>Deep reinforcement learning</em>)</li>
 </ul>
 </section>
 <section id="príklad" class="level2 smaller">
@@ -198,6 +206,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>vytvorte regresný model</li>
 <li>vytvorte model s čo najmenšou MSE</li>
 </ul>
+</section>
+<section id="kritická-teplota-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="kritická-teplota-1">Kritická teplota</h2>
 <div class="cell" data-execution_count="1">
 <details>
 <summary>Ukaž kód</summary>

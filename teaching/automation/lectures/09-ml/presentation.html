@@ -10,7 +10,7 @@
 <link href="09-ml_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.340">
 
-  <meta name="author" content="Petr Čermák">
+  <meta name="author" content="Tomáš Červeň + Petr Čermák">
   <meta name="dcterms.date" content="2023-12-01">
   <title>Automatizce ve fyzice: ML</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -398,7 +398,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Petr Čermák 
+Tomáš Červeň + Petr Čermák 
 </div>
 </div>
 </div>
@@ -444,9 +444,17 @@ Petr Čermák
 <h2>Maybe Attention Is Not Always All You Need</h2>
 <ul>
 <li>závisí na forme vstupu, spracovaní dát</li>
-<li>klasické modely ako lineárna či logistická regresia, perceptron, kNN, SVM, DT, PCA …</li>
-<li>konvolučné a rekurentné siete, transformery, generatívne siete, DM, NF …</li>
-<li>DRL</li>
+<li>klasické modely ako
+<ul>
+<li>lineárna či logistická regresia,</li>
+<li>perceptron,</li>
+<li>kNN (<em>K-Nearest Neighbors Algorithm</em>),</li>
+<li>SVM (<em>support vector machine</em>),</li>
+<li>DT (<em>Decision tree</em>),</li>
+<li>PCA (<em>Principal Component Analysis</em>) …</li>
+</ul></li>
+<li>konvolučné a rekurentné siete, transformery, generatívne siete, DM (<em>data mining</em>), NF …</li>
+<li>DRL (<em>Deep reinforcement learning</em>)</li>
 </ul>
 </section>
 <section id="príklad" class="slide level2 smaller">
@@ -497,6 +505,9 @@ Petr Čermák
 <li>vytvorte regresný model</li>
 <li>vytvorte model s čo najmenšou MSE</li>
 </ul>
+</section>
+<section id="kritická-teplota-1" class="slide level2 smaller">
+<h2>Kritická teplota</h2>
 <div class="cell" data-execution_count="1">
 <details>
 <summary>Ukaž kód</summary>
@@ -580,7 +591,7 @@ Petr Čermák
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"9b62f68f11f72e07","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":null,"id":"9b9a488bc94de460","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
