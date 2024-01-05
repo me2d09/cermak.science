@@ -5,7 +5,7 @@ from ariane.lib.gaussian_process_regression import LogGaussianProcessRegressor
 import numpy as np
 from ariane.lib.utils.math import normalizer
 from ariane.lib.utils import math
-+
+
 
 # %%
 
