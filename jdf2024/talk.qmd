@@ -181,7 +181,7 @@ def kernel(X1, X2, l=1.0, sigma=1.0):
 
 Stáhneme si na google pomocné funkce:
 ```{python}
-!wget https://cermak.science/teaching/automation/lectures/07-bo/helper.py
+!wget https://cermak.science/jdf2024/helper.py
 ```
 
 Importujeme je, abychom je mohli používat:
@@ -257,7 +257,7 @@ To není dokonalé - ta data nejsou z principu přesná.
 ## Zadáme data (se šumem) {.smaller}
 
 ```{python}
-#| code-line-numbers: 1-4|5|6-7
+#| code-line-numbers: 1-2,5
 #| output-location: fragment
 # Zašuměná data
 noise = 0.2
@@ -767,7 +767,7 @@ Teixeira Parente, M., Brandl, G., Franz, C. et al. Active learning-assisted neut
 :::: column
 
 ::: {.absolute top=0 right=50 width="450" height="250"}
-{{< video alsa.mp4  height="600px" >}}
+{{< video https://cermak.science/jdf2024/alsa.mp4  height="600px" >}}
 :::
 
 ::::
