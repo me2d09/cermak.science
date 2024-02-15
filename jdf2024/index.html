@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="talk_files/libs/clipboard/clipboard.min.js"></script>
+<script src="talk_files/libs/quarto-html/tabby.min.js"></script>
+<script src="talk_files/libs/quarto-html/popper.min.js"></script>
+<script src="talk_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="talk_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="talk_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="talk_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="talk_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="talk_files/libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="talk_files/libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.450">
+
+  <meta name="author" content="Petr Čermák">
+  <meta name="dcterms.date" content="2024-02-15">
+  <title>Optimalizujeme život matfyzáka: Od hledání lanýžů po neuronové sítě</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="talk_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="talk_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="talk_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="talk_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="talk_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="talk_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="talk_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="talk_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="talk_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Optimalizujeme život matfyzáka: Od hledání lanýžů po neuronové sítě</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Petr Čermák 
+</div>
+</div>
+</div>
+
+  <p class="date">2024-02-15</p>
+</section>
+<section id="připojte-se" class="slide level2">
+<h2>Připojte se</h2>
+
+<img data-src="qr.png" class="r-stretch"><p><a href="https://cermak.science/jdf2024">cermak.science/jdf2024</a></p>
+</section>
+<section id="co-chceme" class="title-slide slide level1 larger center">
+<h1>Co chceme?</h1>
+<p>Najít maximum neznámé funkce.</p>
+</section>
+
+<section>
+<section id="co-nás-čeká" class="title-slide slide level1 center">
+<h1>Co nás čeká?</h1>
+<p>Programování</p>
+<p>Matematika</p>
+<p>Nakonci trocha fyziky</p>
+</section>
+<section id="google-colab" class="slide level2">
+<h2>Google Colab</h2>
+<ul>
+<li>cloudový stroj pro vaše výpočty</li>
+<li>vše funguje v prohlížeči</li>
+<li><a href="https://colab.research.google.com/">colab.research.google.com</a></li>
+<li>~ 12 GB RAM, ~ 100GB space, ~2x CPU</li>
+<li>grafická jádra</li>
+</ul>
+<h3 id="vyzkoušejte">Vyzkoušejte!</h3>
+<ul>
+<li>Nový sešit</li>
+</ul>
+</section></section>
+<section>
+<section id="statistika-v-kostce" class="title-slide slide level1 center">
+<h1>Statistika v kostce</h1>
+
+</section>
+<section id="funkce" class="slide level2 smaller">
+<h2>Funkce</h2>
+<div class="fragment">
+<ul>
+<li>krabička co dělá <code>x -&gt; y</code></li>
+<li><span class="math display">\[ y = e^{-x} \cos(2\pi x) \]</span></li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell columns column-output-location" data-execution_count="1">
+<div class="column">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">def</span> f(x):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span>x) <span class="op">*</span> np.cos(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>x)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>x <span class="op">=</span> np.arange(<span class="fl">0.0</span>, <span class="fl">5.0</span>, <span class="fl">0.02</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>plt.plot(x, f(x), <span class="st">'k'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-2-output-1.png" width="805" height="411"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="náhodná-veličina" class="slide level2 smaller">
+<h2>Náhodná veličina</h2>
+<ul>
+<li>Má střední hodnotu</li>
+<li>Má nějaké rozložení výsledků</li>
+</ul>
+<div class="fragment">
+<div class="cell columns column-output-location" data-execution_count="2">
+<div class="column">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Vygnereruj výšky lidí</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>heights <span class="op">=</span> <span class="dv">180</span> <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> np.random.randn(<span class="dv">1000</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># Create a histogram</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>plt.hist(heights, bins<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb2-6"><a href="#cb2-6"></a>         color<span class="op">=</span><span class="st">'skyblue'</span>, </span>
+<span id="cb2-7"><a href="#cb2-7"></a>         edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8"></a>plt.xlabel(<span class="st">'Výška (cm)'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>plt.ylabel(<span class="st">'Počet lidí'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-3-output-1.png" width="816" height="430"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="náhodná-veličina-1" class="slide level2 smaller">
+<h2>Náhodná veličina</h2>
+<div class="cell columns column-output-location" data-execution_count="3">
+<div class="column">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="1-8|10-14|16-23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> hazej(n, dices <span class="op">=</span> <span class="dv">1</span>):</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    rolls <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb3-4"><a href="#cb3-4"></a>        dice <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(dices):</span>
+<span id="cb3-6"><a href="#cb3-6"></a>            dice <span class="op">+=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        rolls.append(dice)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="cf">return</span> rolls</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># Simulujeme 1 kostku</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>data <span class="op">=</span> hazej(<span class="dv">99000</span>, <span class="dv">1</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a>plt.hist(data, bins<span class="op">=</span>np.arange(<span class="dv">14</span>) <span class="op">-</span> <span class="fl">0.5</span>, </span>
+<span id="cb3-14"><a href="#cb3-14"></a>         color<span class="op">=</span><span class="st">'blue'</span>, rwidth<span class="op">=</span><span class="fl">0.85</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co"># dvě kostky</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>data <span class="op">=</span> hazej(<span class="dv">99000</span>, <span class="dv">2</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>plt.hist(data, bins<span class="op">=</span>np.arange(<span class="dv">14</span>) <span class="op">-</span> <span class="fl">0.5</span>, </span>
+<span id="cb3-20"><a href="#cb3-20"></a>         color<span class="op">=</span><span class="st">'red'</span>, rwidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-21"><a href="#cb3-21"></a>plt.xlabel(<span class="st">'Hozeno'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22"></a>plt.ylabel(<span class="st">'Počet'</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-4-output-1.png" width="833" height="429"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="náhodný-proces" class="slide level2 smaller">
+<h2>Náhodný proces</h2>
+<ul>
+<li>obecnější náhodná veličina</li>
+<li>výsledek je funkce</li>
+</ul>
+<div class="cell columns column-output-location" data-execution_count="4">
+<div class="column">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Generování náhodných čísel</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>cisla <span class="op">=</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Vytvoření grafu</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>plt.plot(cisla)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>plt.xlabel(<span class="st">'Index'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>plt.ylabel(<span class="st">'Hodnota'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-5-output-1.png" width="810" height="429"></p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="gaussovské-procesy" class="title-slide slide level1 center">
+<h1>Gaussovské procesy</h1>
+
+</section>
+<section id="gaussovský-proces" class="slide level2">
+<h2>Gaussovský proces</h2>
+<ul>
+<li>model náhodného procesu</li>
+<li>hodnoty jsou náhodné proměné, vzájemně korelované</li>
+<li>popisuje ho střední hodnota a jádro</li>
+<li>jádro definuje vztah (<code>korelaci</code>) mezi každými dvěma body výsledné funkce</li>
+</ul>
+<div class="fragment">
+<h3 id="cíl">Cíl:</h3>
+<ul>
+<li>pro dva blízké body <span class="math inline">\(x_j\)</span> a <span class="math inline">\(x_i\)</span> platí, že jejich <span class="math inline">\(f(x_n)\)</span> jsou také blízké</li>
+</ul>
+</div>
+</section>
+<section id="příklad-jádra" class="slide level2 smaller">
+<h2>Příklad jádra</h2>
+<p>RBF (Radial Basis Function, jádro exponentu kvadratického) <span class="math display">\[
+\kappa(\mathbf{x}_i,\mathbf{x}_j) = \sigma^2 \exp\left(-\frac{\|\mathbf{x}_i - \mathbf{x}_j\|^2}{2l^2}\right)
+\]</span></p>
+<p>kde <span class="math inline">\(l\)</span> ovlivňuje jak rychle korelace klesá a <span class="math inline">\(\sigma\)</span> určuje škálování jádra.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> kernel(X1, X2, l<span class="op">=</span><span class="fl">1.0</span>, sigma<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    sqdist <span class="op">=</span> np.<span class="bu">sum</span>(X1<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">+</span> np.<span class="bu">sum</span>(X2<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(X1, X2.T)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="cf">return</span> sigma<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">/</span> l<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> sqdist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="vsuvka---pomocné-funkce" class="slide level2">
+<h2>Vsuvka - pomocné funkce</h2>
+<p>Stáhneme si na google pomocné funkce:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="op">!</span>wget https:<span class="op">//</span>cermak.science<span class="op">/</span>teaching<span class="op">/</span>automation<span class="op">/</span>lectures<span class="op">/</span><span class="dv">0</span><span class="er">7</span><span class="op">-</span>bo<span class="op">/</span>helper.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Importujeme je, abychom je mohli používat:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">from</span> helper <span class="im">import</span> plot_gp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="jak-ten-proces-vypadá" class="slide level2 smaller">
+<h2>Jak ten proces vypadá?</h2>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="1-3|5-8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>X <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="co">#počet sloupců dopočítá</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>mu <span class="op">=</span> np.zeros(X.shape)   <span class="co"># střední hodnota</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>cov <span class="op">=</span> kernel(X, X)       <span class="co"># spočtu jádro</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># Vygeneruji 5 funkcí jako výsledek náhodného gaussovského procesu</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu.ravel(), cov, <span class="dv">5</span>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># Vše nám nakresli</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>plot_gp(mu, cov, X, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-9-output-1.png" width="792" height="411"></p>
+</div>
+</div>
+</section>
+<section id="co-když-známe-nějaká-data" class="slide level2 smaller">
+<h2>Co když známe nějaká data?</h2>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> inv</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">def</span> posterior(X, X_train, Y_train, l<span class="op">=</span><span class="fl">1.0</span>, sigma<span class="op">=</span><span class="fl">1.0</span>, sigma_y<span class="op">=</span><span class="fl">1e-8</span>):</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="co">"""</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">    Spočítá novou střední hodnotu a kovarianci při znalosti nějakých bodů</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">    </span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">    Argumenty:</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">        X: osa x</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">        X_train, Y_train: známá data (m x 1)</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">        l, sigma: Parametry jádra</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">        sigma_y: šum</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">    </span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">    Výsledek:</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">        Nová střední hodnota a kovariance.</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">    """</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a>    K <span class="op">=</span> kernel(X_train, X_train, l, sigma) <span class="op">+</span> sigma_y<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))  <span class="co"># jádro s šumem</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>    K_s <span class="op">=</span> kernel(X_train, X, l, sigma)</span>
+<span id="cb9-18"><a href="#cb9-18"></a>    K_ss <span class="op">=</span> kernel(X, X, l, sigma) <span class="op">+</span> <span class="fl">1e-8</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X))</span>
+<span id="cb9-19"><a href="#cb9-19"></a>    mu_s <span class="op">=</span> K_s.T.dot(inv(K)).dot(Y_train)</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    cov_s <span class="op">=</span> K_ss <span class="op">-</span> K_s.T.dot(inv(K)).dot(K_s)</span>
+<span id="cb9-21"><a href="#cb9-21"></a>    <span class="cf">return</span> mu_s, cov_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="zadáme-data-bez-šumu" class="slide level2 smaller">
+<h2>Zadáme data (bez šumu)</h2>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="1-3|4-5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Zadáme data</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>X_train <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>]).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>Y_train <span class="op">=</span> np.sin(X_train)</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># Spočteme novou (posterior) střední hodnotu a kovarianci</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train)</span>
+<span id="cb10-6"><a href="#cb10-6"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu_s.ravel(), cov_s, <span class="dv">3</span>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-11-output-1.png" width="792" height="411"></p>
+</div>
+</div>
+<div class="fragment absolute" style="bottom: 0px; right: 10px; width: 400px; height: 300px; ">
+<div style="background-color:white; color: black; padding: 30px; border: 2px black solid">
+<p>To není dokonalé - ta data nejsou z principu přesná.</p>
+</div>
+</div>
+</section>
+<section id="zadáme-data-se-šumem" class="slide level2 smaller">
+<h2>Zadáme data (se šumem)</h2>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="1-4|5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Zašuměná data</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>noise <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>X_train <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>Y_train <span class="op">=</span> np.sin(X_train) <span class="op">+</span> noise <span class="op">*</span> np.random.randn(<span class="op">*</span>X_train.shape)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, sigma_y<span class="op">=</span>noise)</span>
+<span id="cb11-6"><a href="#cb11-6"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu_s.ravel(), cov_s, <span class="dv">3</span>)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train, samples<span class="op">=</span>samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-12-output-1.png" width="792" height="411"></p>
+</div>
+</div>
+<div class="fragment absolute" style="bottom: 0px; right: 10px; width: 400px; height: 300px; ">
+<div style="background-color:white; color: black; padding: 30px; border: 2px black solid">
+<p>Fajn, jak nastavit ty parametry?</p>
+</div>
+</div>
+</section>
+<section id="vliv-parametrů" class="slide level2 smaller">
+<h2>Vliv parametrů</h2>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Ukaž kód</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>params <span class="op">=</span> [</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    (<span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    (<span class="fl">3.0</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    (<span class="fl">1.0</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    (<span class="fl">1.0</span>, <span class="fl">3.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-8"><a href="#cb12-8"></a>    (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.05</span>),</span>
+<span id="cb12-9"><a href="#cb12-9"></a>    (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>),</span>
+<span id="cb12-10"><a href="#cb12-10"></a>]</span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="fl">2.5</span>))</span>
+<span id="cb12-13"><a href="#cb12-13"></a></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="cf">for</span> i, (l, sigma, sigma_y) <span class="kw">in</span> <span class="bu">enumerate</span>(params):</span>
+<span id="cb12-15"><a href="#cb12-15"></a>    mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, l<span class="op">=</span>l, </span>
+<span id="cb12-16"><a href="#cb12-16"></a>                            sigma<span class="op">=</span>sigma, </span>
+<span id="cb12-17"><a href="#cb12-17"></a>                            sigma_y<span class="op">=</span>sigma_y)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">3</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb12-19"><a href="#cb12-19"></a>    plt.subplots_adjust(top<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-20"><a href="#cb12-20"></a>    plt.title(<span class="ss">f'l = </span><span class="sc">{</span>l<span class="sc">}</span><span class="ss">, sigma = </span><span class="sc">{</span>sigma<span class="sc">}</span><span class="ss">, sigma_y = </span><span class="sc">{</span>sigma_y<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb12-21"><a href="#cb12-21"></a>    plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-13-output-1.png" width="1016" height="515"></p>
+</div>
+</div>
+</section>
+<section id="optimální-parametry" class="slide level2 smaller">
+<h2>Optimální parametry</h2>
+<p>Lze nalézt optimální parametry</p>
+<p><span class="math display">\[
+\log p(\mathbf{y} \lvert \mathbf{X}) =
+\log \mathcal{N}(\mathbf{y} \lvert \mathbf{0},\mathbf{K}_y) =
+-\frac{1}{2} \mathbf{y}^T \mathbf{K}_y^{-1} \mathbf{y}
+-\frac{1}{2} \log \begin{vmatrix}\mathbf{K}_y\end{vmatrix}
+-\frac{N}{2} \log(2\pi)
+\]</span></p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> cholesky, det </span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="im">from</span> scipy.linalg <span class="im">import</span> solve_triangular</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="kw">def</span> nll_fn(X_train, Y_train, noise):</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="co">"""</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">    Vrací funkci která spočítá rovnici výše.</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co">    Argumenty:</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co">        X_train: tréninková data (m x d).</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="co">        Y_train: tréninkové hodnoty (m x 1).</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co">        noise: známý šum u hodnot</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co">    """</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a>    </span>
+<span id="cb13-15"><a href="#cb13-15"></a>    Y_train <span class="op">=</span> Y_train.ravel()</span>
+<span id="cb13-16"><a href="#cb13-16"></a>    </span>
+<span id="cb13-17"><a href="#cb13-17"></a>    <span class="kw">def</span> nll_naive(theta):</span>
+<span id="cb13-18"><a href="#cb13-18"></a>        <span class="co"># Jednoduchá implementace výše uvedené funkce</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a>        K <span class="op">=</span> kernel(X_train, X_train, l<span class="op">=</span>theta[<span class="dv">0</span>], sigma<span class="op">=</span>theta[<span class="dv">1</span>]) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a>            noise<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.eye(<span class="bu">len</span>(X_train))</span>
+<span id="cb13-21"><a href="#cb13-21"></a>        <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> np.log(det(K)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a>               <span class="fl">0.5</span> <span class="op">*</span> Y_train.dot(inv(K).dot(Y_train)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a>               <span class="fl">0.5</span> <span class="op">*</span> <span class="bu">len</span>(X_train) <span class="op">*</span> np.log(<span class="dv">2</span><span class="op">*</span>np.pi)</span>
+<span id="cb13-24"><a href="#cb13-24"></a></span>
+<span id="cb13-25"><a href="#cb13-25"></a>    <span class="cf">return</span> nll_naive</span>
+<span id="cb13-26"><a href="#cb13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27"></a></span>
+<span id="cb13-28"><a href="#cb13-28"></a><span class="co"># Minimalizujeme tu logaritmickou funkci vzhledem k parametrům l a sigma_f.</span></span>
+<span id="cb13-29"><a href="#cb13-29"></a>res <span class="op">=</span> minimize(nll_fn(X_train, Y_train, noise), [<span class="dv">1</span>, <span class="dv">1</span>], </span>
+<span id="cb13-30"><a href="#cb13-30"></a>               bounds<span class="op">=</span>((<span class="fl">1e-5</span>, <span class="va">None</span>), (<span class="fl">1e-5</span>, <span class="va">None</span>)),</span>
+<span id="cb13-31"><a href="#cb13-31"></a>               method<span class="op">=</span><span class="st">'L-BFGS-B'</span>)</span>
+<span id="cb13-32"><a href="#cb13-32"></a></span>
+<span id="cb13-33"><a href="#cb13-33"></a><span class="co"># Uložíme výsledek</span></span>
+<span id="cb13-34"><a href="#cb13-34"></a>l_opt, sigma_f_opt <span class="op">=</span> res.x</span>
+<span id="cb13-35"><a href="#cb13-35"></a></span>
+<span id="cb13-36"><a href="#cb13-36"></a><span class="co"># Zobrazení výsledku</span></span>
+<span id="cb13-37"><a href="#cb13-37"></a>mu_s, cov_s <span class="op">=</span> posterior(X, X_train, Y_train, l<span class="op">=</span>l_opt, sigma<span class="op">=</span>sigma_f_opt, sigma_y<span class="op">=</span>noise)</span>
+<span id="cb13-38"><a href="#cb13-38"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb13-39"><a href="#cb13-39"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell fragment" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-14-output-1.png" width="1028" height="337"></p>
+</div>
+</div>
+</section>
+<section id="více-rozměrů" class="slide level2 smaller">
+<h2>Více rozměrů</h2>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">from</span> helper <span class="im">import</span> plot_gp_2D</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>noise_2D <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>rx, ry <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.3</span>), np.arange(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.3</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>gx, gy <span class="op">=</span> np.meshgrid(rx, rx)</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>X_2D <span class="op">=</span> np.c_[gx.ravel(), gy.ravel()]</span>
+<span id="cb14-9"><a href="#cb14-9"></a></span>
+<span id="cb14-10"><a href="#cb14-10"></a>X_2D_train <span class="op">=</span> np.random.uniform(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, (<span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb14-11"><a href="#cb14-11"></a>Y_2D_train <span class="op">=</span> np.sin(<span class="fl">0.5</span> <span class="op">*</span> np.linalg.norm(X_2D_train, axis<span class="op">=</span><span class="dv">1</span>)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a>             noise_2D <span class="op">*</span> np.random.randn(<span class="bu">len</span>(X_2D_train))</span>
+<span id="cb14-13"><a href="#cb14-13"></a></span>
+<span id="cb14-14"><a href="#cb14-14"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">7</span>))</span>
+<span id="cb14-15"><a href="#cb14-15"></a></span>
+<span id="cb14-16"><a href="#cb14-16"></a>mu_s, _ <span class="op">=</span> posterior(X_2D, X_2D_train, Y_2D_train, sigma_y<span class="op">=</span>noise_2D)</span>
+<span id="cb14-17"><a href="#cb14-17"></a>plot_gp_2D(gx, gy, mu_s, X_2D_train, Y_2D_train, </span>
+<span id="cb14-18"><a href="#cb14-18"></a>           <span class="ss">f'Před optimalizací parametrů: l=</span><span class="sc">{</span><span class="fl">1.00</span><span class="sc">}</span><span class="ss"> sigma_f=</span><span class="sc">{</span><span class="fl">1.00</span><span class="sc">}</span><span class="ss">'</span>, <span class="dv">1</span>)</span>
+<span id="cb14-19"><a href="#cb14-19"></a></span>
+<span id="cb14-20"><a href="#cb14-20"></a>res <span class="op">=</span> minimize(nll_fn(X_2D_train, Y_2D_train, noise_2D), [<span class="dv">1</span>, <span class="dv">1</span>], </span>
+<span id="cb14-21"><a href="#cb14-21"></a>               bounds<span class="op">=</span>((<span class="fl">1e-5</span>, <span class="va">None</span>), (<span class="fl">1e-5</span>, <span class="va">None</span>)),</span>
+<span id="cb14-22"><a href="#cb14-22"></a>               method<span class="op">=</span><span class="st">'L-BFGS-B'</span>)</span>
+<span id="cb14-23"><a href="#cb14-23"></a></span>
+<span id="cb14-24"><a href="#cb14-24"></a>mu_s, _ <span class="op">=</span> posterior(X_2D, X_2D_train, Y_2D_train, <span class="op">*</span>res.x, sigma_y<span class="op">=</span>noise_2D)</span>
+<span id="cb14-25"><a href="#cb14-25"></a>plot_gp_2D(gx, gy, mu_s, X_2D_train, Y_2D_train,</span>
+<span id="cb14-26"><a href="#cb14-26"></a>           <span class="ss">f'Po optimalizaci parametrů: l=</span><span class="sc">{</span>res<span class="sc">.</span>x[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss"> sigma_f=</span><span class="sc">{</span>res<span class="sc">.</span>x[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">'</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-15-output-1.png" width="1075" height="515"></p>
+</div>
+</div>
+</section>
+<section id="jsou-na-to-knihovny" class="slide level2 smaller">
+<h2>Jsou na to knihovny</h2>
+<p>Scikit-learn</p>
+<ul>
+<li><code>GaussianProcessRegressor</code> vytváří posterior data (“fituje hodnoty”)</li>
+<li>Připravená jádra</li>
+</ul>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="1-2|4-5|7-11|13-15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> ConstantKernel, RBF</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a>rbf <span class="op">=</span> ConstantKernel(<span class="fl">1.0</span>) <span class="op">*</span> RBF(length_scale<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>rbf, alpha<span class="op">=</span>noise<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># Použiju stará data</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>gpr.fit(X_train, Y_train)</span>
+<span id="cb15-9"><a href="#cb15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co"># Výpočet posterior parametrů</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>mu_s, cov_s <span class="op">=</span> gpr.predict(X, return_cov<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co"># Optimalizované parametry Gausse</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>l <span class="op">=</span> gpr.kernel_.k2.get_params()[<span class="st">'length_scale'</span>]</span>
+<span id="cb15-15"><a href="#cb15-15"></a>sigma <span class="op">=</span> np.sqrt(gpr.kernel_.k1.get_params()[<span class="st">'constant_value'</span>])</span>
+<span id="cb15-16"><a href="#cb15-16"></a></span>
+<span id="cb15-17"><a href="#cb15-17"></a>plot_gp(mu_s, cov_s, X, X_train<span class="op">=</span>X_train, Y_train<span class="op">=</span>Y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section><section id="jsou-na-to-knihovny-output" class="slide level2 smaller output-location-slide"><h2>Jsou na to knihovny</h2><div class="cell output-location-slide" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-16-output-1.png" width="805" height="411"></p>
+</div>
+</div></section></section>
+<section>
+<section id="bayesovská-optimalizace" class="title-slide slide level1 center">
+<h1>Bayesovská optimalizace</h1>
+
+</section>
+<section id="co-optimalizovat" class="slide level2 smaller">
+<h2>Co optimalizovat?</h2>
+<p>Funkce typu “black-box”</p>
+<ul>
+<li>neznáme jaká funkce to je</li>
+<li>měření v bodě –&gt; zašuměná odpověď</li>
+</ul>
+<p>Co když měření trvá dlouho?</p>
+<ul>
+<li>najít minimum za pomocí nejmenšího počtu měření</li>
+</ul>
+<p>–&gt; Bayesovská optimalizace! Potřebujeme:</p>
+<ul>
+<li><strong>Náhradní (Surrogate) model</strong> (GP!!)</li>
+<li><strong>Akviziční funkce</strong> - vymyslí na základě modelu, kde dále měřit</li>
+</ul>
+</section>
+<section id="akviziční-funkce" class="slide level2 smaller">
+<h2>Akviziční funkce</h2>
+<ul>
+<li>hledá kompromis mezi
+<ul>
+<li><em>průzkumem</em> (exploration) - měřit tam, kde nic nevíme</li>
+<li><em>vytěžováním</em> (exploitation) - měřit tom, kde se odhaduje minimum/maximum</li>
+</ul></li>
+<li>existují různé druhy:
+<ul>
+<li>“maximum probability of improvement” (MPI)</li>
+<li>“upper confidence bound” (UCB)</li>
+<li>“expected improvement” (EI)</li>
+</ul></li>
+</ul>
+</section>
+<section id="jak-to-v-praxi-funguje" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a>bounds <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
+<span id="cb16-5"><a href="#cb16-5"></a>noise <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="kw">def</span> f(X, noise<span class="op">=</span>noise):</span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="cf">return</span> <span class="op">-</span>np.sin(<span class="dv">3</span><span class="op">*</span>X) <span class="op">-</span> X<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.7</span><span class="op">*</span>X <span class="op">+</span> noise <span class="op">*</span> np.random.randn(<span class="op">*</span>X.shape)</span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a>X_init <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">0.9</span>], [<span class="fl">1.1</span>]])</span>
+<span id="cb16-11"><a href="#cb16-11"></a>Y_init <span class="op">=</span> f(X_init)</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a></span>
+<span id="cb16-14"><a href="#cb16-14"></a>X <span class="op">=</span> np.arange(bounds[:, <span class="dv">0</span>], bounds[:, <span class="dv">1</span>], <span class="fl">0.01</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-15"><a href="#cb16-15"></a>Y <span class="op">=</span> f(X,<span class="dv">0</span>)</span>
+<span id="cb16-16"><a href="#cb16-16"></a></span>
+<span id="cb16-17"><a href="#cb16-17"></a></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="kw">def</span> expected_improvement(X, X_sample, Y_sample, gpr, xi<span class="op">=</span><span class="fl">0.01</span>):</span>
+<span id="cb16-19"><a href="#cb16-19"></a>    mu, sigma <span class="op">=</span> gpr.predict(X, return_std<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-20"><a href="#cb16-20"></a>    mu_sample <span class="op">=</span> gpr.predict(X_sample)</span>
+<span id="cb16-21"><a href="#cb16-21"></a></span>
+<span id="cb16-22"><a href="#cb16-22"></a>    sigma <span class="op">=</span> sigma.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-23"><a href="#cb16-23"></a></span>
+<span id="cb16-24"><a href="#cb16-24"></a>    mu_sample_opt <span class="op">=</span> np.<span class="bu">max</span>(mu_sample)</span>
+<span id="cb16-25"><a href="#cb16-25"></a></span>
+<span id="cb16-26"><a href="#cb16-26"></a>    <span class="cf">with</span> np.errstate(divide<span class="op">=</span><span class="st">'warn'</span>):</span>
+<span id="cb16-27"><a href="#cb16-27"></a>        imp <span class="op">=</span> mu <span class="op">-</span> mu_sample_opt <span class="op">-</span> xi</span>
+<span id="cb16-28"><a href="#cb16-28"></a>        Z <span class="op">=</span> imp <span class="op">/</span> sigma</span>
+<span id="cb16-29"><a href="#cb16-29"></a>        ei <span class="op">=</span> imp <span class="op">*</span> norm.cdf(Z) <span class="op">+</span> sigma <span class="op">*</span> norm.pdf(Z)</span>
+<span id="cb16-30"><a href="#cb16-30"></a>        ei[sigma <span class="op">==</span> <span class="fl">0.0</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb16-31"><a href="#cb16-31"></a></span>
+<span id="cb16-32"><a href="#cb16-32"></a>    <span class="cf">return</span> ei</span>
+<span id="cb16-33"><a href="#cb16-33"></a></span>
+<span id="cb16-34"><a href="#cb16-34"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb16-35"><a href="#cb16-35"></a></span>
+<span id="cb16-36"><a href="#cb16-36"></a><span class="kw">def</span> propose_location(acquisition, X_sample, Y_sample, gpr, bounds, n_restarts<span class="op">=</span><span class="dv">25</span>):</span>
+<span id="cb16-37"><a href="#cb16-37"></a>    dim <span class="op">=</span> X_sample.shape[<span class="dv">1</span>]</span>
+<span id="cb16-38"><a href="#cb16-38"></a>    min_val <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb16-39"><a href="#cb16-39"></a>    min_x <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb16-40"><a href="#cb16-40"></a>    </span>
+<span id="cb16-41"><a href="#cb16-41"></a>    <span class="kw">def</span> min_obj(X):</span>
+<span id="cb16-42"><a href="#cb16-42"></a>        <span class="cf">return</span> <span class="op">-</span>acquisition(X.reshape(<span class="op">-</span><span class="dv">1</span>, dim), X_sample, Y_sample, gpr).flatten()</span>
+<span id="cb16-43"><a href="#cb16-43"></a>    </span>
+<span id="cb16-44"><a href="#cb16-44"></a>    <span class="cf">for</span> x0 <span class="kw">in</span> np.random.uniform(bounds[:, <span class="dv">0</span>], bounds[:, <span class="dv">1</span>], size<span class="op">=</span>(n_restarts, dim)):</span>
+<span id="cb16-45"><a href="#cb16-45"></a>        res <span class="op">=</span> minimize(min_obj, x0<span class="op">=</span>x0, bounds<span class="op">=</span>bounds, method<span class="op">=</span><span class="st">'L-BFGS-B'</span>)        </span>
+<span id="cb16-46"><a href="#cb16-46"></a>        <span class="cf">if</span> res.fun <span class="op">&lt;</span> min_val:</span>
+<span id="cb16-47"><a href="#cb16-47"></a>            min_val <span class="op">=</span> res.fun</span>
+<span id="cb16-48"><a href="#cb16-48"></a>            min_x <span class="op">=</span> res.x           </span>
+<span id="cb16-49"><a href="#cb16-49"></a>            </span>
+<span id="cb16-50"><a href="#cb16-50"></a>    <span class="cf">return</span> min_x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-51"><a href="#cb16-51"></a></span>
+<span id="cb16-52"><a href="#cb16-52"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
+<span id="cb16-53"><a href="#cb16-53"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> ConstantKernel, Matern</span>
+<span id="cb16-54"><a href="#cb16-54"></a><span class="im">from</span> helper <span class="im">import</span> plot_approximation, plot_acquisition</span>
+<span id="cb16-55"><a href="#cb16-55"></a></span>
+<span id="cb16-56"><a href="#cb16-56"></a><span class="co"># Gaussian process with Matérn kernel as surrogate model</span></span>
+<span id="cb16-57"><a href="#cb16-57"></a>m52 <span class="op">=</span> ConstantKernel(<span class="fl">1.0</span>) <span class="op">*</span> Matern(length_scale<span class="op">=</span><span class="fl">1.0</span>, nu<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb16-58"><a href="#cb16-58"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>m52, alpha<span class="op">=</span>noise<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb16-59"><a href="#cb16-59"></a></span>
+<span id="cb16-60"><a href="#cb16-60"></a><span class="co"># Initialize samples</span></span>
+<span id="cb16-61"><a href="#cb16-61"></a>X_sample <span class="op">=</span> X_init</span>
+<span id="cb16-62"><a href="#cb16-62"></a>Y_sample <span class="op">=</span> Y_init</span>
+<span id="cb16-63"><a href="#cb16-63"></a></span>
+<span id="cb16-64"><a href="#cb16-64"></a><span class="co"># Number of iterations</span></span>
+<span id="cb16-65"><a href="#cb16-65"></a>i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-66"><a href="#cb16-66"></a></span>
+<span id="cb16-67"><a href="#cb16-67"></a><span class="kw">def</span> step():</span>
+<span id="cb16-68"><a href="#cb16-68"></a>    <span class="kw">global</span> X_sample, Y_sample</span>
+<span id="cb16-69"><a href="#cb16-69"></a>    <span class="co"># Update Gaussian process with existing samples</span></span>
+<span id="cb16-70"><a href="#cb16-70"></a>    gpr.fit(X_sample, Y_sample)</span>
+<span id="cb16-71"><a href="#cb16-71"></a></span>
+<span id="cb16-72"><a href="#cb16-72"></a>    <span class="co"># Obtain next sampling point from the acquisition function (expected_improvement)</span></span>
+<span id="cb16-73"><a href="#cb16-73"></a>    X_next <span class="op">=</span> propose_location(expected_improvement, X_sample, Y_sample, gpr, bounds)</span>
+<span id="cb16-74"><a href="#cb16-74"></a></span>
+<span id="cb16-75"><a href="#cb16-75"></a>    <span class="co"># Obtain next noisy sample from the objective function</span></span>
+<span id="cb16-76"><a href="#cb16-76"></a>    Y_next <span class="op">=</span> f(X_next, noise)</span>
+<span id="cb16-77"><a href="#cb16-77"></a></span>
+<span id="cb16-78"><a href="#cb16-78"></a>    <span class="co"># Plot samples, surrogate function, noise-free objective and next sampling location</span></span>
+<span id="cb16-79"><a href="#cb16-79"></a>    plot_approximation(gpr, X, Y, X_sample, Y_sample, X_next, show_legend<span class="op">=</span>i<span class="op">==</span><span class="dv">0</span>)</span>
+<span id="cb16-80"><a href="#cb16-80"></a>    plt.title(<span class="ss">f'Iterace </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-81"><a href="#cb16-81"></a></span>
+<span id="cb16-82"><a href="#cb16-82"></a>    <span class="co"># Add sample to previous samples</span></span>
+<span id="cb16-83"><a href="#cb16-83"></a>    X_sample <span class="op">=</span> np.vstack((X_sample, X_next))</span>
+<span id="cb16-84"><a href="#cb16-84"></a>    Y_sample <span class="op">=</span> np.vstack((Y_sample, Y_next))</span>
+<span id="cb16-85"><a href="#cb16-85"></a>    plt.ylim(<span class="op">-</span><span class="dv">3</span>,<span class="dv">2</span>)</span>
+<span id="cb16-86"><a href="#cb16-86"></a>    plt.show()</span>
+<span id="cb16-87"><a href="#cb16-87"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-17-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-1" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-18-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-2" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-19-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-3" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-20-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-4" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-21-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-5" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-22-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-6" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-23-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-7" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-24-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-8" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-25-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-9" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-26-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-10" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-27-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-v-praxi-funguje-11" class="slide level2">
+<h2>Jak to v praxi funguje?</h2>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Kód zde</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-28-output-1.png" width="792" height="431"></p>
+</div>
+</div>
+</section>
+<section id="použití-scikit-optimize" class="slide level2">
+<h2>Použití Scikit-optimize</h2>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="1-6|8-12|14-18|20-22|24-32|33-38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="im">from</span> sklearn.base <span class="im">import</span> clone</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="im">from</span> skopt <span class="im">import</span> gp_minimize</span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="im">from</span> skopt.learning <span class="im">import</span> GaussianProcessRegressor</span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="im">from</span> skopt.learning.gaussian_process.kernels <span class="im">import</span> ConstantKernel, Matern</span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="im">from</span> helper <span class="im">import</span> plot_approximation, plot_acquisition</span>
+<span id="cb28-7"><a href="#cb28-7"></a></span>
+<span id="cb28-8"><a href="#cb28-8"></a>bounds <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
+<span id="cb28-9"><a href="#cb28-9"></a>noise <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a></span>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="kw">def</span> f(X, noise<span class="op">=</span>noise):</span>
+<span id="cb28-12"><a href="#cb28-12"></a>    <span class="cf">return</span> <span class="op">-</span>np.sin(<span class="dv">3</span><span class="op">*</span>X) <span class="op">-</span> X<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.7</span><span class="op">*</span>X <span class="op">+</span> noise <span class="op">*</span> np.random.randn(<span class="op">*</span>X.shape)</span>
+<span id="cb28-13"><a href="#cb28-13"></a></span>
+<span id="cb28-14"><a href="#cb28-14"></a>X_init <span class="op">=</span> np.array([[<span class="op">-</span><span class="fl">0.9</span>], [<span class="fl">1.1</span>]])</span>
+<span id="cb28-15"><a href="#cb28-15"></a>Y_init <span class="op">=</span> f(X_init)</span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="co"># pro plotování:</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a>X <span class="op">=</span> np.arange(bounds[:, <span class="dv">0</span>], bounds[:, <span class="dv">1</span>], <span class="fl">0.01</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb28-18"><a href="#cb28-18"></a>Y <span class="op">=</span> f(X,<span class="dv">0</span>)</span>
+<span id="cb28-19"><a href="#cb28-19"></a></span>
+<span id="cb28-20"><a href="#cb28-20"></a><span class="co"># Definice jádra</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a>m52 <span class="op">=</span> ConstantKernel(<span class="fl">1.0</span>) <span class="op">*</span> Matern(length_scale<span class="op">=</span><span class="fl">1.0</span>, nu<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb28-22"><a href="#cb28-22"></a>gpr <span class="op">=</span> GaussianProcessRegressor(kernel<span class="op">=</span>m52, alpha<span class="op">=</span>noise<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb28-23"><a href="#cb28-23"></a></span>
+<span id="cb28-24"><a href="#cb28-24"></a>r <span class="op">=</span> gp_minimize(<span class="kw">lambda</span> x: <span class="op">-</span>f(np.array(x))[<span class="dv">0</span>], </span>
+<span id="cb28-25"><a href="#cb28-25"></a>                bounds.tolist(),</span>
+<span id="cb28-26"><a href="#cb28-26"></a>                base_estimator<span class="op">=</span>gpr,</span>
+<span id="cb28-27"><a href="#cb28-27"></a>                acq_func<span class="op">=</span><span class="st">'EI'</span>,      <span class="co"># funkce expected improvement</span></span>
+<span id="cb28-28"><a href="#cb28-28"></a>                xi<span class="op">=</span><span class="fl">0.01</span>,            <span class="co"># preference exploitation-exploration</span></span>
+<span id="cb28-29"><a href="#cb28-29"></a>                n_calls<span class="op">=</span><span class="dv">10</span>,         <span class="co"># počet měření</span></span>
+<span id="cb28-30"><a href="#cb28-30"></a>                x0<span class="op">=</span>X_init.tolist(), <span class="co"># počáteční měření</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a>                y0<span class="op">=-</span>Y_init.ravel())</span>
+<span id="cb28-32"><a href="#cb28-32"></a></span>
+<span id="cb28-33"><a href="#cb28-33"></a><span class="co"># Fituj náš Gaussovský proces</span></span>
+<span id="cb28-34"><a href="#cb28-34"></a>gpr.fit(r.x_iters, <span class="op">-</span>r.func_vals)</span>
+<span id="cb28-35"><a href="#cb28-35"></a></span>
+<span id="cb28-36"><a href="#cb28-36"></a><span class="co"># Zobraz výsledky</span></span>
+<span id="cb28-37"><a href="#cb28-37"></a>plot_approximation(gpr, X, Y, r.x_iters, <span class="op">-</span>r.func_vals, show_legend<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+<section id="použití-scikit-optimize-output" class="slide level2 output-location-slide"><h2>Použití Scikit-optimize</h2><div class="cell output-location-slide" data-execution_count="28">
+<div class="cell-output cell-output-display">
+<p><img data-src="talk_files/figure-revealjs/cell-29-output-1.png" width="805" height="411"></p>
+</div>
+</div></section><section id="na-co-je-to-dobré" class="slide level2">
+<h2>Na co je to dobré?</h2>
+<ul>
+<li>hledání lanýžů</li>
+<li>ropných vrtů</li>
+<li>průmysl (výrobní procesy)</li>
+<li>farmacie (optimální dávkování)</li>
+<li>A/B testování</li>
+</ul>
+</section></section>
+<section>
+<section id="fyzika" class="title-slide slide level1 center">
+<h1>Fyzika</h1>
+
+</section>
+<section id="automatická-příprava-vzorků" class="slide level2 smaller">
+<h2>Automatická příprava vzorků</h2>
+<div class="columns">
+<div class="column">
+<h3 id="autonomous-research-system-ares">Autonomous Research System (ARES)</h3>
+<p>Příprava jednostěnných uhlíkových nanotrubek pomocí chemické depozice&nbsp;(100 vzorků za den)</p>
+<div class="fragment">
+<p><img data-src="ares2.png"></p>
+</div>
+</div><div class="column">
+<p><img data-src="ares.png"></p>
+</div>
+</div>
+
+<aside><div>
+<p>Nikolaev, P., Hooper, D., Webber, F.&nbsp;et al.&nbsp;Autonomy in materials research: a case study in carbon nanotube growth.&nbsp;<a href="https://doi.org/10.1038/npjcompumats.2016.31">npj Comput Mater&nbsp;2, 16031 (2016)</a>.</p>
+</div></aside></section>
+<section id="automatické-měření" class="slide level2">
+<h2>Automatické měření</h2>
+<div class="columns">
+<div class="column">
+<h3 id="kde-máme-měřit">Kde máme měřit?</h3>
+<p>Časové náročné měření</p>
+<p>Je třeba vybrat kde je důležité měřit</p>
+<p><img data-src="aitas.png"></p>
+</div><div class="column">
+<div class="fragment">
+<p><img data-src="aitas2.png"></p>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>Teixeira Parente, M., Brandl, G., Franz, C. et al.&nbsp;Active learning-assisted neutron spectroscopy with log-Gaussian processes. <a href="https://doi.org/10.1038/s41467-023-37418-8">Nat Commun 14, 2246 (2023)</a>.</p>
+</div></aside></section>
+<section id="robotizace" class="slide level2">
+<h2>Robotizace</h2>
+<div class="columns">
+<div class="column">
+<h3 id="automatická-charakterizace-vzorků">Automatická charakterizace vzorků</h3>
+<ul>
+<li>Uchopování</li>
+<li>Nalepování</li>
+<li>Uspořádávání</li>
+</ul>
+</div><div class="column">
+<div class="absolute" style="top: 0px; right: 50px; width: 450px; height: 250px; ">
+<video id="video_shortcode_videojs_video1" height="600px" class="video-js vjs-default-skin " controls="" preload="auto" data-setup="{}" title=""><source src="alsa.mp4"></video>
+</div>
+</div>
+</div>
+
+<div class="footer footer-default">
+
+</div>
+<aside><div>
+<p>Zařízení <a href="https://mambaproject.cz/alsa">ALSA</a>, živě v budově <strong>F</strong>: <em>Jak objevit nové vlastnosti materiálů – chladit, nebo tlačit?</em></p>
+</div></aside></section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="talk_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="talk_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="talk_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="talk_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'multiplex': {"secret":null,"id":"16c9aa5b432ca662","url":"https://reveal-multiplex.glitch.me/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+    
+
+</body></html>
