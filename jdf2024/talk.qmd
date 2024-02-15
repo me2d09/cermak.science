@@ -19,7 +19,7 @@ execute:
 
 ![](qr.png)
 
-[cermak.science/jdf2024](https://cermak.science/jdf2024)
+[cermak.science/jdf2024](https://cermak.science/jdf2024) {.center}
 
 # Co chceme? {.larger}
 
@@ -28,9 +28,9 @@ Najít maximum neznámé funkce.
 
 # Co nás čeká?
 
-Programování
+Matematika (Statistika)
 
-Matematika
+Programování
 
 Nakonci trocha fyziky
 
@@ -44,7 +44,7 @@ Nakonci trocha fyziky
   
 ### Vyzkoušejte!
 
- - Nový sešit
+ - Soubor --> Nový sešit
   
 
 
@@ -57,6 +57,7 @@ Nakonci trocha fyziky
  - krabička co dělá `x -> y`
  - $$ y = e^{-x} \cos(2\pi x) $$
 :::
+
 
 . . .
 
@@ -73,6 +74,16 @@ def f(x):
 x = np.arange(0.0, 5.0, 0.02)
 plt.plot(x, f(x), 'k')
 ```
+
+::: {.fragment .absolute top=10 right=10 width="400" height="300"}
+::: {style="background-color:white; color: black; padding: 30px; border: 2px black solid"}
+Zkuste to sami:
+
+Kopírovat ➡️ vložit do Colab ➡️ SHIFT + ENTER
+:::
+:::
+
+
 ## Náhodná veličina  {.smaller}
 
  - Má střední hodnotu
@@ -146,6 +157,10 @@ plt.xlabel('Index')
 plt.ylabel('Hodnota')
 plt.show()
 ```
+
+# Co chceme? {.larger}
+
+Najít maximum neznámé funkce.
 
 # Gaussovské procesy
 
