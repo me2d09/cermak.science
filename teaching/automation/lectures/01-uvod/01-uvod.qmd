@@ -1,0 +1,194 @@
+---
+title: "Automatizce ve fyzice: úvodní hodina"
+author: Petr Čermák
+date: 2024-10-03
+format:
+  revealjs: 
+    output-file: presentation.html
+    theme: moon
+    multiplex: true
+    chalkboard: true
+  html:
+    output-file: index.html
+  ipynb: default
+jupyter: python3
+execute: 
+  echo: true
+summary: |
+  Úvodní informace
+  Podmínky získání zápočtu
+  Testování znalostí
+---
+
+# Info
+
+## Připojte se!
+
+[cermak.science/teaching/automation/lectures/01-uvod/presentation.html](https://cermak.science/teaching/automation/lectures/01-uvod/presentation.html)
+
+![](qr1.png)
+
+## Úvodní informace
+
+- Web cvičení: [cermak.science/teaching/automation/](https://cermak.science/teaching/automation/)
+- Podmínky zápočtu: 
+    - Překonání hard problému, nebo
+    - Vyřešení 3/4 domácích úkolů
+
+. . .
+
+- Konzultace: 
+    - discord (nejrychlejší)
+    - mail (klasika)  
+    - osobní setkání (kancelář mám na Karlově)
+
+## Automatizace - proč?
+
+- Zjednodušení práce - od kdy je to efektivní?
+- Reprodukovatelnost
+- Přenositelnost
+- F.A.I.R. principy
+
+## Programovací jazyk? {.smaller}
+ 
+- Strojový kód je pro člověka nečitelný
+- Závisí na procesoru
+- Programovací jazyk je čitelný, *překladač* ho zkompiluje do zdrojového kódu
+- Dynamické programovací jazyky - překládají se za běhu \pause
+
+**Python**
+
+- Snadno čitelný kód, populární ve vědě, AI, statistice
+- Mnoho dostupných knihoven
+
+**Excel**
+
+- Nezatracujte ho - je to programování?
+- Python binding!!
+
+**Julia, R**
+  
+## Verzování {.smaller}
+
+### Git?
+    
+- Ukládání kódu
+- Verzování
+- [gitlab.mff.cuni.cz](https://gitlab.mff.cuni.cz/cermp5am/automation)
+
+### CI/CD ?
+
+- Continuous Integration / Continuous Deployment
+- Naměřím výsledky
+- script je automaticky zpracuje
+- gitlab!
+
+# Opakování
+
+## Co umíme? 1
+
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+1+1
+```
+
+
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+2+3*4+1
+```
+
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+2+3 * 4 +1
+```
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+(2+3)*(4+1)
+```
+
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+2**10
+```
+
+```{python}
+#| code-line-numbers: false
+#| output-location: fragment
+2**100
+```
+
+
+## Co umíme? 2
+```{python}
+#| code-line-numbers: 1-2|3
+#| output-location: fragment
+a = 5
+b = 3
+print(f"Výsledek je {a+b=}")
+```
+
+## Co umíme? 3
+```{python}
+#| code-line-numbers: 4-5|7-8
+#| output-location: fragment
+numbers = [12, 34, 56, 78, 90]
+total = 0
+
+for num in numbers:
+    total += num
+
+average = total / len(numbers)
+print(f"Průměr: {average}")
+```
+. . .
+
+```{python}
+#| output-location: fragment
+average = sum(numbers) / len(numbers)
+print(f"Průměr: {average}")
+```
+
+. . .
+
+```{python}
+#| output-location: fragment
+import numpy as np
+print(f"Průměr: {np.mean(numbers)}")
+```
+
+## Navažujeme prvky
+
+
+```{python}
+#| code-line-numbers: 1|2|3|4-5
+#| output-location: fragment
+from periodictable import formula
+f = formula("Cu3P")
+mass = 15   # mass in g
+for k,v in f.mass_fraction.items():
+  print(f"{str(k) : >2}{v*mass:9.4f}g")
+```
+
+. . .
+
+Znáte rychlejší způsob?
+
+# DISKUSE
+
+## Otázky:
+
+ - Vyhovuje vám čas?
+ - Co si představujete, že vám předmět přinese?
+ - Na co byste se chtěli zaměřit?
+   - git, gitlab, CI/`
+   - python, jupyter, quarto
+   - zpracování obrazu (opencv)
+   - optimalizace (bayesovská, knihovny)
+   - ros (komunikujeme s roboty)
+   - F.A.I.R. - jak ukládat data

@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.55">
 
   <meta name="author" content="Petr Čermák">
-  <meta name="dcterms.date" content="2023-10-06">
+  <meta name="dcterms.date" content="2024-10-03">
   <title>Automatizce ve fyzice: úvodní hodina</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -100,6 +100,8 @@
   <link href="01-uvod_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-uvod_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-uvod_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="01-uvod_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="01-uvod_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="01-uvod_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -402,13 +404,18 @@ Petr Čermák
 </div>
 </div>
 
-  <p class="date">2023-10-06</p>
+  <p class="date">2024-10-03</p>
 </section>
 <section>
 <section id="info" class="title-slide slide level1 center">
 <h1>Info</h1>
 
 </section>
+<section id="připojte-se" class="slide level2">
+<h2>Připojte se!</h2>
+<p><a href="https://cermak.science/teaching/automation/lectures/01-uvod/presentation.html">cermak.science/teaching/automation/lectures/01-uvod/presentation.html</a></p>
+
+<img data-src="qr1.png" class="r-stretch"></section>
 <section id="úvodní-informace" class="slide level2">
 <h2>Úvodní informace</h2>
 <ul>
@@ -483,58 +490,58 @@ Petr Čermák
 </section>
 <section id="co-umíme-1" class="slide level2">
 <h2>Co umíme? 1</h2>
-<div id="256cd2a1" class="cell" data-execution_count="1">
+<div id="8c77892f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>2</code></pre>
 </div>
 </div>
-<div id="95c6e009" class="cell" data-execution_count="2">
+<div id="065035c2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>15</code></pre>
 </div>
 </div>
-<div id="3ac8cba7" class="cell" data-execution_count="3">
+<div id="d401c83a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>15</code></pre>
 </div>
 </div>
-<div id="b1e97fae" class="cell" data-execution_count="4">
+<div id="7a3d0373" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span><span class="op">+</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>25</code></pre>
 </div>
 </div>
-<div id="ad751562" class="cell" data-execution_count="5">
+<div id="047b2fc0" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>1024</code></pre>
 </div>
 </div>
-<div id="0d972589" class="cell" data-execution_count="6">
+<div id="bee8f43c" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>1267650600228229401496703205376</code></pre>
 </div>
 </div>
 </section>
 <section id="co-umíme-2" class="slide level2">
 <h2>Co umíme? 2</h2>
-<div id="f3a11966" class="cell" data-execution_count="7">
+<div id="f195bed6" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13" data-code-line-numbers="1-2|3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a>a <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb13-2"><a href=""></a>b <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb13-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Výsledek je </span><span class="sc">{</span>a<span class="op">+</span>b<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -547,7 +554,7 @@ Petr Čermák
 </section>
 <section id="co-umíme-3" class="slide level2">
 <h2>Co umíme? 3</h2>
-<div id="7af886ba" class="cell" data-execution_count="8">
+<div id="0d159feb" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15" data-code-line-numbers="4-5|7-8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a>numbers <span class="op">=</span> [<span class="dv">12</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">78</span>, <span class="dv">90</span>]</span>
 <span id="cb15-2"><a href=""></a>total <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb15-3"><a href=""></a></span>
@@ -563,7 +570,7 @@ Petr Čermák
 </div>
 </div>
 <div class="fragment">
-<div id="b64f91b9" class="cell" data-execution_count="9">
+<div id="d08ff7a1" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>average <span class="op">=</span> <span class="bu">sum</span>(numbers) <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
 <span id="cb17-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -574,7 +581,7 @@ Petr Čermák
 </div>
 </div>
 <div class="fragment">
-<div id="dd9f7e91" class="cell" data-execution_count="10">
+<div id="35b47cc6" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>np<span class="sc">.</span>mean(numbers)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -587,7 +594,7 @@ Petr Čermák
 </section>
 <section id="navažujeme-prvky" class="slide level2">
 <h2>Navažujeme prvky</h2>
-<div id="4871dae2" class="cell" data-execution_count="11">
+<div id="dd08bfdb" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1|2|3|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="im">from</span> periodictable <span class="im">import</span> formula</span>
 <span id="cb21-2"><a href=""></a>f <span class="op">=</span> formula(<span class="st">"Cu3P"</span>)</span>
 <span id="cb21-3"><a href=""></a>mass <span class="op">=</span> <span class="dv">15</span>   <span class="co"># mass in g</span></span>
@@ -640,6 +647,9 @@ Petr Čermák
   <script src="01-uvod_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="01-uvod_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="01-uvod_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="01-uvod_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="01-uvod_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="01-uvod_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="01-uvod_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -660,7 +670,9 @@ Petr Čermák
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'multiplex': {"secret":"172794624422027111","id":"1529d7a953088da5","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -831,7 +843,7 @@ Petr Čermák
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
