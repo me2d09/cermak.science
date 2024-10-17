@@ -1,0 +1,428 @@
+---
+title: "Automatizce ve fyzice: Notebooky"
+author: Petr Čermák
+date: 2024-10-17
+format:
+  revealjs: 
+    output-file: presentation.html
+    theme: moon
+    multiplex: true
+    chalkboard: true
+  html:
+    output-file: index.html
+  ipynb: default
+jupyter: python3
+execute: 
+  echo: true
+---
+
+# Úvod
+
+## Cíl hodiny
+
+> In the year 2525
+>
+> if man is still alive  
+> If woman can survive,  
+> they may find…  <span class="fragment">your data</span>
+
+. . .
+
+> and check your nfpl242 homework
+
+. . .
+
+> and evaluate all your measurements
+
+# Pythoní okénko 
+
+## Mrožík
+
+Co udělají následující příkazy?
+
+```{python}
+#| error: true
+#| output-location: fragment
+print(a)
+```
+
+```{python}
+#| error: true
+#| output-location: fragment
+a = None
+print(a)
+```
+
+```{python}
+#| error: true
+#| output-location: fragment
+print(a = 1)
+```
+
+```{python}
+#| error: true
+#| output-location: fragment
+print(a == 1)
+```
+
+```{python}
+#| error: true
+#| output-location: fragment
+print(a := 1)
+```
+
+## Mrožík
+
+Operátor přířazení a vrácení hodnoty, walrus, mrož:
+
+::: {style="margin-top: -20px; font-size: 8em; text-align: center"}
+
+`:=`   🦭 
+
+:::
+
+## Mrožík
+
+```{python}
+#| eval: false
+line = file1.readline()
+while line:
+    print(f"Line: {line}")
+    line = file1.readline()
+```
+
+. . .
+
+```{python}
+#| eval: false
+while True:
+    line = file1.readline()
+    if not line:
+        break
+    print(f"Line: {line}")
+```
+
+. . .
+
+```{python}
+#| eval: false
+while line := file1.readline():
+    print(f"Line: {line}")
+```
+
+. . .
+
+```{python}
+#| eval: false
+for line in file1:
+    print(f"Line: {line}")
+```
+
+
+## f-string
+
+- vkládání hodnot do textu a jejich formátování
+- tři historické možnosti
+  - modulo operátor
+  - str.format
+  - f-string
+
+## f-string
+
+### Modulo operátor
+
+```{python}
+from random import choice
+name = "Erwin"
+cat_alive = choice(["žije", "nežije"])
+
+print("Tohle je %s, jeho kočka %s" % (name, cat_alive))
+```
+
+## f-string
+
+### str.format
+
+```{python}
+from random import choice
+name = "Erwin"
+cat_alive = choice(["žije", "nežije"])
+
+print("Kočka %s, chudák %s" % (name, cat_alive))
+print("Kočka {1}, chudák {0}".format(name, cat_alive))
+```
+
+## f-string
+
+### f-string
+
+```{python}
+from random import choice
+name = "Erwin"
+
+print(f"{name}ova kočka {choice(['žije', 'nežije'])}")
+```
+
+
+## f-string
+
+### Ladění
+
+```{python}
+name = "Erwin"
+print(f"{name = }")
+```
+
+### Problémy
+
+```{python}
+#| error: true
+from random import choice
+print(f"Házím {choice(["pana", "orel"])}")
+```
+
+::: {.fragment}
+### Jen do verze Python 3.11 
+:::
+
+## f-string
+
+ - nový PEG parser
+ - stejné uvozovky, lomítka, komentáře
+ - lepší errory
+
+```{.python}
+## Python 3.12
+
+f"{
+    f"{
+        f"{
+            f"{
+                f"{
+                    f"To se\nhodí!"
+                }"
+            }"
+        }"   ## navíc můžu komentovat
+    }"
+}"
+```
+
+# Užitečné knihovny
+
+## Regexp
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+*Teorie*: NTIN071 Automaty a gramatiky
+
+*Praxe*: NSWI177 Úvod do Linuxu
+
+*Fyzik*: to bude něco na parsování...
+
+[regex101.com](regex101.com){.fragment}
+
+:::
+::: {.column width="50%"}
+
+![](chat-regex.png){.fragment}
+
+:::
+::::
+
+
+
+## Pandas {.smaller}
+
+::: columns
+:::: column
+
+ - dataseries (ds)
+   - 1D pole objektů stejných typů
+   - má jeden index (popisek)
+ - dataframe (df)
+   - 2D tabulka, obsahuje ds
+   - má dva indexa (sloupce, řádky)
+ - `pd.read_csv()` - mocná funkce
+ - `df.plot()` - matplotlib, ale i jíné (plotly)
+
+::::
+:::: column
+
+![](df.png){width=100%}
+
+::::
+:::
+
+# Reprodukovatelnost
+
+## Virtual environment
+
+- venv
+
+```{.bash}
+py -m venv .venv
+env\Scripts\activate.bat  
+source env/bin/activate
+pip freeze > requirements.txt
+```
+
+- anaconda
+
+```{.bash}
+conda create --prefix env python
+conda activate .\env
+conda env export > environment.yml
+```
+
+- renv
+
+```{.r}
+install.packages("renv")
+renv::init()
+renv::snapshot()
+```
+
+# Notebooky
+
+## iPython: Interactive python {.smaller}
+
+### Co to je?
+
+ - Interaktivní python shell
+ - Jde se na něj připojit z klienta (web, vscode)
+ - Auto-completion, interakce s shellem
+ - různé backendy (cloud)
+
+### Mimo python příkazy
+
+ - line magic `%timeit`, `%matplotlib`, `%run`
+ - cell magic `%%timeit`
+ - interakce se shellem `!`
+
+## iPython: příklady
+
+```{python}
+files = !dir /b /a-d  #windows
+files = !ls           #linux
+print(files)
+
+web = "mff.cuni.cz"
+!ping -c 1 $web
+```
+
+```{python}
+%timeit range(5000)
+```
+
+## iPython qtConsole
+
+ - interaktivní klienta
+ - pořád vypadá jako příkazová řádka
+ - grafy!!
+ - neumožňuje editaci předchozích cell
+
+`jupyter qtconsole`
+
+## Jupyter, JupyterLab
+
+ - webová aplikace, nejen python (JUlia, PYThon, R)
+ - Latex, video, tlačítka
+
+`jupyter notebook`
+
+![](nb-workflow.jpg)
+
+## Jupyter: problémy {.smaller}
+
+.ipynb je binární (obsahuje i výsledky)
+
+### Výhody
+
+  - jde prohlížet bez pythonu
+  - integrace v githubu
+  - interní verzování (revisions)
+  - přístup z webového prohlížeče
+
+### Nevýhody
+
+  - nemusí jít znovu spustit (smazaná cela)
+  - nejde verzovat v gitu
+  - přístup z webového prohlížeče
+
+## VSCode: Jupyter {.smaller}
+
+ - není webový prohlížeče
+ - linting, etc.
+ - search engine, snippets...
+ - debugger
+ - zabudovaný git
+   - ale - > stále ipynb
+   - řešení: export do .py souboru
+   - trochu nešťastné
+ - využití .py a syntaxe cell:
+   - `# %%`
+   - nevhodné formátování
+   - podpora markdown
+
+## rMarkdown {.smaller}
+
+formát dokumentace a zpracování textu, spojuje text s kódem (nejen v R)
+
+### Výhody
+
+- Hezké formátování
+- plain text --> verzování (Git)
+- různé výstupy (HTML, PDF, ale i presentace, dashboardy...)
+- kombinování jazyků
+
+### Nevýhody
+
+ - hodně zaměřeno na r
+ - python řešen přes *reticulate* 
+ - chybí iPython engine
+ - pomalé
+
+## quarto
+
+::: columns
+:::: column
+
+- **Ultimate solution**
+- kombinace všeho co fyzik potřebuje
+- výborná integrace do vscode (run cell)
+- cachování, live preview
+- visual mode
+- více na cvičení
+
+::::
+:::: column
+
+```{.yaml}
+image: registry.gitlab.com/quarto-forge/docker/python
+
+pages:
+  script:
+    - quarto render --execute --to html --output-dir public
+  artifacts:
+    paths:
+      - public
+```
+
+::::
+:::
+
+# Úkol #0 - bonus
+
+## Zadání
+
+ - Mějme obecný nekonvexní n-úhelník
+ - Hypotéza: 
+ 
+  > Pro zadané m existuje takový obecný m-úhelník, 
+  > který je n-úhelníku opsaný a jehož plocha je nejmenší možná.
+
+ - Dokažte :D
+ - Napište algoritmus pro nalezení tohoto n-úhelníku pro n=<3,10>
+ - Testovací data: `shapes.py`
