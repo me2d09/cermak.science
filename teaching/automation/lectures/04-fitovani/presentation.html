@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.55" />
+
+  <meta name="author" content="Petr Čermák">
+  <meta name="dcterms.date" content="2024-10-24">
+  <title>Automatizce ve fyzice: Visualizace dat</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="04-fitovani_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="04-fitovani_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="04-fitovani_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="04-fitovani_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="04-fitovani_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="04-fitovani_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="04-fitovani_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="04-fitovani_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="04-fitovani_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" data-relocate-top="true"></script>
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+  <script type="text/javascript">
+  window.PlotlyConfig = {MathJaxConfig: 'local'};
+  if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+  if (typeof require !== 'undefined') {
+  require.undef("plotly");
+  requirejs.config({
+      paths: {
+          'plotly': ['https://cdn.plot.ly/plotly-2.35.2.min']
+      }
+  });
+  require(['plotly'], function(Plotly) {
+      window._Plotly = Plotly;
+  });
+  }
+  </script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block">
+  <h1 class="title">Automatizce ve fyzice: Visualizace dat</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Petr Čermák 
+</div>
+</div>
+</div>
+
+  <p class="date">2024-10-24</p>
+</section>
+<section>
+<section id="cvičení" class="title-slide slide level1">
+<h1>Cvičení</h1>
+
+</section>
+<section id="připojte-se" class="slide level2">
+<h2>Připojte se!</h2>
+<p><a href="https://cermak.science/teaching/automation/lectures/02-gitlab/">cermak.science/teaching/automation/lectures/02-gitlab/</a></p>
+<p><img data-src="qrgitlab.png" /></p>
+</section>
+<section id="prázdný-quarto-logbook" class="slide level2">
+<h2>Prázdný quarto logbook</h2>
+<p>Vytvořte nový soubor (ctrl+shift+p New quarto)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource {markdown} number-lines"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>---</span>
+<span id="cb1-2"><a href="#cb1-2"></a>title: &quot;Susceptibility measurement&quot;</span>
+<span id="cb1-3"><a href="#cb1-3"></a>date: 2024-10-24</span>
+<span id="cb1-4"><a href="#cb1-4"></a>author:</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  - name: Petr Čermák</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    email: petr.cermak@matfyz.cuni.cz</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    url: https://cermak.science/</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    affiliation: </span>
+<span id="cb1-9"><a href="#cb1-9"></a>      - name: Charles University</span>
+<span id="cb1-10"><a href="#cb1-10"></a>        city: Prague</span>
+<span id="cb1-11"><a href="#cb1-11"></a>        state: Czech republic</span>
+<span id="cb1-12"><a href="#cb1-12"></a>        url: https://kfkl.mff.cuni.cz/</span>
+<span id="cb1-13"><a href="#cb1-13"></a>abstract: &gt; </span>
+<span id="cb1-14"><a href="#cb1-14"></a>  Ukázka měřícího protokolu.</span>
+<span id="cb1-15"><a href="#cb1-15"></a>keywords:</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  - Automation</span>
+<span id="cb1-17"><a href="#cb1-17"></a>  - Physics</span>
+<span id="cb1-18"><a href="#cb1-18"></a>license: &quot;CC 0&quot;</span>
+<span id="cb1-19"><a href="#cb1-19"></a>title-block-banner: true</span>
+<span id="cb1-20"><a href="#cb1-20"></a>toc: true</span>
+<span id="cb1-21"><a href="#cb1-21"></a>number-sections: true</span>
+<span id="cb1-22"><a href="#cb1-22"></a>bibliography: references.bib</span>
+<span id="cb1-23"><a href="#cb1-23"></a>csl: ../aps.csl</span>
+<span id="cb1-24"><a href="#cb1-24"></a>highlight-style: pygments</span>
+<span id="cb1-25"><a href="#cb1-25"></a>format:</span>
+<span id="cb1-26"><a href="#cb1-26"></a>  html:</span>
+<span id="cb1-27"><a href="#cb1-27"></a>    code-fold: true</span>
+<span id="cb1-28"><a href="#cb1-28"></a>    code-tools: true</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  pdf:</span>
+<span id="cb1-30"><a href="#cb1-30"></a>    geometry: </span>
+<span id="cb1-31"><a href="#cb1-31"></a>      - top=30mm</span>
+<span id="cb1-32"><a href="#cb1-32"></a>      - left=30mm</span>
+<span id="cb1-33"><a href="#cb1-33"></a>jupyter: python3</span>
+<span id="cb1-34"><a href="#cb1-34"></a>---</span>
+<span id="cb1-35"><a href="#cb1-35"></a># My super experiment </span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a>## Preparation</span>
+<span id="cb1-38"><a href="#cb1-38"></a></span>
+<span id="cb1-39"><a href="#cb1-39"></a>We have came to the room, glued the sample and started the measurement.</span></code></pre></div>
+</section>
+<section id="porovnání-knihoven-pro-fitování-scipy-lmfit-iminuit" class="slide level2 smaller">
+<h2 class="smaller">Porovnání knihoven pro fitování: SciPy, lmfit, iminuit</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 37%" />
+<col style="width: 29%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Knihovna</strong></th>
+<th><strong>Hlavní vlastnosti</strong></th>
+<th><strong>Výhody</strong></th>
+<th><strong>Nevýhody</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SciPy</strong></td>
+<td>Základ<br> <code>curve_fit</code></td>
+<td>Jednoduché (?) použití</td>
+<td>Nelze snadno přidat omezení parametrů.</td>
+</tr>
+<tr class="even">
+<td><strong>lmfit</strong></td>
+<td>Nadstavba nad SciPy s pokročilým rozhraním pro fitování.</td>
+<td>Omezení a pevně dané parametry.</td>
+<td>Větší overhead, u nelineárních někdy diverguje.</td>
+</tr>
+<tr class="odd">
+<td><strong>iminuit</strong></td>
+<td>Optimalizační knihovna založená na algoritmu Minuit (CERN). Gradientní sestupy, numerické odhady derivací</td>
+<td>Rychlé a přesné fitování. <br> Výborné pro nelineární a složité problémy, určije chyby a korelace parametrů.</td>
+<td>- Vyžaduje více konfigurace.<br> - Složitější pro začátečníky.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="iminuit" class="slide level2">
+<h2>iMinuit</h2>
+<div id="fc159aab" class="cell" data-execution_count="1">
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># !python -m pip install iminuit</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="im">from</span> iminuit <span class="im">import</span> Minuit</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="im">from</span> iminuit.cost <span class="im">import</span> LeastSquares</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># Funkce pro Gaussovu křivku</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">def</span> gauss(x, A, mu, sigma):</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="cf">return</span> A <span class="op">*</span> np.exp(<span class="op">-</span>(x <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>np.random.seed(<span class="dv">42</span>)  <span class="co"># Pro opakovatelnost výsledků</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a>angles <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>true_sigma <span class="op">=</span> <span class="fl">1.5</span>  <span class="co"># Výsledek</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a>params <span class="op">=</span> [ (<span class="dv">100</span>, <span class="op">-</span><span class="dv">3</span>),  <span class="co"># A, úhel</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>          (<span class="dv">150</span>, <span class="dv">0</span>),</span>
+<span id="cb2-19"><a href="#cb2-19"></a>          (<span class="dv">80</span>, <span class="dv">3</span>)  ]</span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="1">
+
+</div>
+</section>
+<section id="iminuit-1" class="slide level2">
+<h2>iMinuit</h2>
+<div id="d1a4d8e7" class="cell" data-execution_count="2">
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Generování dat a přidání šumu</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>data <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="cf">for</span> A, mu <span class="kw">in</span> params:</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    intensity <span class="op">=</span> gauss(angles, A, mu, true_sigma) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">5</span>, angles.size)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    data.append(intensity)</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># Vizualizace generovaných dat</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="cf">for</span> intensity, (A, mu) <span class="kw">in</span> <span class="bu">zip</span>(data, params):</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    plt.plot() <span class="co">#???)</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>plt.xlabel(<span class="st">&#39;Úhel (°)&#39;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a>plt.ylabel(<span class="st">&#39;Intenzita&#39;</span>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a>plt.legend()</span>
+<span id="cb3-14"><a href="#cb3-14"></a>plt.show()</span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="04-fitovani_files/figure-revealjs/cell-3-output-1.png" width="832" height="431" /></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="iminuit-2" class="slide level2">
+<h2>iMinuit</h2>
+<div id="d07ff058" class="cell" data-execution_count="3">
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Least squares cost function pro jednotlivé sady dat</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">def</span> cost_func(A1, mu1, A2, mu2, A3, mu3, sigma):</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="co"># Každá sada dat je hodnocena zvlášť, ale sdílí stejnou sigma</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    chi2_1 <span class="op">=</span> LeastSquares(angles, data[<span class="dv">0</span>], np.ones_like(data[<span class="dv">0</span>]) <span class="op">*</span> <span class="dv">5</span>, gauss)(A1, mu1, sigma)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    chi2_2 <span class="op">=</span> LeastSquares(angles, data[<span class="dv">1</span>], np.ones_like(data[<span class="dv">1</span>]) <span class="op">*</span> <span class="dv">5</span>, gauss)(A2, mu2, sigma)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    chi2_3 <span class="op">=</span> LeastSquares(angles, data[<span class="dv">2</span>], np.ones_like(data[<span class="dv">2</span>]) <span class="op">*</span> <span class="dv">5</span>, gauss)(A3, mu3, sigma)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="cf">return</span> chi2_1 <span class="op">+</span> chi2_2 <span class="op">+</span> chi2_3  <span class="co"># Součet všech chi^2</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># Inicializace Minuit s počátečními odhady parametrů</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>m <span class="op">=</span> Minuit(cost_func, A1<span class="op">=</span><span class="dv">100</span>, mu1<span class="op">=-</span><span class="dv">3</span>, A2<span class="op">=</span><span class="dv">150</span>, mu2<span class="op">=</span><span class="dv">0</span>, A3<span class="op">=</span><span class="dv">80</span>, mu3<span class="op">=</span><span class="dv">3</span>, sigma<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># Fitování</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>m.migrad()</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co"># Výstup výsledků</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="bu">print</span>(m.values)</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="bu">print</span>(<span class="ss">f&quot;Fitovaná poloviční šířka (sigma): </span><span class="sc">{</span>m<span class="sc">.</span>values[<span class="st">&#39;sigma&#39;</span>]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ValueView A1=97.81956046158962 mu1=-3.0019066325926755 A2=149.8060320971459 mu2=0.018103000048898255 A3=78.1085963835439 mu3=3.003145548463833 sigma=1.5057810077888512&gt;
+Fitovaná poloviční šířka (sigma): 1.5057810077888512</code></pre>
+</div>
+</div>
+</section>
+<section id="iminuit-3" class="slide level2">
+<h2>iMinuit</h2>
+<div id="110a73b3" class="cell" data-execution_count="4">
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Vizualizace fitovaných křivek</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># použijte m.values[&#39;A1&#39;], m.values[&#39;mu1&#39;], m.values[&#39;sigma&#39;]</span></span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="4">
+
+</div>
+</section>
+<section id="python-data-science" class="slide level2">
+<h2>Python Data Science</h2>
+<p>Nainstalujte extension Python Data Science</p>
+<p>Obsahuje data wrangler</p>
+<div id="fff0c4a2" class="cell" data-execution_count="5">
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="op">!</span>curl https:<span class="op">//</span>user.mgml.eu<span class="op">/</span>automation<span class="op">/</span>vsm<span class="op">/</span><span class="fl">00000001.</span><span class="er">dat</span> <span class="op">--</span>output <span class="fl">01.</span><span class="er">dat</span></span></code></pre></div>
+</div>
+<div id="3e3a01e2" class="cell" data-execution_count="6">
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="im">import</span> re</span>
+<span id="cb8-3"><a href="#cb8-3"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">&quot;matplotlib&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>header <span class="op">=</span> {}</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;01.dat&quot;</span>, <span class="st">&quot;r&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="cf">for</span> line <span class="kw">in</span> f:</span>
+<span id="cb8-8"><a href="#cb8-8"></a>      <span class="cf">if</span> r <span class="op">:=</span> re.match(<span class="vs">r&#39;^INFO,([^,]*),([^,]*)$&#39;</span>, line):</span>
+<span id="cb8-9"><a href="#cb8-9"></a>        header[r[<span class="dv">2</span>].strip()] <span class="op">=</span> r[<span class="dv">1</span>]</span>
+<span id="cb8-10"><a href="#cb8-10"></a>      <span class="cf">if</span> line.strip() <span class="op">==</span> <span class="st">&quot;[Data]&quot;</span>:</span>
+<span id="cb8-11"><a href="#cb8-11"></a>        <span class="cf">break</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>    df <span class="op">=</span> pd.read_csv(f, delimiter<span class="op">=</span><span class="st">&quot;,&quot;</span>, index_col<span class="op">=</span><span class="st">&quot;Temperature (K)&quot;</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a>df.head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Comment</th>
+<th data-quarto-table-cell-role="th">Time Stamp (sec)</th>
+<th data-quarto-table-cell-role="th">Magnetic Field (Oe)</th>
+<th data-quarto-table-cell-role="th">Moment (emu)</th>
+<th data-quarto-table-cell-role="th">M. Std. Err. (emu)</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Temperature (K)</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1.894809</td>
+<td>NaN</td>
+<td>358.894085</td>
+<td>2000.191002</td>
+<td>0.000067</td>
+<td>7.134839e-07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3.078118</td>
+<td>NaN</td>
+<td>362.511599</td>
+<td>2000.191002</td>
+<td>0.000070</td>
+<td>7.662391e-07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4.010035</td>
+<td>NaN</td>
+<td>372.406449</td>
+<td>2000.191002</td>
+<td>0.000068</td>
+<td>5.733090e-07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5.069258</td>
+<td>NaN</td>
+<td>372.630530</td>
+<td>2000.191002</td>
+<td>0.000070</td>
+<td>7.033015e-07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5.995225</td>
+<td>NaN</td>
+<td>376.526731</td>
+<td>2000.191002</td>
+<td>0.000069</td>
+<td>7.084128e-07</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="pandas" class="slide level2">
+<h2>Pandas</h2>
+<div id="67193d1a" class="cell" data-execution_count="7">
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Zobrazí prvních 5 řádků dat</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">print</span>(<span class="st">&quot;Prvních 5 řádků:&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="bu">print</span>(df.head())</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># Základní popis statistik dat</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Základní statistiky:&quot;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="bu">print</span>(df.describe())</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># Zobrazení informací o datech (datové typy, null hodnoty, velikost atd.)</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Informace o datech:&quot;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="bu">print</span>(df.info())</span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>Prvních 5 řádků:
+                Comment  Time Stamp (sec)  Magnetic Field (Oe)  Moment (emu)  \
+Temperature (K)                                                                
+1.894809            NaN        358.894085          2000.191002      0.000067   
+3.078118            NaN        362.511599          2000.191002      0.000070   
+4.010035            NaN        372.406449          2000.191002      0.000068   
+5.069258            NaN        372.630530          2000.191002      0.000070   
+5.995225            NaN        376.526731          2000.191002      0.000069   
+
+                 M. Std. Err. (emu)  
+Temperature (K)                      
+1.894809               7.134839e-07  
+3.078118               7.662391e-07  
+4.010035               5.733090e-07  
+5.069258               7.033015e-07  
+5.995225               7.084128e-07  
+
+Základní statistiky:
+       Time Stamp (sec)  Magnetic Field (Oe)  Moment (emu)  M. Std. Err. (emu)
+count        300.000000           300.000000    300.000000        3.000000e+02
+mean        1104.659126          2000.191002      0.000052        5.020059e-07
+std          426.730677             0.000000      0.000012        1.246511e-07
+min          358.894085          2000.191002      0.000032        2.790489e-07
+25%          747.380907          2000.191002      0.000041        3.994841e-07
+50%         1093.057337          2000.191002      0.000050        4.926898e-07
+75%         1481.394855          2000.191002      0.000064        5.988325e-07
+max         1828.118167          2000.191002      0.000073        7.987605e-07
+
+Informace o datech:
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 300 entries, 1.8948093429447053 to 301.094156836479
+Data columns (total 5 columns):
+ #   Column               Non-Null Count  Dtype  
+---  ------               --------------  -----  
+ 0   Comment              25 non-null     object 
+ 1   Time Stamp (sec)     300 non-null    float64
+ 2   Magnetic Field (Oe)  300 non-null    float64
+ 3   Moment (emu)         300 non-null    float64
+ 4   M. Std. Err. (emu)   300 non-null    float64
+dtypes: float64(4), object(1)
+memory usage: 14.1+ KB
+None</code></pre>
+</div>
+</div>
+</section>
+<section id="pandas-1" class="slide level2">
+<h2>Pandas</h2>
+<div id="e40279b1" class="cell" data-execution_count="8">
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Filtrování dat (např. výběr řádků, kde hodnota ve sloupci &#39;age&#39; je větší než 30)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>filtered_df <span class="op">=</span> df[df[<span class="st">&#39;Time Stamp (sec)&#39;</span>] <span class="op">&gt;</span> <span class="dv">500</span>]</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Filtrování dle času&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="bu">print</span>(filtered_df)</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># Vytvoření nového sloupce (např. výpočet BMI na základě sloupců &#39;weight&#39; a &#39;height&#39;)</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>df[<span class="st">&#39;Xi&#39;</span>] <span class="op">=</span> <span class="dv">0</span> <span class="co"># #???</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Nový sloupec BMI:&quot;</span>)</span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="bu">print</span>(df[[<span class="st">&#39;Magnetic Field (Oe)&#39;</span>,  <span class="st">&#39;Moment (emu)&#39;</span>, <span class="st">&#39;Xi&#39;</span>]].head())</span></code></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Filtrování dle času
+                                                           Comment  \
+Temperature (K)                                                      
+25.928075                                                      NaN   
+27.034747                                                      NaN   
+27.987122                                                      NaN   
+28.978676                                                      NaN   
+30.051740                                                      NaN   
+...                                                            ...   
+297.021017                                                     NaN   
+298.043718       sample offset = 34.54 mm touchdown = 9.3200001...   
+298.950699                                                     NaN   
+299.989653                                                     NaN   
+301.094157                                                     NaN   
+
+                 Time Stamp (sec)  Magnetic Field (Oe)  Moment (emu)  \
+Temperature (K)                                                        
+25.928075              501.914716          2000.191002      0.000071   
+27.034747              511.185624          2000.191002      0.000072   
+27.987122              520.558571          2000.191002      0.000070   
+28.978676              522.824700          2000.191002      0.000071   
+30.051740              523.900309          2000.191002      0.000072   
+...                           ...                  ...           ...   
+297.021017            1808.808241          2000.191002      0.000034   
+298.043718            1812.464221          2000.191002      0.000033   
+298.950699            1815.072137          2000.191002      0.000034   
+299.989653            1819.358787          2000.191002      0.000032   
+301.094157            1828.118167          2000.191002      0.000034   
+
+                 M. Std. Err. (emu)  
+Temperature (K)                      
+25.928075              5.955311e-07  
+27.034747              6.088898e-07  
+27.987122              6.528519e-07  
+28.978676              6.465979e-07  
+30.051740              6.970362e-07  
+...                             ...  
+297.021017             3.088224e-07  
+298.043718             3.666648e-07  
+298.950699             3.654659e-07  
+299.989653             2.790489e-07  
+301.094157             3.216486e-07  
+
+[276 rows x 5 columns]
+
+Nový sloupec BMI:
+                 Magnetic Field (Oe)  Moment (emu)  Xi
+Temperature (K)                                       
+1.894809                 2000.191002      0.000067   0
+3.078118                 2000.191002      0.000070   0
+4.010035                 2000.191002      0.000068   0
+5.069258                 2000.191002      0.000070   0
+5.995225                 2000.191002      0.000069   0</code></pre>
+</div>
+</div>
+</section>
+<section id="plotly" class="slide level2">
+<h2>Plotly</h2>
+<div id="a7135ad3" class="cell" data-execution_count="9">
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python cell-code number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>pd.options.plotting.backend <span class="op">=</span> <span class="st">&quot;plotly&quot;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>df[[<span class="st">&#39;Moment (emu)&#39;</span>]].plot(y<span class="op">=</span><span class="st">&#39;Moment (emu)&#39;</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>                            <div id="bcfb267c-4db1-474b-aac8-b34bc8269408" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("bcfb267c-4db1-474b-aac8-b34bc8269408")) {                    Plotly.newPlot(                        "bcfb267c-4db1-474b-aac8-b34bc8269408",                        [{"hovertemplate":"Temperature (K)=%{x}\u003cbr\u003eMoment (emu)=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":[1.8948093429447053,3.078117682316993,4.010035190194746,5.069257708306981,5.995225368733906,7.106094650867281,8.005135100279952,8.952150673978727,10.026512902017782,10.98731726316232,12.04079982139424,12.971271028854868,13.945272256437518,15.00471455260656,15.973853735182262,17.04982640519469,18.00834148160376,19.051059209059886,19.953818158574837,20.974487056955244,22.0136184478741,22.92780311135417,24.049883061521665,25.038652492504625,25.92807459941332,27.034746854059904,27.987121926510056,28.97867616232364,30.05173981224644,31.0515144683408,32.02634243418694,33.05299409734647,34.050006440107616,35.04065339266015,36.03392808595167,37.01348526407162,37.9937157614652,38.95504711008211,39.982445637859946,41.054725142203296,42.038508321678,42.95967553761909,43.97351409257271,45.08011474793408,46.038592930038206,46.98256036173291,48.00220615103978,49.01637946594663,50.01268825298762,51.08848118775816,51.99097341655223,52.99550770865204,54.02680607004305,54.94603988767601,55.99025486343929,56.98257781961975,58.03100981611425,58.953188144136,60.01548340805215,61.02463055817702,62.05460845858824,62.9284383495492,63.93694789511397,64.93576806196833,65.97290753452582,66.93184797971493,68.05296505375883,68.98001850274149,70.00047356179626,71.08110671853557,71.87668473537732,72.9485233336298,74.03060342122224,74.98689041978335,76.09307147897854,76.96493631835928,77.93884507679715,79.08207357744269,79.94817088801962,81.12865693637296,82.0989280489565,82.99771959578757,84.01975880502587,84.97740089483067,86.05396352411528,86.93152014670096,87.91524892817289,89.03318099899714,89.99607971413226,90.9916403862192,92.05522423419217,93.04275581086662,93.95996152940296,95.05124214984367,95.99571149276012,96.96236130815036,98.00288472593785,99.03675290139869,99.998736906521,101.0330302959382,102.053627738133,102.96927159351156,104.03078613731822,104.94721723594272,105.98538634955447,107.06983851363783,108.048322883454,108.96742980659928,109.98711281074242,110.95333567272884,112.0673906186303,112.9986996012756,113.94528601999282,115.00899508275934,115.97361303890992,117.02720651259092,117.96199338549094,119.0120301191999,119.9168546465841,120.9845172528522,121.93973834462368,122.97421187211724,123.9539689479373,125.01378920396763,125.92528638671,126.99437514917211,128.0291089257148,129.06238552745623,129.9946691212664,130.9264090719117,132.04720187418957,133.13668612607069,134.02833364928347,135.0132781038768,135.9377490015647,136.987229224388,138.002237172926,138.9336991072685,140.0023084538128,140.9086857440441,142.00801655791153,142.98317493418247,143.97162830461437,145.01357699789668,145.96885928917942,146.91088602074092,148.00928958418015,148.9896715837488,150.0138455553969,150.97297993114267,151.9742835209964,153.0309425484997,154.04252965351225,155.02525041997418,155.95698541608573,157.0969424592438,158.00512533566322,159.0110723085945,159.99964718879312,161.06267163553068,162.12190443290285,162.95552533022123,163.93466711839685,165.06046788735998,165.91914578239823,166.9828207397769,168.00410339020405,169.0781937905207,169.9909629678499,171.04358454386474,172.017018962375,173.0864048562311,173.9795328509492,175.0182055420582,176.01522791841023,176.92230097018972,178.01783670754904,178.92980786412815,180.17322193496145,180.9852164568229,181.92942436259247,183.06728212646036,184.1693303803219,185.01735156992152,185.94859166499663,187.00061299451264,187.9819389785331,188.9700714066584,189.93060199045615,190.9800856112436,191.88711817501184,192.9808443605993,194.02277379844776,195.03203811810573,195.94126693581944,197.02243558862716,198.07273196252245,199.0120867819155,199.89097450396676,201.05951076672577,202.02507422301943,202.90202417402548,204.02217435722775,204.9258704706884,206.038362189548,207.0481264626856,207.97740346338244,208.9417935170859,209.9197883131909,211.00946297414507,211.9684766128952,213.04694101076865,213.99092021629605,214.9639473899002,216.04115411578923,216.999853083085,217.99758660005003,218.9755048439464,219.93570856812605,221.0416614987665,221.96976217227837,222.8948764686406,224.0336688701809,224.9775293405919,226.0394570488511,226.94807985266468,228.1039105160341,228.9572481708625,230.04648950927395,231.06984281951205,231.9512896716145,233.02407363771857,234.04957300414983,234.99310489461183,235.9917805090429,237.10860355038943,238.036252814072,239.0235891635845,240.01028833432463,240.9861634276777,241.9985903666534,243.07969239251943,243.96428958034943,244.99083538026656,246.00218926103585,246.9520249965672,247.99673429918792,248.9326219801472,249.9678865489835,250.98516691592735,251.9915073187924,252.97431241695057,253.9763260223238,255.05937375469173,256.0015893813867,257.0416004008422,258.01431183715664,259.04076772453413,259.955544779555,261.035750576678,261.9219163785584,262.89929338420274,263.89069622812366,264.9731579914019,266.0084517892979,267.1372200811189,268.0548435353547,268.9695102215942,269.9997170157284,270.9642706624476,272.02950941871416,273.0567916328394,273.994922923562,274.9981749422903,276.04370523235883,277.01719060870187,278.06941036623755,279.0067225241664,279.97452872919695,281.04702829637085,282.01684258912377,283.0633246235266,284.07408781682943,285.03857186914314,285.9386587723262,286.89165795964385,288.0162575547943,288.8918783605806,290.0428636637399,291.0561597078301,291.95922205741846,293.080048951827,293.91723794152944,294.99050363090066,295.992689767143,297.02101704699805,298.0437180228716,298.9506991660573,299.9896531842416,301.094156836479],"xaxis":"x","y":[0.0000670674878151169,0.00006972776010251511,0.00006822376959610374,0.0000696268513940234,0.00006942445653622526,0.00007004878689064126,0.00006858545360762197,0.00006930919716501427,0.00007117236717851302,0.00006950781510562794,0.00007156396409237686,0.00007083123197524748,0.00007137781466710764,0.00007002710791198921,0.00007018511278828169,0.00007244362183819453,0.00006747802922666591,0.00007348596582728816,0.000069993740250972,0.00007321101877791237,0.00006987000113225456,0.00007140837056452651,0.00007097055205708481,0.0000710260080386046,0.00007086819865475329,0.0000724578912797013,0.00006985515156879426,0.00007112576397277554,0.00007179472951552786,0.00006993363789022097,0.00007116161796623804,0.00007182239514859157,0.0000716915672480835,0.0000725076867873283,0.00007301045519549338,0.00007031720157572577,0.00007002012199069772,0.00007214237808054907,0.00006848550059180384,0.00006963215747620113,0.00007112761465209356,0.00007089704875364337,0.00006942092108895013,0.0000682298359216338,0.00006861051592792521,0.00006841724366643201,0.00007191974892222826,0.00007107572658532825,0.00007070873585074911,0.00007004289542873029,0.00007021683694792842,0.00006910577285799735,0.00006773431124672282,0.00006860257537640863,0.00007079437566368415,0.00006960977212953512,0.00006876247746036644,0.00006742936787680394,0.00006393760506396922,0.0000668013598685906,0.00006586966598188661,0.0000678024386363293,0.00006394414087694,0.00006248611835033338,0.00006691088362772143,0.00006743848477734429,0.00006418333590917192,0.0000662653263972161,0.0000659959626979928,0.00006615503301818941,0.00006660622792469288,0.00006395813880086278,0.00006555219774224154,0.00006427590383944349,0.00006545252641751171,0.00006315290842339739,0.0000654823912889707,0.000060797897063460536,0.00006193265502873766,0.00006188769195130405,0.00006270372732501758,0.0000634563642154089,0.00006140049858848948,0.0000621956019128522,0.00006048830875934906,0.00006101214594759164,0.00006063945130933431,0.00006029196960855698,0.00006247293541128667,0.00006223851051781698,0.000058682398439859175,0.000058983843290595314,0.0000592126986727078,0.00005981906834092721,0.00005846162096039397,0.00005833768358285374,0.00005749025923670911,0.00005904110411843069,0.00005901678041913435,0.00005713421238637176,0.00005788626311438932,0.00005846521898020854,0.00005478814767357857,0.00005647863076278725,0.000058293802065675065,0.00005752668507891618,0.00005823273574371764,0.00005694029940589661,0.00005723809175593964,0.00005679797545326036,0.00005305973749839973,0.00005554259594032713,0.00005771378510410233,0.000056471255776301386,0.00005669285035752232,0.0000524556473704574,0.00005573961790591386,0.00005452203535686499,0.00005560078628135378,0.00005510324367143032,0.00005185557527724653,0.0000538018547986602,0.00005288528424278831,0.00005477305863090975,0.00005556558032456998,0.00005172665306734525,0.00005554944289868184,0.000053780359466946406,0.0000517941305380637,0.000053865696969193656,0.00005459200700932249,0.000052220915930364416,0.00005147512354533165,0.00005471146499989062,0.00005047680742761631,0.00005062787882371314,0.0000515593165406169,0.00005251492688560322,0.00005068085455010456,0.00004985778388399266,0.00004857586886623639,0.00005205999804642904,0.000050522624611277016,0.00004940289229739255,0.0000498075865724316,0.000048402050017851,0.00004720985795908232,0.00004793409661166022,0.0000513931569391093,0.00004837816411899517,0.00004974970071671156,0.00004977196144962696,0.00004950738478238624,0.00004844899438769231,0.00004901645756139161,0.00005013879069482611,0.00005174064504192854,0.00004951020548824365,0.00005171826926457808,0.000049865808222125366,0.00004982314577887213,0.00004662448586348664,0.00004907403253032271,0.00004840958606592688,0.000049995595908434365,0.00004686409482278025,0.000046955553704397735,0.00004864849896007068,0.000046130220625797424,0.00004714312422698485,0.00004318518544539445,0.000046051454420500506,0.00004725836121951832,0.00004646143458225375,0.00004883109338526466,0.00004782046338494348,0.00004618200620841551,0.00004408569123938224,0.00004619397680422215,0.00004710539476784735,0.00004688563184333701,0.00004787206886616316,0.00004581067341100789,0.00004499161376786255,0.00004728499916919528,0.00004335867782966832,0.000043644816540847216,0.000043955421340309175,0.00004591994072623747,0.0000440596133216606,0.000044563160704822605,0.00004501147052135587,0.00004356012271544045,0.00004420884855935595,0.000045616255776019605,0.00004389810910805666,0.00004448131801656542,0.00004466634930706051,0.00004240725878581303,0.00004593133936351695,0.00004445080238399198,0.00004017015958545465,0.00004409583486658086,0.00004349154680278875,0.00004349680197264983,0.00004086798401947842,0.0000429667149183544,0.0000428773670299534,0.000044119737647112855,0.00004241579551761869,0.000041623771312852365,0.00004418505462833447,0.00004117311512881604,0.00004358985648486803,0.0000412483858206468,0.0000403861189819254,0.00004315360990929885,0.000041807226958643504,0.000041186015188549415,0.00003949664727644047,0.000042088411387887786,0.00004314496973154892,0.00004349170125879508,0.000041268322475898285,0.000040140608241591776,0.000042298224837828965,0.00003808900039086715,0.00003969317563944707,0.000041636306081124455,0.00003983820380249086,0.00004059442242747518,0.00004013872006388893,0.00004159759114803473,0.000041043767290137175,0.00004241165902205184,0.00004118430489853648,0.000039159195494670544,0.00003771363503447674,0.00004033409203978324,0.00004073558049225216,0.0000407344706340511,0.00003839849390898318,0.00004136375279524175,0.00003982975410488688,0.00003729967987279001,0.000041853272708221165,0.00003905001945763277,0.00003932702991395814,0.00003683113185319283,0.00003705235645113935,0.00003658112658452934,0.0000367329042900068,0.00003938927233313606,0.00003818215931689308,0.00003711966762694258,0.00003730722176900979,0.00003874043790503002,0.00003929257365402386,0.00003857105068266784,0.00003733723797624628,0.00003740697258857144,0.00003941165556273811,0.00003787147760234267,0.00003767474592694788,0.000038164831849570816,0.00003961620577090004,0.000035519576166997525,0.00003740014606131362,0.00003790695247340165,0.00003580468901313858,0.00003649964066377878,0.00003886840253750159,0.00003657234643680335,0.000036064340107797495,0.00003560246925926381,0.000036058451546684815,0.000035700745465880506,0.000036048294338916336,0.00003600741380452306,0.00003865544068746223,0.00003852553266336032,0.000038376291216893055,0.00003633518733672643,0.00003366120485498245,0.00003547260438582151,0.00003724971302043566,0.00003451202726542587,0.00003364256773712637,0.00003728861642875108,0.000034830564358264565,0.00003440828156224752,0.00003732897587392816,0.00003618510935636345,0.00003557071911732835,0.00003690398262182563,0.00003366163789512912,0.00003336649885631142,0.00003435379762087438,0.00003209062098200689,0.0000337731039035181],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Temperature (K)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Moment (emu)"}},"legend":{"tracegroupgap":0}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('bcfb267c-4db1-474b-aac8-b34bc8269408');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="04-fitovani_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="04-fitovani_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="04-fitovani_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="04-fitovani_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id = "quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    </body>
+</html>

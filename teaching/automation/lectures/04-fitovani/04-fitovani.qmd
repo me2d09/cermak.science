@@ -1,0 +1,238 @@
+---
+title: "Automatizce ve fyzice: Visualizace dat"
+author: Petr Čermák
+date: 2024-10-24
+format:
+  revealjs: 
+    output-file: presentation.html
+    theme: moon
+    multiplex: true
+    chalkboard: true
+  html:
+    output-file: index.html
+  ipynb: default
+jupyter: python3
+execute: 
+  echo: true
+---
+
+# Cvičení
+
+## Připojte se!
+
+[cermak.science/teaching/automation/lectures/04-fitovani/](https://cermak.science/teaching/automation/lectures/04-fitovani/)
+
+
+## Prázdný quarto logbook
+
+Vytvořte nový soubor (ctrl+shift+p New quarto)
+
+```{markdown}
+---
+title: "Susceptibility measurement"
+date: 2024-10-24
+author:
+  - name: Petr Čermák
+    email: petr.cermak@matfyz.cuni.cz
+    url: https://cermak.science/
+    affiliation: 
+      - name: Charles University
+        city: Prague
+        state: Czech republic
+        url: https://kfkl.mff.cuni.cz/
+abstract: > 
+  Ukázka měřícího protokolu.
+keywords:
+  - Automation
+  - Physics
+license: "CC 0"
+title-block-banner: true
+toc: true
+number-sections: true
+bibliography: references.bib
+csl: ../aps.csl
+highlight-style: pygments
+format:
+  html:
+    code-fold: true
+    code-tools: true
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+jupyter: python3
+---
+# My super experiment 
+
+## Preparation
+
+We have came to the room, glued the sample and started the measurement.
+
+```
+
+## Porovnání knihoven pro fitování: SciPy, lmfit, iminuit {.smaller}
+
+| **Knihovna**   | **Hlavní vlastnosti**                                                                 | **Výhody**                                                           | **Nevýhody**                                                   |
+| -------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **SciPy**      | Základ<br> `curve_fit` | Jednoduché (?) použití | Nelze snadno přidat omezení parametrů. |
+| **lmfit**      | Nadstavba nad SciPy s pokročilým rozhraním pro fitování. | Omezení a pevně dané parametry. | Větší overhead, u nelineárních někdy diverguje. |
+| **iminuit**    | Optimalizační knihovna založená na algoritmu Minuit (CERN). Gradientní sestupy, numerické odhady derivací | Rychlé a přesné fitování. <br> Výborné pro nelineární a složité problémy, určije chyby a korelace parametrů. | - Vyžaduje více konfigurace.<br> - Složitější pro začátečníky. |
+
+## iMinuit
+
+```{python}
+#| error: true
+#| output-location: fragment
+
+# !python -m pip install iminuit
+
+import numpy as np
+import matplotlib.pyplot as plt
+from iminuit import Minuit
+from iminuit.cost import LeastSquares
+
+# Funkce pro Gaussovu křivku
+def gauss(x, A, mu, sigma):
+    return A * np.exp(-(x - mu) ** 2 / (2 * sigma ** 2))
+
+np.random.seed(42)  # Pro opakovatelnost výsledků
+
+angles = np.linspace(-10, 10, 100)
+true_sigma = 1.5  # Výsledek
+
+params = [ (100, -3),  # A, úhel
+          (150, 0),
+          (80, 3)  ]
+```
+
+
+
+## iMinuit
+
+```{python}
+#| error: true
+#| output-location: fragment
+# Generování dat a přidání šumu
+data = []
+for A, mu in params:
+    intensity = gauss(angles, A, mu, true_sigma) + np.random.normal(0, 5, angles.size)
+    data.append(intensity)
+
+# Vizualizace generovaných dat
+for intensity, (A, mu) in zip(data, params):
+    plt.plot() #???)
+
+plt.xlabel('Úhel (°)')
+plt.ylabel('Intenzita')
+plt.legend()
+plt.show()
+```
+
+
+## iMinuit
+
+```{python}
+#| error: true
+#| output-location: fragment
+# Least squares cost function pro jednotlivé sady dat
+def cost_func(A1, mu1, A2, mu2, A3, mu3, sigma):
+    # Každá sada dat je hodnocena zvlášť, ale sdílí stejnou sigma
+    chi2_1 = LeastSquares(angles, data[0], np.ones_like(data[0]) * 5, gauss)(A1, mu1, sigma)
+    chi2_2 = LeastSquares(angles, data[1], np.ones_like(data[1]) * 5, gauss)(A2, mu2, sigma)
+    chi2_3 = LeastSquares(angles, data[2], np.ones_like(data[2]) * 5, gauss)(A3, mu3, sigma)
+    return chi2_1 + chi2_2 + chi2_3  # Součet všech chi^2
+
+# Inicializace Minuit s počátečními odhady parametrů
+m = Minuit(cost_func, A1=100, mu1=-3, A2=150, mu2=0, A3=80, mu3=3, sigma=1)
+
+# Fitování
+m.migrad()
+
+# Výstup výsledků
+print(m.values)
+print(f"Fitovaná poloviční šířka (sigma): {m.values['sigma']}")
+
+```
+## iMinuit
+
+```{python}
+#| error: true
+#| output-location: fragment
+# Vizualizace fitovaných křivek
+
+# použijte m.values['A1'], m.values['mu1'], m.values['sigma']
+```
+## Python Data Science
+
+
+Nainstalujte extension Python Data Science
+
+Obsahuje data wrangler
+
+```{python}
+!curl https://user.mgml.eu/automation/vsm/00000001.dat --output 01.dat
+```
+
+```{python}
+import pandas as pd
+import re
+pd.options.plotting.backend = "matplotlib"
+
+header = {}
+with open("01.dat", "r") as f:
+    for line in f:
+      if r := re.match(r'^INFO,([^,]*),([^,]*)$', line):
+        header[r[2].strip()] = r[1]
+      if line.strip() == "[Data]":
+        break
+    df = pd.read_csv(f, delimiter=",", index_col="Temperature (K)")
+
+df.head()
+```
+
+
+## Pandas
+
+```{python}
+#| error: true
+#| output-location: fragment
+
+# Zobrazí prvních 5 řádků dat
+print("Prvních 5 řádků:")
+print(df.head())
+
+# Základní popis statistik dat
+print("\nZákladní statistiky:")
+print(df.describe())
+
+# Zobrazení informací o datech (datové typy, null hodnoty, velikost atd.)
+print("\nInformace o datech:")
+print(df.info())
+```
+
+## Pandas
+
+```{python}
+#| error: true
+#| output-location: fragment
+
+# Filtrování dat (např. výběr řádků, kde hodnota ve sloupci 'age' je větší než 30)
+filtered_df = df[df['Time Stamp (sec)'] > 500]
+print("\nFiltrování dle času")
+print(filtered_df)
+
+# Vytvoření nového sloupce (např. výpočet BMI na základě sloupců 'weight' a 'height')
+df['Xi'] = 0 # #???
+print("\nNový sloupec BMI:")
+print(df[['Magnetic Field (Oe)',  'Moment (emu)', 'Xi']].head())
+
+```
+
+## Plotly
+
+```{python}
+pd.options.plotting.backend = "plotly"
+
+df[['Moment (emu)']].plot(y='Moment (emu)')
+```
+
