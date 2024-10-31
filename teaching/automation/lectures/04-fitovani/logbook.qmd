@@ -1,0 +1,56 @@
+---
+title: "Susceptibility measurement"
+date: 2024-10-24
+author:
+  - name: Petr Čermák
+    email: petr.cermak@matfyz.cuni.cz
+    url: https://cermak.science/
+    affiliation: 
+      - name: Charles University
+        city: Prague
+        state: Czech republic
+        url: https://kfkl.mff.cuni.cz/
+abstract: > 
+  Ukázka měřícího protokolu.
+keywords:
+  - Automation
+  - Physics
+license: "CC 0"
+title-block-banner: true
+toc: true
+number-sections: true
+#bibliography: references.bib
+#csl: ../aps.csl
+highlight-style: pygments
+format:
+  html:
+    code-fold: true
+    code-tools: true
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+jupyter: python3
+---
+# My super experiment 
+
+## Preparation
+
+We have came to the room, glued the sample and started the measurement.
+
+```{python}
+import pandas as pd
+import re
+
+header = {}
+with open("01.dat", "r") as f:
+    for line in f:
+      if r := re.match(r'^INFO,([^,]*),([^,]*)$', line):
+        header[r[2].strip()] = r[1]
+      if line.strip() == "[Data]":
+        break
+    df = pd.read_csv(f, delimiter=",", index_col="Temperature (K)")
+df['Xi'] = df['Moment (emu)'] / df['Magnetic Field (Oe)'] 
+pd.options.plotting.backend = "plotly"
+df.plot(y='Xi')
+```
