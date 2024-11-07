@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.55">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Petr Čermák">
+<meta name="dcterms.date" content="2024-11-07">
+
+<title>Automatizace ve fyzice: OpenCV podruhé</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="06-opencv_files/libs/clipboard/clipboard.min.js"></script>
+<script src="06-opencv_files/libs/quarto-html/quarto.js"></script>
+<script src="06-opencv_files/libs/quarto-html/popper.min.js"></script>
+<script src="06-opencv_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="06-opencv_files/libs/quarto-html/anchor.min.js"></script>
+<link href="06-opencv_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="06-opencv_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="06-opencv_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="06-opencv_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="06-opencv_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="presentation.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="06-opencv.ipynb" download="06-opencv.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Automatizace ve fyzice: OpenCV podruhé</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Petr Čermák </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 7, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="připojte-se" class="level2">
+<h2 class="anchored" data-anchor-id="připojte-se">Připojte se</h2>
+<p><a href="https://cermak.science/teaching/automation/lectures/06-opencv-2/presentation.html">cermak.science/teaching/automation/lectures/06-opencv-2/</a></p>
+</section>
+<section id="domácí-úkol-č.-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="domácí-úkol-č.-1">Domácí úkol č. 1</h2>
+<div class="columns">
+<div class="column">
+<p>Discord –&gt; <span class="citation" data-cites="nfpl242_automatizace">@nfpl242_automatizace</span> –&gt; pište DM</p>
+<p><code>$vsm_measure PROJECT TOKEN [branch]</code></p>
+<p>default branch je <code>master</code>, PROJECT je číslo projektu</p>
+<ul>
+<li>robot provede měření,</li>
+<li>uloží data na server</li>
+<li>vytriggeruje vaší pipeline</li>
+<li>dá mi vědět, že jste úkol odevzdali</li>
+</ul>
+</div><div class="column">
+<p><img src="gitlab-number.png" class="img-fluid"> <img src="gitlab-trigger.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="detekce-objektů" class="level1">
+<h1>Detekce objektů</h1>
+<section id="opakování" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="opakování">Opakování</h2>
+<ol type="1">
+<li>Načíst soubor</li>
+</ol>
+<p>. . .</p>
+<div id="25aa4d74" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2 <span class="im">as</span> cv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> cv.imread(<span class="st">"thea.jpg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ol start="2" type="1">
+<li>Převést do šedé</li>
+</ol>
+<p>. . .</p>
+<div id="038020a0" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gray <span class="op">=</span> cv.cvtColor(img, cv.COLOR_BGR2GRAY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ol start="3" type="1">
+<li>Rozostřit</li>
+</ol>
+<p>. . .</p>
+<div id="135ad1d8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>blur <span class="op">=</span> cv.medianBlur(gray, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ol start="4" type="1">
+<li>Práh nebo Hrany</li>
+</ol>
+<p>. . .</p>
+<div id="80ea2a9d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>binary <span class="op">=</span> cv.adaptiveThreshold(blur,<span class="dv">255</span>,<span class="op">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  cv.ADAPTIVE_THRESH_GAUSSIAN_C,<span class="op">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  cv.THRESH_BINARY,<span class="dv">11</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>. . .</p>
+<ol start="5" type="1">
+<li>Obrysy</li>
+</ol>
+<p>. . .</p>
+<div id="eac69c0c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>c, _ <span class="op">=</span> cv.findContours(binary, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="bu">len</span>(c)<span class="sc">}</span><span class="ss"> contour(s) found!'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>86928 contour(s) found!</code></pre>
+</div>
+</div>
+</section>
+<section id="barevné-prostory" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="barevné-prostory">Barevné prostory</h2>
+<div id="32607de3" class="cell" data-output-location="column" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">7</span>))<span class="op">;</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># BGR to HSV</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>hsv <span class="op">=</span> cv.cvtColor(img, cv.COLOR_BGR2HSV)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)<span class="op">;</span> plt.imshow(hsv)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># BGR to L*a*b</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>lab <span class="op">=</span> cv.cvtColor(img, cv.COLOR_BGR2LAB)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)<span class="op">;</span> plt.imshow(lab)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># BGR to RGB</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>rgb <span class="op">=</span> cv.cvtColor(img, cv.COLOR_BGR2RGB)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)<span class="op">;</span> plt.imshow(rgb)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="co"># BGR</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">4</span>)<span class="op">;</span> plt.imshow(img)</span>
+<span id="cb7-23"><a href="#cb7-23"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb7-24"><a href="#cb7-24"></a></span>
+<span id="cb7-25"><a href="#cb7-25"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-7-output-1.png" width="408" height="537" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="jednotlivé-složky-rgb" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="jednotlivé-složky-rgb">Jednotlivé složky RGB</h2>
+<div id="bc7c1a39" class="cell" data-output-location="column" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>blank <span class="op">=</span> np.zeros(img.shape[:<span class="dv">2</span>], dtype<span class="op">=</span><span class="st">'uint8'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>b,g,r <span class="op">=</span> cv.split(img)</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">7</span>))<span class="op">;</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a>blue <span class="op">=</span> cv.merge([b,blank,blank])</span>
+<span id="cb8-8"><a href="#cb8-8"></a>green <span class="op">=</span> cv.merge([blank,g,blank])</span>
+<span id="cb8-9"><a href="#cb8-9"></a>red <span class="op">=</span> cv.merge([blank,blank,r])</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>)<span class="op">;</span>plt.imshow(blue)<span class="op">;</span>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>)<span class="op">;</span>plt.imshow(green)<span class="op">;</span>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">3</span>)<span class="op">;</span>plt.imshow(red)<span class="op">;</span>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-8-output-1.png" width="466" height="232" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="d50eeaca" class="cell" data-output-location="column" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))<span class="op">;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(rgb)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-9-output-1.png" width="156" height="241" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="jednotlivé-složky-hsv" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="jednotlivé-složky-hsv">Jednotlivé složky HSV</h2>
+<ul>
+<li>odstín, hue (0 a 360 = červená, 120 = zelená, 240 = modrá).</li>
+<li>sytost (0 - 100)</li>
+<li>jas (0 - 100)</li>
+<li>podobné HSL, což je více pro design</li>
+</ul>
+<div id="21af6986" class="cell" data-output-location="column" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>h,s,v <span class="op">=</span> cv.split(hsv)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>))<span class="op">;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>)<span class="op">;</span> plt.imshow(h, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'hue'</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>)<span class="op">;</span> plt.imshow(s, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'saturation'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">3</span>)<span class="op">;</span> plt.imshow(v, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'value'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)<span class="op">;</span> plt.imshow(rgb)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'original'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-10-output-1.png" width="614" height="249" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="jednotlivé-složky-lab" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="jednotlivé-složky-lab">Jednotlivé složky Lab</h2>
+<ul>
+<li>světelnost (0-100)</li>
+<li>zelená &lt;-&gt; červená (-128 - 127)</li>
+<li>modrá &lt;-&gt; žlutá (-128 - 127)</li>
+</ul>
+<div id="b4f8671c" class="cell" data-output-location="column" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>h,s,v <span class="op">=</span> cv.split(lab)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>))<span class="op">;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>)<span class="op">;</span> plt.imshow(h, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'lightness'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>)<span class="op">;</span> plt.imshow(s, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'a'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">3</span>)<span class="op">;</span> plt.imshow(v, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'b'</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)<span class="op">;</span> plt.imshow(rgb)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'original'</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-11-output-1.png" width="614" height="249" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="histogramy" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="histogramy">Histogramy</h2>
+<div id="1cf0679d" class="cell" data-output-location="column-fragment" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">2</span>))<span class="op">;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(rgb)<span class="op">;</span>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-12-output-1.png" width="110" height="167" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>. . .</p>
+<div id="845e2448" class="cell" data-output-location="column-fragment" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>gray_hist <span class="op">=</span> cv.calcHist(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  [gray], <span class="co"># zdroj</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  [<span class="dv">0</span>],    <span class="co"># kanál</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="va">None</span>,   <span class="co"># maska</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  [<span class="dv">256</span>],  <span class="co"># počet binů</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  [<span class="dv">0</span>,<span class="dv">256</span>] <span class="co"># rozsah</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb13-10"><a href="#cb13-10"></a>plt.title(<span class="st">'Šedivý Histogram'</span>)</span>
+<span id="cb13-11"><a href="#cb13-11"></a>plt.xlabel(<span class="st">'Biny'</span>)</span>
+<span id="cb13-12"><a href="#cb13-12"></a>plt.ylabel(<span class="st">'# of pixelů'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13"></a>plt.plot(gray_hist)</span>
+<span id="cb13-14"><a href="#cb13-14"></a>plt.xlim([<span class="dv">0</span>,<span class="dv">256</span>])</span>
+<span id="cb13-15"><a href="#cb13-15"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-13-output-1.png" width="402" height="305" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="histogramy-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="histogramy-1">Histogramy</h2>
+<div id="28ecd6a4" class="cell" data-output-location="column-fragment" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>plt.figure()</span>
+<span id="cb14-2"><a href="#cb14-2"></a>plt.title(<span class="st">'Barevný Histogram'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a>plt.xlabel(<span class="st">'Biny'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a>plt.ylabel(<span class="st">'# of pixelů'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>colors <span class="op">=</span> (<span class="st">'b'</span>, <span class="st">'g'</span>, <span class="st">'r'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="cf">for</span> i,col <span class="kw">in</span> <span class="bu">enumerate</span>(colors):</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    hist <span class="op">=</span> cv.calcHist([img], [i],</span>
+<span id="cb14-8"><a href="#cb14-8"></a>       <span class="va">None</span>, [<span class="dv">256</span>], [<span class="dv">0</span>,<span class="dv">256</span>])</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    plt.plot(hist, color<span class="op">=</span>col)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>    plt.xlim([<span class="dv">0</span>,<span class="dv">256</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-14-output-1.png" width="620" height="450" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="detekce-a-kategorizace" class="level1">
+<h1>Detekce a kategorizace</h1>
+<section id="haar-cascade" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="haar-cascade">Haar cascade</h2>
+<blockquote class="blockquote">
+<p>Viola, P. and Jones, M. Rapid object detection using a boosted cascade of simple features. Proceedings of CVPR 2001 (Vol. 1, 2001) <a href="https://ieeexplore.ieee.org/document/990517">doi:10.1109/CVPR.2001.990517</a></p>
+</blockquote>
+<div class="columns">
+<div class="column">
+<ul>
+<li>data se natrénují na setu obrázků s objektem a bez objektu</li>
+<li>obrázek procházen jádrem s nějakým Haarovým rysem
+<ul>
+<li>odečítá se intenzita pod černým - bílým polem</li>
+<li>různé velikosti jader - mnoho rysů obrázku</li>
+</ul></li>
+<li>rysy promazány a protříděny do etap</li>
+<li>kaskádové - kde nic není, vyhodnotí se to rychle jako prázdno</li>
+</ul>
+</div><div class="column">
+<p><img src="haar_features.jpg" class="img-fluid" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+<section id="detekce-obličejů" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="detekce-obličejů">Detekce obličejů</h2>
+<p>OpenCV obsahuje <a href="https://github.com/opencv/opencv/tree/master/data/haarcascades">předučená data</a>.</p>
+<div id="9cd306ba" class="cell" data-output-location="column-fragment" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>people <span class="op">=</span> cv.imread(<span class="st">'people.jpg'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>people <span class="op">=</span> cv.cvtColor(people, cv.COLOR_BGR2RGB)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>gray <span class="op">=</span> cv.cvtColor(people, cv.COLOR_BGR2GRAY)</span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#gray = cv.equalizeHist(gray)</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>haar_cascade <span class="op">=</span> cv.CascadeClassifier(<span class="st">'haar_face.xml'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>faces_rect <span class="op">=</span> haar_cascade.detectMultiScale(</span>
+<span id="cb15-7"><a href="#cb15-7"></a>  gray, scaleFactor<span class="op">=</span><span class="fl">1.06</span>, minNeighbors<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="cf">for</span> (x,y,w,h) <span class="kw">in</span> faces_rect:</span>
+<span id="cb15-9"><a href="#cb15-9"></a>    cv.rectangle(people, (x,y), (x<span class="op">+</span>w,y<span class="op">+</span>h), </span>
+<span id="cb15-10"><a href="#cb15-10"></a>                 (<span class="dv">0</span>,<span class="dv">255</span>,<span class="dv">0</span>), thickness<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb15-11"><a href="#cb15-11"></a></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="bu">print</span>(<span class="ss">f'Nalezeno </span><span class="sc">{</span><span class="bu">len</span>(faces_rect)<span class="sc">}</span><span class="ss"> obličejů.'</span>)</span>
+<span id="cb15-13"><a href="#cb15-13"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))<span class="op">;</span> </span>
+<span id="cb15-14"><a href="#cb15-14"></a>plt.imshow(people)</span>
+<span id="cb15-15"><a href="#cb15-15"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nalezeno 29 obličejů.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-opencv_files/figure-html/cell-15-output-2.png" width="611" height="463" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="vlastní-data" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="vlastní-data">Vlastní data</h2>
+<ul>
+<li>Potřebujeme:
+<ul>
+<li>pozitivních data (kde jsou objekty)</li>
+<li>negativní data (kde nic není)</li>
+</ul></li>
+<li>Pozitivní lze vygenerovat (např. pro logo, hrot)
+<ul>
+<li><code>opencv_createsamples</code></li>
+<li>alternativně je sw jen upraví</li>
+<li><code>opencv_annotation</code> - naklikáte objekty z obrázku</li>
+</ul></li>
+<li><code>opencv_traincascade</code>
+<ul>
+<li>hlavní nástroj, mnoho parametrů</li>
+</ul></li>
+<li><code>opencv_visualisation</code>
+<ul>
+<li>zobrazí, jaké rysy sleduje a v jakých etapách</li>
+</ul></li>
+</ul>
+<p><strong>Pozor:</strong> Tyto nástroje nejsou součástí OpenCV 4, nutno stáhnout starou verzi.</p>
+</section>
+</section>
+<section id="příští-hodina-14.11.-odpadá" class="level1">
+<h1>Příští hodina 14.11. odpadá</h1>
+</section>
+<section id="cvičení" class="level1">
+<h1>Cvičení</h1>
+<section id="detekce-obličejů-1" class="level2">
+<h2 class="anchored" data-anchor-id="detekce-obličejů-1">Detekce obličejů</h2>
+<p>Úkol - kolik lidí je v KFKL na oddělení?</p>
+<ol type="1">
+<li>Stáhnout <a href="https://cermak.science/teaching/automation/lectures/06-opencv-2/people.jpg">cermak.science/teaching/automation/lectures/06-opencv-2/people.jpg</a></li>
+<li>Pohrát si s barevnými prostory, vyvážení barev</li>
+<li>Použít <code>haar_cascade.detectMultiScale</code></li>
+<li>Vytvořit docker CI pomocí image <code>hdgigante/python-opencv:4.10.0-alpine</code></li>
+</ol>
+</section>
+</section>
+<section id="příští-hodina-14.11.-odpadá-1" class="level1">
+<h1>Příští hodina 14.11. odpadá</h1>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
