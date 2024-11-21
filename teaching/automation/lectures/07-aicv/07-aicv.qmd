@@ -1,5 +1,5 @@
 ---
-title: "Automatizace ve fyzice: OpenCV naposledy"
+title: "Automatizace ve fyzice: Computer Vision pomocí AI"
 author: Petr Čermák
 date: 2024-11-21
 format:
