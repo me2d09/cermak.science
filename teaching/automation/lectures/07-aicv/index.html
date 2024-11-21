@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.55">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Petr Čermák">
+<meta name="dcterms.date" content="2024-11-21">
+
+<title>Automatizace ve fyzice: OpenCV naposledy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="07-aicv_files/libs/clipboard/clipboard.min.js"></script>
+<script src="07-aicv_files/libs/quarto-html/quarto.js"></script>
+<script src="07-aicv_files/libs/quarto-html/popper.min.js"></script>
+<script src="07-aicv_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="07-aicv_files/libs/quarto-html/anchor.min.js"></script>
+<link href="07-aicv_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="07-aicv_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="07-aicv_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="07-aicv_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="07-aicv_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="presentation.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="07-aicv.ipynb" download="07-aicv.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Automatizace ve fyzice: OpenCV naposledy</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Petr Čermák </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 21, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="připojte-se" class="level2">
+<h2 class="anchored" data-anchor-id="připojte-se">Připojte se</h2>
+<p><a href="https://cermak.science/teaching/automation/lectures/07-aicv/presentation.html">cermak.science/teaching/automation/lectures/07-aicv/</a></p>
+</section>
+<section id="free-výpočetní-cloudy" class="level1">
+<h1>Free výpočetní cloudy</h1>
+<section id="binder-colab-kaggle" class="level2">
+<h2 class="anchored" data-anchor-id="binder-colab-kaggle">Binder, Colab, Kaggle</h2>
+<ul>
+<li>free hostovaný jupyter notebook</li>
+<li>stačí se zaregistrovat (pro colab google account)</li>
+<li>CPU výkon srovnatelný s nb</li>
+<li>dostupné GPU !!</li>
+<li>nulová instalace</li>
+</ul>
+</section>
+<section id="binder" class="level2">
+<h2 class="anchored" data-anchor-id="binder">Binder</h2>
+<ul>
+<li>Stáhne celý repo</li>
+<li>nainstaluje requirements.txt</li>
+<li>není python specific</li>
+<li>založený na <a href="https://github.com/jupyterhub/repo2docker">repo2docker</a></li>
+<li><a href="https://mybinder.org/">mybinder.org</a></li>
+<li>není od googlu</li>
+</ul>
+</section>
+<section id="colab-and-kaggle" class="level2">
+<h2 class="anchored" data-anchor-id="colab-and-kaggle">Colab and kaggle</h2>
+<ul>
+<li><a href="https://colab.research.google.com/">colab.research.google.com</a></li>
+<li>jen malé rozdíly</li>
+<li>~ 12 GB RAM, ~ 100GB space, ~2x CPU</li>
+<li>Kaggle obsahuje datasety, soutěže</li>
+<li>Colab je rozšířenější, snadno se linkuje z repozitáře</li>
+<li>přímé napojení na github</li>
+</ul>
+</section>
+<section id="colab-triky" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="colab-triky">Colab triky</h2>
+<ul>
+<li>připoj si google disk</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>drive.mount(<span class="st">'/content/gdrive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>funkční linux</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">!wget</span> url</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">!pip</span> install ...</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">!git</span> clone ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>nahrávání/stahování souborů</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> files</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>files.upload()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files.download(<span class="st">'soubor'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>procházení pandas dataframes</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext google.colab.data_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="gpu" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="gpu">GPU</h2>
+<ul>
+<li>všechny ale mají podporu GPU
+<ul>
+<li>většinou chybí na noteboocích</li>
+<li>nutnost pro deep learning</li>
+</ul></li>
+<li>vylepší výkon?
+<ul>
+<li>nutnost kopírovat data na grafickou kartu</li>
+<li><em>neexistuje</em> <code>instruction set</code> jako u CPU</li>
+<li>resp. každá grafika ho má jiný</li>
+<li>přístup přes API (OpenGL, DirectX, CUDA, …)</li>
+<li>velmi omezené možnosti co dělat (aby to mělo smysl)</li>
+</ul></li>
+<li>Je třeba se učit CUDA?
+<ul>
+<li>ne –&gt; numba</li>
+</ul></li>
+</ul>
+</section>
+<section id="numpy-trochu-interně" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="numpy-trochu-interně">numpy trochu interně</h2>
+<ul>
+<li>ufuncs
+<ul>
+<li>univerzální funkce s numpy <code>array</code> po prvcích</li>
+<li>například při umocňování:</li>
+</ul></li>
+</ul>
+<div id="de08e2f1" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">10</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.exp(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 0  1  4  9 16 25 36 49 64 81]
+[1.00000000e+00 2.71828183e+00 7.38905610e+00 2.00855369e+01
+ 5.45981500e+01 1.48413159e+02 4.03428793e+02 1.09663316e+03
+ 2.98095799e+03 8.10308393e+03]</code></pre>
+</div>
+</div>
+<pre><code>- je to mnohem rychlejší</code></pre>
+<div id="d0b87259" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">int</span>(<span class="fl">1e6</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit np.sqrt(x)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit [math.sqrt(xx) <span class="cf">for</span> xx <span class="kw">in</span> x]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7.55 ms ± 428 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+261 ms ± 18.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+</div>
+</div>
+</section>
+<section id="numba" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="numba">Numba</h2>
+<ul>
+<li>Numba umí předkompilovat pythoní kód</li>
+<li>prakticky pouze numpy a cykly
+<ul>
+<li>žádné pandas, vlasní knihovny etc.</li>
+<li>použití těchto bude delší</li>
+<li>snadno přepne na GPU</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="bu">int</span>(<span class="fl">1e7</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(npoints, dtype<span class="op">=</span>np.float32)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numba <span class="im">import</span> vectorize </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">@vectorize</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cpu_sqrt(x):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> math.sqrt(x)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>cpu_sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numba <span class="im">import</span> vectorize</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32)'</span>], target<span class="op">=</span><span class="st">'cuda'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gpu_sqrt(x):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> math.sqrt(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit gpu_sqrt(a)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit np.sqrt(a)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit cpu_sqrt(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="komplikovanější-výpočet" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="komplikovanější-výpočet">Komplikovanější výpočet</h2>
+<ul>
+<li>Multivariabilní normálně rozdělená náhodná veličina.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.random.multivariate_normal([<span class="dv">0</span>,<span class="dv">0</span>], [[<span class="fl">1.</span>,<span class="fl">0.9</span>], [<span class="fl">0.9</span>,<span class="fl">1.</span>]], <span class="dv">1000</span>).astype(np.float32)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(points[:,<span class="dv">0</span>], points[:,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>převod do radiálních souřednic</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.arctan2(points[:,<span class="dv">1</span>], points[:,<span class="dv">0</span>]) </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(theta, bins<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>to samé na GPU:</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="at">@vectorize</span>([<span class="st">'float32(float32, float32)'</span>],target<span class="op">=</span><span class="st">'cuda'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gpu_arctan2(y, x): </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> math.atan2(y,x)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># malý trik kvůli GPU:</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">0</span>])</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.ascontiguousarray(points[:,<span class="dv">1</span>])</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> gpu_arctan2(y, x)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>plt.hist(theta, bins<span class="op">=</span><span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Porovnání</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit gpu_arctan2(y, x) <span class="co"># compiled for the GPU </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit np.arctan2(y, x) <span class="co"># compiled for the CPU</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit [math.atan2(point[<span class="dv">1</span>], point[<span class="dv">0</span>]) <span class="cf">for</span> point <span class="kw">in</span> points] <span class="co"># plain python</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="detekce-objektů" class="level1">
+<h1>Detekce objektů</h1>
+<section id="klasifikace-objektů" class="level2">
+<h2 class="anchored" data-anchor-id="klasifikace-objektů">Klasifikace objektů?</h2>
+<p>Identifikace a kategorizace objektů v obrázku do předdefinovaných tříd.</p>
+<ul>
+<li>Trénink modelu na anotovaném datasetu.</li>
+<li>Použití natrénovaného modelu ke klasifikaci nových obrázků.</li>
+</ul>
+<section id="detekce-objektů-1" class="level3">
+<h3 class="anchored" data-anchor-id="detekce-objektů-1">Detekce objektů</h3>
+<p>Úloha identifikace a lokalizace objektů určitých tříd v obrázcích.</p>
+<ul>
+<li><strong>Algoritmy</strong>: R-CNN, Faster R-CNN, YOLO, SSD.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="yolo-you-only-look-once" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="yolo-you-only-look-once">YOLO (You Only Look Once)</h2>
+<p>Detekce objektů v reálném čase.</p>
+<p><strong>Princip</strong>: Zpracovává celý obrázek jedním průchodem neuronovou sítí.</p>
+<p><strong>Výhody</strong>:</p>
+<ul>
+<li>Vysoká rychlost zpracování.</li>
+<li>Schopnost detekovat více objektů různých tříd současně.</li>
+</ul>
+<section id="historie" class="level3">
+<h3 class="anchored" data-anchor-id="historie">Historie</h3>
+<ul>
+<li><strong>YOLOv1</strong> (2015): První verze, která rozdělila obrázek na mřížku a předpovídala bounding boxy a třídy pro každou buňku.</li>
+<li><strong>YOLOv2 (YOLO9000)</strong> (2016): Zlepšení přesnosti a schopnost detekovat přes 9000 tříd objektů.</li>
+<li>…</li>
+<li><strong>YOLOv11</strong> (2024): vylepšení architektury, podpora segmentace a detekce orientovaných objektů, zlepšená přesnost.</li>
+</ul>
+</section>
+</section>
+<section id="jak-yolo-funguje" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="jak-yolo-funguje">Jak YOLO funguje?</h2>
+<ol type="1">
+<li><strong>Rozdělení obrázku</strong>: Obrázek je rozdělen na mřížku SxS buněk.</li>
+<li><strong>Predikce</strong>: Každá buňka předpovídá B bounding boxů a jejich confidence skóre.</li>
+<li><strong>Kombinace</strong>: Bounding boxy jsou kombinovány s předpovězenými třídami objektů.</li>
+<li><strong>Výstup</strong>: Výsledkem jsou bounding boxy s přiřazenými třídami a confidence skóre.</li>
+</ol>
+<section id="výhody" class="level3">
+<h3 class="anchored" data-anchor-id="výhody">Výhody</h3>
+<ul>
+<li>Rychlost: Schopnost zpracovat obrázky v reálném čase.</li>
+<li>Jednoduchá architektura a implementace.</li>
+<li>Neustálý <strong>vývoj</strong> a vylepšování vedly k vyšší přesnosti a rychlosti.</li>
+</ul>
+</section>
+<section id="nevýhody" class="level3">
+<h3 class="anchored" data-anchor-id="nevýhody">Nevýhody</h3>
+<ul>
+<li>Přesnost: Může mít nižší přesnost u malých objektů nebo objektů v blízkosti sebe.</li>
+<li>Lokalizace: Méně přesná lokalizace objektů ve srovnání s některými jinými metodami.</li>
+</ul>
+</section>
+</section>
+<section id="další-zdroje" class="level2">
+<h2 class="anchored" data-anchor-id="další-zdroje">Další zdroje</h2>
+<ul>
+<li><a href="https://kili-technology.com/data-labeling/machine-learning/yolo-algorithm-real-time-object-detection-from-a-to-z">YOLO Algorithm: Real-Time Object Detection from A to Z</a></li>
+<li><a href="https://pjreddie.com/darknet/yolo/">Oficiální stránka YOLO</a></li>
+<li><a href="https://github.com/AlexeyAB/darknet">GitHub repozitář YOLO</a></li>
+<li><a href="https://arxiv.org/pdf/2410.17725">Poslední paper (v11)</a></li>
+</ul>
+</section>
+<section id="anotování" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="anotování">Anotování</h2>
+<p><strong>Hlavní výzvy</strong>:</p>
+<ul>
+<li>Časová náročnost.</li>
+<li>Potřeba přesnosti.</li>
+<li>Kompatibilita s různými formáty (YOLO, COCO, Pascal VOC, atd.).</li>
+</ul>
+<p>. . .</p>
+<section id="roboflow" class="level3">
+<h3 class="anchored" data-anchor-id="roboflow">Roboflow</h3>
+<ul>
+<li>Webové rozhraní.</li>
+<li>Možnost týmové spolupráce.</li>
+<li>Import a export v YOLO, COCO …</li>
+<li>Nástroje pro předanotaci (např. AutoML modely pro předběžné označení).</li>
+<li><strong>Augmentace dat</strong>: přidání transformací (rotace, ořez, změna jasu, atd.).</li>
+<li><strong>Bezplatný tarif</strong>: Až 1 000 obrázků zdarma, akademický tarif.</li>
+<li><a href="https://roboflow.com/">roboflow.com</a></li>
+</ul>
+</section>
+</section>
+<section id="anotování---alternativy" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="anotování---alternativy">Anotování - alternativy</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><strong>Nástroj</strong></th>
+<th><strong>Výhody</strong></th>
+<th><strong>Nevýhody</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/tzutalin/labelImg">LabelImg</a></td>
+<td>Zdarma, open-source, jednoduchý na použití</td>
+<td>Ruční anotace, omezené funkce</td>
+</tr>
+<tr class="even">
+<td><a href="https://cvat.ai/">CVAT</a></td>
+<td>Výkonný a přizpůsobitelný pro velké projekty</td>
+<td>Složitá instalace</td>
+</tr>
+<tr class="odd">
+<td><a href="https://labelstudio.io/">Label Studio</a></td>
+<td>Podpora různých typů dat (text, obrázky, audio)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="https://supervise.ly/">Supervise.ly</a></td>
+<td>Cloudová platforma s pokročilou automatizací</td>
+<td>Omezené použití zdarma</td>
+</tr>
+<tr class="odd">
+<td><a href="https://roboflow.com/">Roboflow</a></td>
+<td>Intuitivní rozhraní, automatizace, sdílení projektů</td>
+<td>Omezení u bezplatného tarifu</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="cvičení" class="level1">
+<h1>Cvičení</h1>
+<section id="data-k-anotování" class="level2">
+<h2 class="anchored" data-anchor-id="data-k-anotování">Data k anotování</h2>
+<p>Data k analýze:</p>
+<p><a href="https://user.mgml.eu/automation/potato/">user.mgml.eu/automation/potato</a></p>
+<p><a href="https://user.mgml.eu/automation/potato.zip">user.mgml.eu/automation/potato.zip</a></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

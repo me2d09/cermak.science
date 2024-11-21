@@ -1,0 +1,294 @@
+---
+title: "Automatizace ve fyzice: OpenCV naposledy"
+author: Petr Čermák
+date: 2024-11-21
+format:
+  revealjs: 
+    output-file: presentation.html
+    theme: moon
+    multiplex: true
+    chalkboard: true
+  html:
+    output-file: index.html
+  ipynb: default
+jupyter: python3
+execute: 
+  echo: true
+---
+## Připojte se
+
+[cermak.science/teaching/automation/lectures/07-aicv/](https://cermak.science/teaching/automation/lectures/07-aicv/presentation.html)
+
+
+# Free výpočetní cloudy
+
+## Binder, Colab, Kaggle
+
+- free hostovaný jupyter notebook
+- stačí se zaregistrovat (pro colab google account)
+- CPU výkon srovnatelný s nb
+- dostupné GPU !!
+- nulová instalace
+
+
+## Binder
+
+ - Stáhne celý repo
+ - nainstaluje requirements.txt
+ - není python specific
+ - založený na [repo2docker](https://github.com/jupyterhub/repo2docker)
+ - [mybinder.org](https://mybinder.org/)
+ - není od googlu
+
+## Colab and kaggle
+
+ - [colab.research.google.com](https://colab.research.google.com/)
+ - jen malé rozdíly
+ - ~ 12 GB RAM, ~ 100GB space, ~2x CPU
+ - Kaggle obsahuje datasety, soutěže
+ - Colab je rozšířenější, snadno se linkuje z repozitáře
+ - přímé napojení na github
+
+## Colab triky {.smaller}
+
+ - připoj si google disk
+
+```{.python}
+from google.colab import drive
+drive.mount('/content/gdrive')
+```
+
+ - funkční linux
+```{.bash}
+!wget url
+!pip install ...
+!git clone ...
+```
+
+ - nahrávání/stahování souborů
+
+```{.python}
+from google.colab import files
+files.upload()
+files.download('soubor')
+```
+
+ - procházení pandas dataframes
+```{.python}
+%load_ext google.colab.data_table
+```
+
+## GPU {.smaller}
+
+ - všechny ale mají podporu GPU
+   - většinou chybí na noteboocích
+   - nutnost pro deep learning
+ - vylepší výkon?
+   - nutnost kopírovat data na grafickou kartu
+   - *neexistuje* `instruction set` jako u CPU
+   - resp. každá grafika ho má jiný
+   - přístup přes API (OpenGL, DirectX, CUDA, ...)
+   - velmi omezené možnosti co dělat (aby to mělo smysl)
+ - Je třeba se učit CUDA?
+   - ne --> numba
+
+
+## numpy trochu interně {.smaller}
+
+ - ufuncs
+   - univerzální funkce s numpy `array` po prvcích
+   - například při umocňování:
+
+```{python}
+import numpy as np
+x = np.arange(10)
+print(x**2)
+print(np.exp(x))
+```
+
+    - je to mnohem rychlejší
+
+```{python}
+import math
+x = np.arange(int(1e6))
+%timeit np.sqrt(x)
+%timeit [math.sqrt(xx) for xx in x]
+```
+
+## Numba {.smaller}
+
+ - Numba umí předkompilovat pythoní kód
+ - prakticky pouze numpy a cykly
+   - žádné pandas, vlasní knihovny etc.
+   - použití těchto bude delší
+   - snadno přepne na GPU
+
+```{.python}
+npoints = int(1e7)
+a = np.arange(npoints, dtype=np.float32)
+
+from numba import vectorize 
+
+@vectorize
+def cpu_sqrt(x):
+  return math.sqrt(x)
+
+cpu_sqrt(x)
+```
+
+```{.python}
+import math
+from numba import vectorize
+
+@vectorize(['float32(float32)'], target='cuda')
+def gpu_sqrt(x):
+    return math.sqrt(x)
+```
+
+```{.python}
+%timeit gpu_sqrt(a)
+%timeit np.sqrt(a)
+%timeit cpu_sqrt(a)
+```
+
+## Komplikovanější výpočet {.smaller}
+
+ - Multivariabilní normálně rozdělená náhodná veličina.
+
+```{.python}
+points = np.random.multivariate_normal([0,0], [[1.,0.9], [0.9,1.]], 1000).astype(np.float32)
+import matplotlib.pyplot as plt
+plt.scatter(points[:,0], points[:,1])
+```
+ - převod do radiálních souřednic
+
+```{.python}
+theta = np.arctan2(points[:,1], points[:,0]) 
+_ = plt.hist(theta, bins=100)
+``` 
+ - to samé na GPU:
+
+```{.python}
+@vectorize(['float32(float32, float32)'],target='cuda')
+def gpu_arctan2(y, x): 
+    theta = math.atan2(y,x)
+    return theta
+
+# malý trik kvůli GPU:
+x = np.ascontiguousarray(points[:,0])
+y = np.ascontiguousarray(points[:,1])
+theta = gpu_arctan2(y, x)
+plt.hist(theta, bins=200)
+``` 
+ - Porovnání
+
+```{.python}
+%timeit gpu_arctan2(y, x) # compiled for the GPU 
+%timeit np.arctan2(y, x) # compiled for the CPU
+%timeit [math.atan2(point[1], point[0]) for point in points] # plain python
+```
+
+# Detekce objektů
+
+
+## Klasifikace objektů?
+
+Identifikace a kategorizace objektů v obrázku do předdefinovaných tříd.
+
+  - Trénink modelu na anotovaném datasetu.
+  - Použití natrénovaného modelu ke klasifikaci nových obrázků.
+
+### Detekce objektů
+
+Úloha identifikace a lokalizace objektů určitých tříd v obrázcích.
+
+- **Algoritmy**: R-CNN, Faster R-CNN, YOLO, SSD.
+
+---
+
+## YOLO (You Only Look Once) {.smaller}
+
+Detekce objektů v reálném čase.
+
+**Princip**: Zpracovává celý obrázek jedním průchodem neuronovou sítí.
+
+**Výhody**:
+
+  - Vysoká rychlost zpracování.
+  - Schopnost detekovat více objektů různých tříd současně.
+
+### Historie
+
+- **YOLOv1** (2015): První verze, která rozdělila obrázek na mřížku a předpovídala bounding boxy a třídy pro každou buňku.
+- **YOLOv2 (YOLO9000)** (2016): Zlepšení přesnosti a schopnost detekovat přes 9000 tříd objektů.
+- ...
+- **YOLOv11** (2024): vylepšení architektury, podpora segmentace a detekce orientovaných objektů, zlepšená přesnost.
+
+
+## Jak YOLO funguje? {.smaller}
+
+1. **Rozdělení obrázku**: Obrázek je rozdělen na mřížku SxS buněk.
+2. **Predikce**: Každá buňka předpovídá B bounding boxů a jejich confidence skóre.
+3. **Kombinace**: Bounding boxy jsou kombinovány s předpovězenými třídami objektů.
+4. **Výstup**: Výsledkem jsou bounding boxy s přiřazenými třídami a confidence skóre.
+
+### Výhody
+
+  - Rychlost: Schopnost zpracovat obrázky v reálném čase.
+  - Jednoduchá architektura a implementace.
+  - Neustálý **vývoj** a vylepšování vedly k vyšší přesnosti a rychlosti.
+
+### Nevýhody
+
+  - Přesnost: Může mít nižší přesnost u malých objektů nebo objektů v blízkosti sebe.
+  - Lokalizace: Méně přesná lokalizace objektů ve srovnání s některými jinými metodami.
+
+## Další zdroje
+
+- [YOLO Algorithm: Real-Time Object Detection from A to Z](https://kili-technology.com/data-labeling/machine-learning/yolo-algorithm-real-time-object-detection-from-a-to-z)
+- [Oficiální stránka YOLO](https://pjreddie.com/darknet/yolo/)
+- [GitHub repozitář YOLO](https://github.com/AlexeyAB/darknet)
+- [Poslední paper (v11)](https://arxiv.org/pdf/2410.17725)
+
+## Anotování {.smaller}
+
+**Hlavní výzvy**:
+
+  - Časová náročnost.
+  - Potřeba přesnosti.
+  - Kompatibilita s různými formáty (YOLO, COCO, Pascal VOC, atd.).
+
+. . .
+
+### Roboflow
+
+- Webové rozhraní.
+- Možnost týmové spolupráce.
+- Import a export v YOLO, COCO ...
+- Nástroje pro předanotaci (např. AutoML modely pro předběžné označení).
+- **Augmentace dat**: přidání transformací (rotace, ořez, změna jasu, atd.).
+- **Bezplatný tarif**: Až 1 000 obrázků zdarma, akademický tarif.
+- [roboflow.com](https://roboflow.com/)   
+
+## Anotování - alternativy {.smaller}
+
+
+| **Nástroj**   | **Výhody**                                         | **Nevýhody**                                |
+|---------------|---------------------------------------------------|---------------------------------------------|
+| [LabelImg](https://github.com/tzutalin/labelImg)  | Zdarma, open-source, jednoduchý na použití        | Ruční anotace, omezené funkce               |
+| [CVAT](https://cvat.ai/)   | Výkonný a přizpůsobitelný pro velké projekty       | Složitá instalace      |
+| [Label Studio](https://labelstudio.io/) | Podpora různých typů dat (text, obrázky, audio) |         |
+| [Supervise.ly](https://supervise.ly/)  | Cloudová platforma s pokročilou automatizací    | Omezené použití zdarma |
+| [Roboflow](https://roboflow.com/)        | Intuitivní rozhraní, automatizace, sdílení projektů | Omezení u bezplatného tarifu                |
+
+
+# Cvičení
+
+## Data k anotování
+
+Data k analýze:
+
+[user.mgml.eu/automation/potato](https://user.mgml.eu/automation/potato/)
+
+[user.mgml.eu/automation/potato.zip](https://user.mgml.eu/automation/potato.zip)
+
