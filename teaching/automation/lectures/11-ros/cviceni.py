@@ -13,6 +13,9 @@ client.run()
 # %%
 print('Is ROS connected?', client.is_connected)
 
+# %%
+# Ukončení spojení
+client.terminate()
 
 
 # %%
@@ -25,13 +28,35 @@ client.get_services()
 
 service_type = client.get_service_type("/spawn")
 print(service_type)
-#
+# %%
+client.get_service_request_details(service_type)
+
+
+#%%
+# Jaké mám topicy
+client.get_topics()
+#%%
+client.get_topic_type('/connected_clients')
+#%%
+listener = roslibpy.Topic(client, '/connected_clients', 'rosbridge_msgs/msg/ConnectedClients')
+listener.subscribe(print)  ## print je callback! bude tisknout výstup
+
+#%%
+# odpojím se
+listener.unsubscribe()
+
+
+
+
+
+
+
 # %%
 # Vytvořte si vlastní želvu
 service = roslibpy.Service(client, '/spawn', 'turtlesim/srv/Spawn')
-request = roslibpy.ServiceRequest({'x': [0-10],
-                                   'y': [0-10],
-                                   'name': '??'})
+request = roslibpy.ServiceRequest({'x': ??,
+                                   'y': ??,
+                                   'name': ??})
 service.call(request)
 
 
@@ -54,28 +79,28 @@ service.call(request)
 
 # úkol: vypište jen topicy pro vyši želvičku
 
-for t in client.get_topics():
-    if "turtle1" in t:
-        print(t)
+
 
 # %%
 
 # pohyb želvy rovně
 
-talker = roslibpy.Topic(client, '/turtle1/cmd_vel', 'geometry_msgs/msg/Twist')
+talker = roslibpy.Topic(client, '/nejakazelva/cmd_vel', 'geometry_msgs/msg/Twist')
+# jeď rovně
 talker.publish(roslibpy.Message(
-        {'linear': {'x': 1.0, 'y': 0.0, 'z': 0.0}, 
+        {'linear': {'x': 10.0, 'y': 0.0, 'z': 0.0}, 
          'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}
          }))
 sleep(1)
+# zatoč
 talker.publish(roslibpy.Message(
         {'linear': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 
          'angular': {'x': 0.0, 'y': 0.0, 'z': 1.0}
          }))
 talker.unadvertise()
 # %%
-
-v = None
+# pozorování rychlosti kamarádovy želvy 
+v = 0
 
 def update_vel(m):
     global v
@@ -83,125 +108,27 @@ def update_vel(m):
         print(f'Rychlost: {v} -> {m["linear_velocity"]}')
         v = m["linear_velocity"]
           
-listener = roslibpy.Topic(client, '/turtle1/pose', 'turtlesim/msg/Pose')
+listener = roslibpy.Topic(client, '/nejakacizizelva/pose', 'turtlesim/msg/Pose')
 listener.subscribe(update_vel)
 
-print("čekám")
-sleep(1)
-print("jedu")
-talker = roslibpy.Topic(client, '/turtle1/cmd_vel', 'geometry_msgs/msg/Twist')
-talker.publish(roslibpy.Message(
-        {'linear': {'x': 1.0, 'y': 0.0, 'z': 0.0}, 
-         'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}
-         }))
-sleep(0.1)
+while v == 0:
+    sleep(0.1)
+print("už jede")
 while v > 0:
     sleep(0.1)
-print("hotovo")
-talker.unadvertise()
+print("už stojí")
 
 listener.unsubscribe()
 
 
-# úkol: nakreslete domeček
-# %%
-from math import sqrt, atan2
+# úkol: nakreslete domeček/vánoční stromek/hvězdu
 # %%
 
 
 
-class Zelvak:
 
-    def __init__(self, client, name):
-        #self._c = client
-        self.n = name
 
-        self.velocity_publisher = roslibpy.Topic(client, f'/{self.n}/cmd_vel', 'geometry_msgs/msg/Twist')
 
-        self.pose_subscriber = roslibpy.Topic(client, f'/{self.n}/pose', 'turtlesim/msg/Pose')
-        self.pose_subscriber.subscribe(self.update_pose)
-        self.pose = None
-
-    def update_pose(self, data):
-        self.pose = data
-        self.pose["x"] = round(self.pose["x"], 4)
-        self.pose["y"] = round(self.pose["y"], 4)
-
-    def euclidean_distance(self, goal_pose):
-        """Euclidean distance between current pose and the goal."""
-        return sqrt(pow((goal_pose["x"] - self.pose["x"]), 2) +
-                    pow((goal_pose["y"] - self.pose["y"]), 2))
-
-    def linear_vel(self, goal_pose, constant=1.5):
-        return constant * self.euclidean_distance(goal_pose)
-
-    def steering_angle(self, goal_pose):
-        return atan2(goal_pose["y"] - self.pose["y"], goal_pose["x"] - self.pose["x"])
-
-    def angular_vel(self, goal_pose, constant=6):
-        return constant * (self.steering_angle(goal_pose) - self.pose["theta"])
-
-    def move2goal(self, x, y):
-        """Moves the turtle to the goal."""
-        goal_pose = {}
-
-        # Get the input from the user.
-        goal_pose["x"] = x
-        goal_pose["y"] = y
-
-        # Please, insert a number slightly greater than 0 (e.g. 0.01).
-        distance_tolerance = 0.01
-
-        vel_msg = {}
-
-        while self.euclidean_distance(goal_pose) >= distance_tolerance:
-
-            vel_msg = {
-                'linear': {'x': self.linear_vel(goal_pose), 'y': 0.0, 'z': 0.0}, 
-                'angular': {'x': 0.0, 'y': 0.0, 'z': self.angular_vel(goal_pose)}
-                }
-            
-
-            # Publishing our vel_msg
-            self.velocity_publisher.publish(
-                roslibpy.Message(vel_msg)
-            )
-
-            # Publish at the desired rate.
-            sleep(0.1)
-
-        # Stop zelvak
-        self.velocity_publisher.publish(roslibpy.Message(
-        {'linear': {'x': 0.0, 'y': 0.0, 'z': 0.0}, 
-         'angular': {'x': 0.0, 'y': 0.0, 'z': 0.0}
-         }))
 # %%
-moje = Zelvak(client, "turtle1")
-# %%
-moje.move2goal(9,3)
-# %%
-# zelvicky
-zelvy = []
-for t in client.get_topics():
-    if "cmd_vel" in t:
-        n = t[1:-8]
-        if n != "turtle1":
-            zelvy.append(n)
-zelvy
-# %%
+#úkol: napište želvu, co bude pronásledovat vybranou spolužákovu želvu
 
-x,y = 0,0
-
-def get_pose(m):
-    global x,y
-    x = m["x"]
-    y = m["y"]
-
-for z in zelvy:          
-    listener = roslibpy.Topic(client, f'/{z}/pose', 'turtlesim/msg/Pose')
-    listener.subscribe(get_pose)
-    sleep(0.1)
-    listener.unsubscribe()
-    print(f"Jdu na {x},{y}")
-    moje.move2goal(x,y)
-# %%
