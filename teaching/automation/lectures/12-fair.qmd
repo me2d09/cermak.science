@@ -1,0 +1,108 @@
+---
+title: "Automatizace ve fyzice: Open data, F.A.I.R."
+author: Petr Čermák
+date: 2025-01-09
+format:
+  revealjs: 
+    output-file: presentation.html
+    theme: moon
+    multiplex: true
+    chalkboard: true
+  html:
+    output-file: index.html
+  ipynb: default
+jupyter: python3
+execute: 
+  echo: true
+summary: |
+  Zásady F.A.I.R.
+  Popisování dat pomocí skriptů
+  Ukládání dat pro další generace
+---
+## Připojte se
+
+[cermak.science/teaching/automation/lectures/12-fair/](https://cermak.science/teaching/automation/lectures/12-fair/presentation.html)
+
+
+# Úvod
+
+## Co je F.A.I.R.? {.smaller}
+
+![](fair.jpg){width=90%}
+
+ - T jako *Trustworthy*
+   - data nejsou upravena
+   - metadata jsou v pořádku (automatické vyplnění)
+   - všechna data jsou publikována
+
+
+## Findable
+
+- Chceme vědět, jestli někdo ještě měřil fonony v křemíku
+- [Článek](https://doi.org/10.1103/PhysRevB.74.054302)
+- Findable?
+
+. . .
+
+- [google](https://www.google.com/search?q=silicon+%223-axis+spectrometer%22++site%3Ahttps%3A%2F%2Fdoi.ill.fr)
+
+## Accessible
+
+- definovaný přístup (API)
+- porovnejte:
+  - [ILL](https://doi.ill.fr/10.5291/ILL-DATA.TEST-2385)
+  - [figshare](https://doi.org/10.6084/m9.figshare.24986532.v1)
+- --> [strojově čitelný záznam](https://api.figshare.com/v2/articles/24986532)
+
+## Interoperable
+
+- použití standardizovaného formátu dat (někde je popis)
+- parametry experimentu v metadatech
+- lze využít ufit library (pip install ufit)
+
+![](ufit.png){width=90%}
+
+## Reusable
+
+ - idea: skript zpracuje všechna data do článku
+  
+ - nestačí pouhý Jupyter notebook
+ - vytvořit `requirements.txt` se specifikovanou verzí knihoven
+ - binder: 
+
+nebo: 
+
+ - použít [Repo2Docker](https://repo2docker.readthedocs.io/)
+ - archivovat celý docker image
+
+## Ideální stav
+
+![](data-policy-and-fair.png){width=90%}
+
+# Cvičení - zpracujeme si data
+
+## Publikace dat
+
+ - python knihovna `ufit`
+ - [cviceni.py](https://cermak.science/teaching/automation/lectures/12-fair/cviceni.py)
+
+## Generování dockeru
+
+ -   Nainstalovat docker (použít WSL na windows)
+ -   `pip install jupyter-repo2docker`
+ -   generování repositáře
+
+```{.bash}
+jupyter-repo2docker https://github.com/xxx/yyy
+# nebo
+jupyter-repo2docker lokalni/adresar
+```
+
+. . .
+
+### Spouštění
+
+```{.bash}
+docker load < silicon.tar.gz
+docker run -it -p 8888:8888 silicon jupyter notebook --ip 0.0.0.0
+```
