@@ -8,11 +8,11 @@
 <link href="01-uvod_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="01-uvod_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="01-uvod_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.55">
+  <meta name="generator" content="quarto-1.3.340">
 
   <meta name="author" content="Petr Čermák">
-  <meta name="dcterms.date" content="2024-10-03">
-  <title>Automatizce ve fyzice: úvodní hodina</title>
+  <meta name="dcterms.date" content="2026-10-09">
+  <title>Automatizace ve fyzice: úvodní hodina</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="01-uvod_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="01-uvod_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="01-uvod_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-uvod_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-uvod_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -224,8 +224,7 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -394,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Automatizce ve fyzice: úvodní hodina</h1>
+  <h1 class="title">Automatizace ve fyzice: úvodní hodina</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -404,7 +403,7 @@ Petr Čermák
 </div>
 </div>
 
-  <p class="date">2024-10-03</p>
+  <p class="date">2026-10-09</p>
 </section>
 <section>
 <section id="info" class="title-slide slide level1 center">
@@ -438,7 +437,7 @@ Petr Čermák
 </ul>
 </div>
 </section>
-<section id="automatizace---proč" class="slide level2">
+<section id="automatizace---proč" class="slide level2 smaller">
 <h2>Automatizace - proč?</h2>
 <ul>
 <li>Zjednodušení práce - od kdy je to efektivní?</li>
@@ -446,26 +445,33 @@ Petr Čermák
 <li>Přenositelnost</li>
 <li>F.A.I.R. principy</li>
 </ul>
+<div class="fragment">
+<h3 id="ai">AI</h3>
+<ul>
+<li>Agent dostane cíl, ne postup: sám napíše skript, spustí ho, přečte chyby a opraví ho</li>
+<li>Běží nepřetržitě, hlídá měření, reaguje na poruchy, plánuje úlohy</li>
+<li>Agentní systémy typu <strong>Hermes Agent</strong> nebo <strong>OpenClaw</strong>: self-hosted, s pamětí a vlastními „skills“, ovládané z chatu.</li>
+</ul>
+</div>
 </section>
 <section id="programovací-jazyk" class="slide level2 smaller">
 <h2>Programovací jazyk?</h2>
 <ul>
-<li>Strojový kód je pro člověka nečitelný</li>
-<li>Závisí na procesoru</li>
-<li>Programovací jazyk je čitelný, <em>překladač</em> ho zkompiluje do zdrojového kódu</li>
-<li>Dynamické programovací jazyky - překládají se za běhu </li>
-</ul>
-<p><strong>Python</strong></p>
+<li>V době AI už je skoro jedno, v čem se programuje - kód často napíše AI</li>
+<li>Co je ale potřeba:
 <ul>
-<li>Snadno čitelný kód, populární ve vědě, AI, statistice</li>
-<li>Mnoho dostupných knihoven</li>
+<li><strong>Rozumět, co kód dělá</strong> - umět ho číst, ověřit a otestovat; za výsledek odpovídáte vy</li>
+<li><strong>Verzovat</strong> - git, malé kroky, změny od AI jde vždy vrátit</li>
+<li><strong>Chápat, co je možné</strong> - znát knihovny, nástroje a limity, umět úlohu dobře zadat</li>
+</ul></li>
 </ul>
-<p><strong>Excel</strong></p>
+<div class="fragment">
+<p><strong>V kurzu: Python</strong></p>
 <ul>
-<li>Nezatracujte ho - je to programování?</li>
-<li>Python binding!!</li>
+<li>Čitelný, populární ve vědě a AI, spousta knihoven - a AI v něm píše nejlépe</li>
+<li>Excel, Julia, R… taky fajn, princip je stejný</li>
 </ul>
-<p><strong>Julia, R</strong></p>
+</div>
 </section>
 <section id="verzování" class="slide level2 smaller">
 <h2>Verzování</h2>
@@ -490,61 +496,61 @@ Petr Čermák
 </section>
 <section id="co-umíme-1" class="slide level2">
 <h2>Co umíme? 1</h2>
-<div id="8c77892f" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2</code></pre>
 </div>
 </div>
-<div id="065035c2" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>15</code></pre>
 </div>
 </div>
-<div id="d401c83a" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">+</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>15</code></pre>
 </div>
 </div>
-<div id="7a3d0373" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span><span class="op">+</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span><span class="op">+</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">4</span><span class="op">+</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>25</code></pre>
 </div>
 </div>
-<div id="047b2fc0" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>1024</code></pre>
 </div>
 </div>
-<div id="bee8f43c" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="false"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="op">**</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>1267650600228229401496703205376</code></pre>
 </div>
 </div>
 </section>
 <section id="co-umíme-2" class="slide level2">
 <h2>Co umíme? 2</h2>
-<div id="f195bed6" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="1-2|3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a>a <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb13-2"><a href=""></a>b <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb13-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Výsledek je </span><span class="sc">{</span>a<span class="op">+</span>b<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="1-2|3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>a <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>b <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="bu">print</span>(<span class="ss">f"Výsledek je </span><span class="sc">{</span>a<span class="op">+</span>b<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
@@ -554,15 +560,15 @@ Petr Čermák
 </section>
 <section id="co-umíme-3" class="slide level2">
 <h2>Co umíme? 3</h2>
-<div id="0d159feb" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="4-5|7-8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a>numbers <span class="op">=</span> [<span class="dv">12</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">78</span>, <span class="dv">90</span>]</span>
-<span id="cb15-2"><a href=""></a>total <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb15-3"><a href=""></a></span>
-<span id="cb15-4"><a href=""></a><span class="cf">for</span> num <span class="kw">in</span> numbers:</span>
-<span id="cb15-5"><a href=""></a>    total <span class="op">+=</span> num</span>
-<span id="cb15-6"><a href=""></a></span>
-<span id="cb15-7"><a href=""></a>average <span class="op">=</span> total <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
-<span id="cb15-8"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="4-5|7-8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>numbers <span class="op">=</span> [<span class="dv">12</span>, <span class="dv">34</span>, <span class="dv">56</span>, <span class="dv">78</span>, <span class="dv">90</span>]</span>
+<span id="cb15-2"><a href="#cb15-2"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="cf">for</span> num <span class="kw">in</span> numbers:</span>
+<span id="cb15-5"><a href="#cb15-5"></a>    total <span class="op">+=</span> num</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a>average <span class="op">=</span> total <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
@@ -570,9 +576,9 @@ Petr Čermák
 </div>
 </div>
 <div class="fragment">
-<div id="d08ff7a1" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>average <span class="op">=</span> <span class="bu">sum</span>(numbers) <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
-<span id="cb17-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>average <span class="op">=</span> <span class="bu">sum</span>(numbers) <span class="op">/</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
@@ -581,9 +587,9 @@ Petr Čermák
 </div>
 </div>
 <div class="fragment">
-<div id="35b47cc6" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb19-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>np<span class="sc">.</span>mean(numbers)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="bu">print</span>(<span class="ss">f"Průměr: </span><span class="sc">{</span>np<span class="sc">.</span>mean(numbers)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
@@ -594,12 +600,12 @@ Petr Čermák
 </section>
 <section id="navažujeme-prvky" class="slide level2">
 <h2>Navažujeme prvky</h2>
-<div id="dd08bfdb" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1|2|3|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="im">from</span> periodictable <span class="im">import</span> formula</span>
-<span id="cb21-2"><a href=""></a>f <span class="op">=</span> formula(<span class="st">"Cu3P"</span>)</span>
-<span id="cb21-3"><a href=""></a>mass <span class="op">=</span> <span class="dv">15</span>   <span class="co"># mass in g</span></span>
-<span id="cb21-4"><a href=""></a><span class="cf">for</span> k,v <span class="kw">in</span> f.mass_fraction.items():</span>
-<span id="cb21-5"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">str</span>(k) <span class="sc">: &gt;2}{</span>v<span class="op">*</span>mass<span class="sc">:9.4f}</span><span class="ss">g"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1|2|3|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="im">from</span> periodictable <span class="im">import</span> formula</span>
+<span id="cb21-2"><a href="#cb21-2"></a>f <span class="op">=</span> formula(<span class="st">"Cu3P"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>mass <span class="op">=</span> <span class="dv">15</span>   <span class="co"># mass in g</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="cf">for</span> k,v <span class="kw">in</span> f.mass_fraction.items():</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">str</span>(k) <span class="sc">: &gt;2}{</span>v<span class="op">*</span>mass<span class="sc">:9.4f}</span><span class="ss">g"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
@@ -610,6 +616,395 @@ Petr Čermák
 <div class="fragment">
 <p>Znáte rychlejší způsob?</p>
 </div>
+</section></section>
+<section>
+<section id="git-1" class="title-slide slide level1 center">
+<h1>GIT</h1>
+
+</section>
+<section id="co-to-je" class="slide level2 smaller">
+<h2>Co to je?</h2>
+<div class="fragment">
+<p>“git” can mean anything, depending on your mood.</p>
+<ul>
+<li>random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that it is a mispronounciation of “get” may or may not be relevant.</li>
+<li>stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.</li>
+<li>“global information tracker”: you’re in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.</li>
+<li>“goddamn idiotic truckload of sh*t”: when it breaks</li>
+</ul>
+<p>Zdroj: <a href="https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README">Původní readme file gitu</a></p>
+</div>
+</section>
+<section id="jak-to-použít" class="slide level2 smaller">
+<h2>Jak to použít</h2>
+<div class="columns">
+<div class="column">
+<p>Využití pro:</p>
+<ul>
+<li>ukládání kódu</li>
+<li>latex</li>
+<li>obrázky (limitovaně)</li>
+<li>data (limitovaně)</li>
+</ul>
+<p>Umožňuje</p>
+<ul>
+<li>verzování</li>
+<li>větvení</li>
+<li>kdo co změnil</li>
+</ul>
+</div><div class="column">
+<p><img data-src="git.png" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+<section id="instalace-gitu" class="slide level2">
+<h2>Instalace gitu</h2>
+<ul>
+<li>Nejjednodušší: nainstalovat <a href="https://code.visualstudio.com/">VS Code</a>
+<ul>
+<li>záložka <em>Source Control</em> nabídne doinstalování gitu, pokud chybí</li>
+<li>Windows: odkaz na <a href="https://git-scm.com/">git-scm.com</a></li>
+<li>macOS: nabídne instalaci <em>Command Line Tools</em></li>
+<li>Linux: <code>sudo apt install git</code></li>
+</ul></li>
+<li>Nápověda: zeptejte se AI, nebo <code>git help [add/commit/config...]</code></li>
+</ul>
+</section>
+<section id="distribuované-verzování-git" class="slide level2 smaller">
+<h2>Distribuované verzování (git)</h2>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Např: git, mercurial</li>
+<li><code>clone</code> a <code>pull</code>
+<ul>
+<li>zkopíruje se celá větev, včetně celé historie</li>
+<li>máme stejná data jako na serveru</li>
+</ul></li>
+<li>většina operací se děje lokálně
+<ul>
+<li><code>stage</code>, <code>commit</code>, <code>branch</code></li>
+<li>máme vlastní historii u sebe</li>
+</ul></li>
+<li>Když je hotovo, provede se “push” na server
+<ul>
+<li>synchronizují se změny, řeší se konflikty</li>
+</ul></li>
+</ul>
+</div><div class="column">
+<p><img data-src="distributed.png" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="snapshoty" class="slide level2">
+<h2>Snapshoty</h2>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Git si dělá snapshoty
+<ul>
+<li>nezměněné fily jsou jen jako odkazy</li>
+<li>trochu více dat</li>
+<li>mnohem rychlejší porovnávání</li>
+</ul></li>
+</ul>
+</div><div class="column">
+<p><img data-src="snapshots.png" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="jak-to-funguje" class="slide level2 smaller">
+<h2>Jak to funguje</h2>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Každý repozitář má soubory v několika oblastech
+<ul>
+<li><em>committed</em> - uložená, verzovaná</li>
+<li><em>working copy</em> - rozpracované soubory</li>
+<li><em>staging area</em> - soubory připravené ke commitu</li>
+</ul></li>
+<li><em>Commit</em> udělá snapshot ze všech souborů ve <em>staging area</em></li>
+<li>Commity se značí hashem (SHA-1), často se vypisuje jen prvních 7 znaků</li>
+</ul>
+</div><div class="column">
+<p><img data-src="areas.png" style="width:100.0%"></p>
+<p>. . .</p>
+<p>Pracujeme stylem: <em>modify</em> -&gt; <em>stage</em> -&gt; <em>commit</em></p>
+</div>
+</div>
+</section>
+<section id="úvodní-nastavení" class="slide level2">
+<h2>Úvodní nastavení</h2>
+<ul>
+<li>Nastavení jména a emailu (nutné!!)</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"John Rambo"</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">git</span> config <span class="at">--global</span> user.email john.rambo@matfyz.cuni.cz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Nano vs vim - nastavte si editor</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">git</span> config <span class="at">--global</span> core.editor nano</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Zkontrolujte nastavení</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">git</span> config <span class="at">--list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Lokální nastavení je uloženo ve filu <code>.git/config</code></p>
+</section>
+<section id="vytvoření-repozitáře" class="slide level2">
+<h2>Vytvoření repozitáře</h2>
+<ul>
+<li><ol type="a">
+<li>Vytvoření nového repozitáře</li>
+</ol>
+<ul>
+<li>bez <code>-m</code> by se otevřel editor</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">git</span> init</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">git</span> add test.py</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">git</span> add .</span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"První commit"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><ol start="2" type="a">
+<li>klonování existujícího repa (remote)</li>
+</ol>
+<ul>
+<li>vytvoří nový adresář <em>folder</em></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">git</span> clone url folder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="git-příkazy" class="slide level2 smaller">
+<h2>Git příkazy</h2>
+<table>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>příkaz</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>git clone url [dir]</td>
+<td>zkopíruje vzdálené repo na lokální disk</td>
+</tr>
+<tr class="even">
+<td>git add [file]</td>
+<td>přidá soubor(y) do staging area (tečka přidá vše)</td>
+</tr>
+<tr class="odd">
+<td>git commit</td>
+<td>vytvoří snapshot ze souborů ve staging</td>
+</tr>
+<tr class="even">
+<td>git status</td>
+<td>zobrazí stav repozitáře, jaké soubory jsou kde atd.</td>
+</tr>
+<tr class="odd">
+<td>git diff</td>
+<td>zobrazí změny v souborech</td>
+</tr>
+<tr class="even">
+<td>git help</td>
+<td>nápověda</td>
+</tr>
+<tr class="odd">
+<td>git pull</td>
+<td>stáhne data z remote (fetch) a zkusí je mergnout</td>
+</tr>
+<tr class="even">
+<td>git push</td>
+<td>odešle změny na remote</td>
+</tr>
+</tbody>
+</table>
+<p>další: init, reset, branch, checkout, merge, log, tag, …</p>
+</section>
+<section id="jak-funguje-zpět" class="slide level2">
+<h2>Jak funguje zpět?</h2>
+<ul>
+<li>Nepřidal jsem file do stage</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">git</span> status               <span class="co"># zobrazí stav</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">git</span> diff test.py         <span class="co"># zobrazí změny</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">git</span> checkout <span class="at">--</span> test.py  <span class="co"># vrátí změny k poslednímu commitu</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="fu">git</span> reset <span class="at">--hard</span>         <span class="co"># vrátí vše na poslední commit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="jak-funguje-zpět-1" class="slide level2">
+<h2>Jak funguje zpět?</h2>
+<ul>
+<li>Přidal jsem file do stage</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> test.py  <span class="co"># vyndá ze stage, nechá změny</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">git</span> reset               <span class="co"># vyhodí vše ze stage, nechá změny</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">git</span> reset HEAD test.py  <span class="co"># vyhodí ze stage a smaže změny</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="fu">git</span> stash         <span class="co"># uloží stage na jindy (jen lokálně)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Už jsem file commitnul
+<ul>
+<li>google it, třeba <a href="https://docs.gitlab.com/ee/topics/git/numerous_undo_possibilities_in_git/">zde</a></li>
+<li>zachovávejte historii (není podmínkou jako v mercurial)</li>
+</ul></li>
+</ul>
+</section>
+<section id="větvení---tam-začíná-zábava" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">git</span> branch name        <span class="co"># založí novou větev</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">git</span> branch             <span class="co"># vylistuje lokální větve</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="fu">git</span> checkout <span class="pp">[</span><span class="ss">branch</span><span class="pp">]</span>  <span class="co"># přepne HEAD na branch</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="fu">git</span> merge <span class="pp">[</span><span class="ss">a</span><span class="pp">]</span>          <span class="co"># mergne [a] do aktuální větve</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Při mergování je třeba ošetřit konflikty</li>
+</ul>
+<div class="fragment">
+<p><img data-src="commits-and-parents.png"></p>
+</div>
+</section>
+<section id="větvení---tam-začíná-zábava-1" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">git</span> branch testing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="two-branches.png" class="r-stretch"></section>
+<section id="větvení---tam-začíná-zábava-2" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">git</span> branch testing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="head-to-master.png" style="width:90.0%" class="r-stretch"></section>
+<section id="větvení---tam-začíná-zábava-3" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">git</span> checkout testing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="head-to-testing.png" style="width:90.0%" class="r-stretch"></section>
+<section id="větvení---tam-začíná-zábava-4" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="ex">vim</span> test.py</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="fu">git</span> commit <span class="at">-a</span> <span class="at">-m</span> <span class="st">'Změna je život'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="advance-testing.png" class="r-stretch"></section>
+<section id="větvení---tam-začíná-zábava-5" class="slide level2">
+<h2>Větvení - tam začíná zábava</h2>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">git</span> checkout master</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">vim</span> test.py</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="fu">git</span> commit <span class="at">-a</span> <span class="at">-m</span> <span class="st">'Jiná změna'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<img data-src="advance-master.png" style="width:90.0%" class="r-stretch"></section></section>
+<section>
+<section id="ci-cd" class="title-slide slide level1 center">
+<h1>CI / CD</h1>
+
+</section>
+<section id="co-to-je-1" class="slide level2">
+<h2>Co to je?</h2>
+<ul>
+<li>Continuous Integration
+<ul>
+<li>automatické testování kódu</li>
+<li>code review od kolegů</li>
+<li>po schválení merge do jiné větve</li>
+<li>více na programování</li>
+</ul></li>
+<li>Continuous Delivery
+<ul>
+<li>Instalace nových verzí software</li>
+</ul></li>
+<li>Využijeme je na automatizaci</li>
+</ul>
+</section>
+<section id="gitlab" class="slide level2">
+<h2>Gitlab</h2>
+<ul>
+<li>open source platforma jako github</li>
+<li>custom hosted: <strong><a href="https://gitlab.mff.cuni.cz/">gitlab.mff.cuni.cz</a></strong></li>
+<li>merge request</li>
+<li>CI/CD workflows –&gt; to použijeme</li>
+</ul>
+</section>
+<section id="spouštění-cicd" class="slide level2 smaller">
+<h2>Spouštění CI/CD</h2>
+<ul>
+<li>Definováno v hlavním adresáři (skrytý soubor <code>.gitlab-ci.yml</code>)</li>
+<li>Commit vede ke spuštění pipeline</li>
+<li>Pipeline má jednu nebo více fází (stage)</li>
+<li>Fáze má jeden nebo více úkolů (job)</li>
+<li>Každý úkol je přiřazen runneru, který provádí požadované příkazy</li>
+<li>Pokud všechny úkoly uspějí, fáze pipeline uspěje a další fáze začne. V opačném případě selže fáze a celá pipeline se zastaví.</li>
+<li>Výsledky pipeline jsou zaznamenány a v případě selhání je odeslán e-mail.</li>
+</ul>
+</section>
+<section id="příklad" class="slide level2">
+<h2>Příklad</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">stages</span><span class="kw">:</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> evaluate</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="fu">check-fruit</span><span class="kw">:</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="at">  </span><span class="fu">stage</span><span class="kw">:</span><span class="at"> evaluate</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="at">  </span><span class="fu">before_script</span><span class="kw">:</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> apk add jq</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a><span class="at">  </span><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a><span class="at">    </span><span class="kw">-</span><span class="at"> echo "Downloading datafiles"</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a><span class="at">    </span><span class="kw">-</span><span class="at"> wget https://filesamples.com/samples/code/json/sample1.json</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a><span class="at">    </span><span class="kw">-</span><span class="at"> echo "Check available fruits"</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a><span class="at">    </span><span class="kw">-</span><span class="at"> jq -c '.[]' sample1.json | while read i; do echo $i &gt;&gt; output.txt; done</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a><span class="at">  </span><span class="fu">artifacts</span><span class="kw">:</span></span>
+<span id="cb36-14"><a href="#cb36-14"></a><span class="at">    </span><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a><span class="at">      </span><span class="kw">-</span><span class="at"> output.txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
+<section id="úkol-1" class="title-slide slide level1 center">
+<h1>Úkol #1</h1>
+
+</section>
+<section id="zadání" class="slide level2 smaller">
+<h2>Zadání</h2>
+<ul>
+<li>Vytvořit soukromé gitlab repo</li>
+<li>Udělit mi přístup pro čtení (cermp5am)</li>
+<li>Vytvořit skript (jakýkoli jazyk), který
+<ul>
+<li>stáhne všechna naměřená data</li>
+<li>načte data, jednotky zkonvertuje do SI</li>
+<li>nafituje je pomocí Curie-Weissova zákona</li>
+<li>z každých dat vyhodnotí (<em>{CW}) a (</em>{eff})</li>
+<li>vytvoří jedno PDF, kde budou všechna nafitovaná data (obrázek) a výsledky</li>
+<li>pdf zůstane jako artifact ukol1.pdf</li>
+</ul></li>
+<li>vytvoříte si Pipeline trigger token
+<ul>
+<li>pošlete mi na discord/email: token + číslo projektu + branch</li>
+<li>vygeneruji nová data a spustím vaši pipeline</li>
+</ul></li>
+</ul>
+</section>
+<section id="curie-weissův-zákon" class="slide level2 smaller">
+<h2>Curie-Weissův zákon</h2>
+<ul>
+<li><p>popisuje chování materiálů v paramagnetické oblasti nad teplotou přechodu.</p></li>
+<li><p>říká, že molární magnetická susceptibilita (<span class="math inline">\(\chi\)</span>) materiálu se v paramagnetické oblasti nad Curieovou teplotou mění s teplotou (<em>T</em>) podle vztahu: <span class="math display">\[
+   \chi = \frac{C}{T - \Theta_{CW}}
+\]</span> kde <span class="math inline">\(\chi\)</span> je magnetická susceptibilita, <span class="math inline">\(T\)</span> je teplota, <span class="math inline">\(\Theta_{CW}\)</span> je Curie-Weissova teplota a <span class="math inline">\(C\)</span> je Curieova konstanta.</p></li>
+<li><p>Více na <a href="https://www.nature.com/articles/s42005-022-00853-y">doi:10.1038/s42005-022-00853-y</a></p></li>
+</ul>
+</section>
+<section id="na-co-dát-pozor" class="slide level2 smaller">
+<h2>Na co dát pozor</h2>
+<ul>
+<li>jednotky (emu není SI)</li>
+<li>susceptibilita závisí na poli a magnetizaci</li>
+<li>doporučuji přepočítat momenty v emu na <span class="math inline">\(\mu_{b}\)</span> (závisí na molární hmotnosti!!)</li>
+<li>počítejte jeden moment na formula unit (=jeden magnetický iont ve strukturním vzorci)</li>
+<li>efektivní moment <span class="math inline">\(\mu_{eff}\)</span> chceme v Bohrových magnetonech <span class="math inline">\(\mu_{b}\)</span></li>
+<li>molární magnetická susceptibilita <span class="math inline">\(\chi\)</span> v SI má jednotku <span class="math inline">\(m^3/mol\)</span></li>
+<li>parsování souborů - použít knihovnu nebo vlastní script?</li>
+</ul>
+</section>
+<section id="data" class="slide level2">
+<h2>Data</h2>
+<h3 id="zde-httpsuser.mgml.euautomationvsm">ZDE: <a href="https://user.mgml.eu/automation/vsm/">https://user.mgml.eu/automation/vsm/</a></h3>
 </section></section>
 <section>
 <section id="diskuse" class="title-slide slide level1 center">
@@ -623,7 +1018,7 @@ Petr Čermák
 <li>Co si představujete, že vám předmět přinese?</li>
 <li>Na co byste se chtěli zaměřit?
 <ul>
-<li>git, gitlab, CI/`</li>
+<li>git, gitlab, CI/CD</li>
 <li>python, jupyter, quarto</li>
 <li>zpracování obrazu (opencv)</li>
 <li>optimalizace (bayesovská, knihovny)</li>
@@ -631,10 +1026,8 @@ Petr Čermák
 <li>F.A.I.R. - jak ukládat data</li>
 </ul></li>
 </ul>
-<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
-</div>
 </div>
 </section></section>
     </div>
@@ -666,13 +1059,14 @@ Petr Čermák
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
+'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"172794624422027111","id":"1529d7a953088da5","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"db75b06c6326679f1e82bbd40c358dcd","id":"36841ab000356427c8432b1313c1ece20e7cea0292cb7cb77a80768455a631b8","url":"https://multiplex.up.railway.app/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -884,7 +1278,18 @@ Petr Čermák
         }
         return false;
       }
-      const onCopySuccess = function(e) {
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -916,50 +1321,11 @@ Petr Čermák
         }, 1000);
         // clear code selection
         e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
       });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        // For code content inside modals, clipBoardJS needs to be initialized with a container option
-        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-        }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
-            }
-          }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      function tippyHover(el, contentFn) {
         const config = {
           allowHTML: true,
+          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -969,17 +1335,8 @@ Petr Čermák
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start',
+          placement: 'bottom-start'
         };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -993,11 +1350,7 @@ Petr Čermák
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
+          return note.innerHTML;
         });
       }
       const findCites = (el) => {
