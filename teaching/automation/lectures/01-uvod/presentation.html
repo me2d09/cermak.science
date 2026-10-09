@@ -955,58 +955,6 @@ Petr Čermák
 <span id="cb36-15"><a href="#cb36-15"></a><span class="at">      </span><span class="kw">-</span><span class="at"> output.txt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section></section>
 <section>
-<section id="úkol-1" class="title-slide slide level1 center">
-<h1>Úkol #1</h1>
-
-</section>
-<section id="zadání" class="slide level2 smaller">
-<h2>Zadání</h2>
-<ul>
-<li>Vytvořit soukromé gitlab repo</li>
-<li>Udělit mi přístup pro čtení (cermp5am)</li>
-<li>Vytvořit skript (jakýkoli jazyk), který
-<ul>
-<li>stáhne všechna naměřená data</li>
-<li>načte data, jednotky zkonvertuje do SI</li>
-<li>nafituje je pomocí Curie-Weissova zákona</li>
-<li>z každých dat vyhodnotí (<em>{CW}) a (</em>{eff})</li>
-<li>vytvoří jedno PDF, kde budou všechna nafitovaná data (obrázek) a výsledky</li>
-<li>pdf zůstane jako artifact ukol1.pdf</li>
-</ul></li>
-<li>vytvoříte si Pipeline trigger token
-<ul>
-<li>pošlete mi na discord/email: token + číslo projektu + branch</li>
-<li>vygeneruji nová data a spustím vaši pipeline</li>
-</ul></li>
-</ul>
-</section>
-<section id="curie-weissův-zákon" class="slide level2 smaller">
-<h2>Curie-Weissův zákon</h2>
-<ul>
-<li><p>popisuje chování materiálů v paramagnetické oblasti nad teplotou přechodu.</p></li>
-<li><p>říká, že molární magnetická susceptibilita (<span class="math inline">\(\chi\)</span>) materiálu se v paramagnetické oblasti nad Curieovou teplotou mění s teplotou (<em>T</em>) podle vztahu: <span class="math display">\[
-   \chi = \frac{C}{T - \Theta_{CW}}
-\]</span> kde <span class="math inline">\(\chi\)</span> je magnetická susceptibilita, <span class="math inline">\(T\)</span> je teplota, <span class="math inline">\(\Theta_{CW}\)</span> je Curie-Weissova teplota a <span class="math inline">\(C\)</span> je Curieova konstanta.</p></li>
-<li><p>Více na <a href="https://www.nature.com/articles/s42005-022-00853-y">doi:10.1038/s42005-022-00853-y</a></p></li>
-</ul>
-</section>
-<section id="na-co-dát-pozor" class="slide level2 smaller">
-<h2>Na co dát pozor</h2>
-<ul>
-<li>jednotky (emu není SI)</li>
-<li>susceptibilita závisí na poli a magnetizaci</li>
-<li>doporučuji přepočítat momenty v emu na <span class="math inline">\(\mu_{b}\)</span> (závisí na molární hmotnosti!!)</li>
-<li>počítejte jeden moment na formula unit (=jeden magnetický iont ve strukturním vzorci)</li>
-<li>efektivní moment <span class="math inline">\(\mu_{eff}\)</span> chceme v Bohrových magnetonech <span class="math inline">\(\mu_{b}\)</span></li>
-<li>molární magnetická susceptibilita <span class="math inline">\(\chi\)</span> v SI má jednotku <span class="math inline">\(m^3/mol\)</span></li>
-<li>parsování souborů - použít knihovnu nebo vlastní script?</li>
-</ul>
-</section>
-<section id="data" class="slide level2">
-<h2>Data</h2>
-<h3 id="zde-httpsuser.mgml.euautomationvsm">ZDE: <a href="https://user.mgml.eu/automation/vsm/">https://user.mgml.eu/automation/vsm/</a></h3>
-</section></section>
-<section>
 <section id="diskuse" class="title-slide slide level1 center">
 <h1>DISKUSE</h1>
 
@@ -1066,7 +1014,7 @@ Petr Čermák
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"36841ab000356427c8432b1313c1ece20e7cea0292cb7cb77a80768455a631b8","url":"https://multiplex.up.railway.app/"},
+'multiplex': {"secret":null,"id":"3531d2230f8452c437d3cafa9da17a72aa729b1f08158f66854c428c9d08d88e","url":"https://multiplex.up.railway.app/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
