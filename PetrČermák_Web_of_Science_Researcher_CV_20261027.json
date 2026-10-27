@@ -1,0 +1,202 @@
+{
+    "author": {
+        "publishing_name": "Petr \u010cerm\u00e1k",
+        "rid": "S-6152-2016",
+        "url": "https://publons.com/wos-op/researcher/S-6152-2016/",
+        "orcid": "0000-0002-4176-6905",
+        "profile_image": "https://publons.com/media/thumbs/academic/photos/bb544131f9394b94b5a30c3613382739.jpg.200x200_q95_crop_detail_upscale.jpg",
+        "affiliations": {
+            "current": [
+                {
+                    "name": "Charles University Prague",
+                    "start_date": null,
+                    "end_date": null
+                }
+            ],
+            "previous": [
+                {
+                    "name": "Charles University Prague",
+                    "start_date": "2010",
+                    "end_date": "2025"
+                },
+                {
+                    "name": "Julich Research Centre",
+                    "start_date": "2014",
+                    "end_date": "2024"
+                },
+                {
+                    "name": "Forsch zentrum Julich",
+                    "start_date": "2023",
+                    "end_date": "2023"
+                }
+            ]
+        }
+    },
+    "date_generated": "October 27th 2026",
+    "period": {
+        "start": "October 2021",
+        "end": "October 2026"
+    },
+    "records": {
+        "publication": {
+            "list": [
+                {
+                    "citation_count": 4,
+                    "doi": "10.1103/KSZH-M6BF",
+                    "journal": "Physical Review B",
+                    "publication_authors": {
+                        "count": 10,
+                        "authors": "Biniskos, N.; dos Santos, F. J. ... Cermak, P."
+                    },
+                    "publication_date": "Nov 2025",
+                    "title": "Spin structures and phase diagrams of the spin-5/2 triangular lattice antiferromagnet Na2BaMn(PO4)2 under magnetic field",
+                    "ut": "WOS:001627113000008"
+                },
+                {
+                    "citation_count": 18,
+                    "doi": "10.1038/S41467-025-64322-0",
+                    "journal": "Nature Communications",
+                    "publication_authors": {
+                        "count": 7,
+                        "authors": "Biniskos, Nikolaos; Dias, Manuel dos Santos ... Cermak, Petr"
+                    },
+                    "publication_date": "Oct 2025",
+                    "title": "Systematic mapping of altermagnetic magnons by resonant inelastic X-ray circular dichroism",
+                    "ut": "WOS:001598740500021"
+                },
+                {
+                    "citation_count": 0,
+                    "doi": "10.1103/PHYSREVRESEARCH.6.023117",
+                    "journal": "Physical Review Research",
+                    "publication_authors": {
+                        "count": 16,
+                        "authors": "Stekiel, M.; Cermak, P. ... Schneidewind, A."
+                    },
+                    "publication_date": "May 2024",
+                    "title": "Long-range magnetic order in CePdAl 3 enabled by orthorhombic deformation",
+                    "ut": "WOS:001226371100001"
+                },
+                {
+                    "citation_count": 6,
+                    "doi": "10.1103/PHYSREVRESEARCH.5.013058",
+                    "journal": "Physical Review Research",
+                    "publication_authors": {
+                        "count": 12,
+                        "authors": "Stekiel, M.; Cermak, P. ... Schneidewind, A."
+                    },
+                    "publication_date": "Jan 2023",
+                    "title": "Incommensurate antiferromagnetic order in CePtAl3",
+                    "ut": "WOS:000926781700002"
+                },
+                {
+                    "citation_count": 18,
+                    "doi": "10.1088/0256-307X/39/2/027501",
+                    "journal": "Chinese Physics Letters",
+                    "publication_authors": {
+                        "count": 15,
+                        "authors": "Ran, Kejing; Wang, Jinghui ... Wen, Jinsheng"
+                    },
+                    "publication_date": "Feb 2022",
+                    "title": "Evidence for Magnetic Fractional Excitations in a Kitaev Quantum-Spin-Liquid Candidate \u03b1-RuCl3",
+                    "ut": "WOS:000752027200001"
+                }
+            ],
+            "per_journal": [
+                {
+                    "name": "ArXiv",
+                    "count": 4,
+                    "is_in_wos_cc": false
+                },
+                {
+                    "name": "Physical Review Research",
+                    "count": 2,
+                    "is_in_wos_cc": true
+                },
+                {
+                    "name": "Chinese Physics Letters",
+                    "count": 1,
+                    "is_in_wos_cc": true
+                },
+                {
+                    "name": "Nature Communications",
+                    "count": 1,
+                    "is_in_wos_cc": true
+                },
+                {
+                    "name": "Physical Review B",
+                    "count": 1,
+                    "is_in_wos_cc": true
+                }
+            ],
+            "period_citations": 46,
+            "period_h_index": 4,
+            "total_citations": 886,
+            "total_h_index": 15,
+            "total_publications": 52,
+            "total_publications_cc": 39,
+            "period_publications": 9,
+            "period_publications_cc": 5,
+            "period_times_cited_in_diidw": 0,
+            "total_times_cited_in_diidw": 0,
+            "preprints_manuscript_list": [
+                {
+                    "preprints_publication_date": "Jun 2021",
+                    "doi": "",
+                    "preprints_publication_ut": "PPRN:11864283",
+                    "preprints_publication_authors": {
+                        "count": 12,
+                        "authors": "Stekiel, M.; Cermak, P. ... Schneidewind, A."
+                    },
+                    "citation_count": null,
+                    "preprints_manuscript_title": "Magnetic ordering in non-centrosymmetric CePdAl3 and CePtAl3"
+                },
+                {
+                    "preprints_publication_date": "Nov 2022",
+                    "doi": "",
+                    "preprints_publication_ut": "PPRN:46922354",
+                    "preprints_publication_authors": {
+                        "count": 17,
+                        "authors": "Baloh, Pavlo; Bauer, Lukas ... Wild, Peter"
+                    },
+                    "citation_count": 0,
+                    "preprints_manuscript_title": "An Exercise in Open Data: Triple Axis Data on Si single crystal"
+                },
+                {
+                    "preprints_publication_date": "Mar 2025",
+                    "doi": "10.1038/S41467-025-64322-0",
+                    "preprints_publication_ut": "PPRN:122376280",
+                    "preprints_publication_authors": {
+                        "count": 7,
+                        "authors": "Biniskos, Nikolaos; Dias, Manuel dos Santos ... Cermak, Petr"
+                    },
+                    "citation_count": null,
+                    "preprints_manuscript_title": "Systematic Mapping of Altermagnetic Magnons by Resonant Inelastic X-Ray Circular Dichroism"
+                },
+                {
+                    "preprints_publication_date": "May 2024",
+                    "doi": "",
+                    "preprints_publication_ut": "PPRN:88980566",
+                    "preprints_publication_authors": {
+                        "count": 16,
+                        "authors": "Stekiel, M.; Cermak, P. ... Schneidewind, A."
+                    },
+                    "citation_count": 0,
+                    "preprints_manuscript_title": "Orthorhombic deformation enables long-range magnetic order in CePdAl3"
+                },
+                {
+                    "preprints_publication_date": "Feb 2022",
+                    "doi": "",
+                    "preprints_publication_ut": "PPRN:12067312",
+                    "preprints_publication_authors": {
+                        "count": 15,
+                        "authors": "Ran, Kejing; Wang, Jinghui ... Wen, Jinsheng"
+                    },
+                    "citation_count": null,
+                    "preprints_manuscript_title": "Evidence for magnetic fractional excitations in a Kitaev quantum-spin-liquid candidate \u03b1-RuCl3"
+                }
+            ]
+        }
+    },
+    "author_grants": {},
+    "author_grants_summary": {}
+}

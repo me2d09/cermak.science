@@ -1,0 +1,251 @@
+{
+  "last_export": "October 27th 2026",
+  "publications": [
+    {
+      "doi": "10.1103/KSZH-M6BF",
+      "title_html": "Spin structures and phase diagrams of the spin-5/2 triangular lattice antiferromagnet Na<sub>2</sub>BaMn(PO<sub>4</sub>)<sub>2</sub> under magnetic field",
+      "journal": "Physical Review B",
+      "date": "2025-11"
+    },
+    {
+      "doi": "10.1038/S41467-025-64322-0",
+      "title_html": "Systematic mapping of altermagnetic magnons by resonant inelastic X-ray circular dichroism",
+      "journal": "Nature Communications",
+      "date": "2025-10"
+    },
+    {
+      "doi": "10.1103/PHYSREVRESEARCH.6.023117",
+      "title_html": "Long-range magnetic order in CePdAl<sub>3</sub> enabled by orthorhombic deformation",
+      "journal": "Physical Review Research",
+      "date": "2024-05"
+    },
+    {
+      "doi": "10.1103/PHYSREVRESEARCH.5.013058",
+      "title_html": "Incommensurate antiferromagnetic order in CePtAl3",
+      "journal": "Physical Review Research",
+      "date": "2023-01-30"
+    },
+    {
+      "doi": "10.1088/0256-307X/39/2/027501",
+      "title_html": "Evidence for Magnetic Fractional Excitations in a Kitaev Quantum-Spin-Liquid Candidate <i>α</i>-RuCl<sub>3</sub>",
+      "journal": "Chinese Physics Letters",
+      "date": "2022-02-01"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.103.054424",
+      "title_html": "Pressure-induced large increase of Curie temperature of the van der Waals ferromagnet VI<sub>3</sub>",
+      "journal": "Physical Review B",
+      "date": "2021-02-17"
+    },
+    {
+      "doi": "10.1038/S41586-020-2716-8",
+      "title_html": "Fractional Antiferromagnetic Skyrmion Lattice Induced By Anisotropic Couplings",
+      "journal": "Nature",
+      "date": "2020-10-01"
+    },
+    {
+      "doi": "10.1038/S42005-020-0365-8",
+      "title_html": "Nature of the spin resonance mode in CeCoIn5",
+      "journal": "Communications Physics",
+      "date": "2020-05-29"
+    },
+    {
+      "doi": "10.1103/PHYSREVX.10.021010",
+      "title_html": "Field-Angle-Resolved Magnetic Excitations as a Probe of Hidden-Order Symmetry in CeB6",
+      "journal": "Physical Review X",
+      "date": "2020-04-14"
+    },
+    {
+      "doi": "10.1103/PHYSREVRESEARCH.2.013063",
+      "title_html": "Magnonic Weyl states in Cu2OSeO3",
+      "journal": "Physical Review Research",
+      "date": "2020-01-21"
+    },
+    {
+      "doi": "10.1103/PHYSREVLETT.124.017001",
+      "title_html": "Neutron Spin Resonance in the Heavily Hole-Doped KFe2As2 Superconductor",
+      "journal": "Physical Review Letters",
+      "date": "2020-01-03"
+    },
+    {
+      "doi": "10.1103/PHYSREVMATERIALS.3.121401",
+      "title_html": "Crystal structures and phase transitions of the van der Waals ferromagnet VI3",
+      "journal": "Physical Review Materials",
+      "date": "2019-12-19"
+    },
+    {
+      "doi": "10.1103/PHYSREVLETT.123.247203",
+      "title_html": "Ultrasmall Moment Incommensurate Spin Density Wave Order Masking a Ferromagnetic Quantum Critical Point in NbFe2",
+      "journal": "Physical Review Letters",
+      "date": "2019-12-11"
+    },
+    {
+      "doi": "10.1038/S41467-019-10942-2",
+      "title_html": "Evidence for singular-phonon-induced nematic superconductivity in a topological superconductor candidate Sr0.1Bi2Se3",
+      "journal": "Nature Communications",
+      "date": "2019-06-26"
+    },
+    {
+      "doi": "10.1073/PNAS.1819664116",
+      "title_html": "Magnetoelastic hybrid excitations in CeAuAl3",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "date": "2019-04-02"
+    },
+    {
+      "doi": "10.1103/PHYSREVLETT.122.037001",
+      "title_html": "Unconventional Antiferromagnetic Quantum Critical Point in Ba(Fe0.97Cr0.03)(2)(As1-xPx)(2)",
+      "journal": "Physical Review Letters",
+      "date": "2019-01-24"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.98.174306",
+      "title_html": "Lattice dynamics and coupled quadrupole-phonon excitations in CeAuAl3",
+      "journal": "Physical Review B",
+      "date": "2018-11-29"
+    },
+    {
+      "doi": "10.1088/1361-648X/AACA67",
+      "title_html": "Theoretical spin-wave dispersions in the antiferromagnetic phase AF1 of MnWO4 based on the polar atomistic model in P2",
+      "journal": "Journal of Physics: Condensed Matter",
+      "date": "2018-07-25"
+    },
+    {
+      "doi": "10.1103/PHYSREVLETT.120.087201",
+      "title_html": "Spin-Glass Ground State in a Triangular-Lattice Compound YbZnGaO<sub>4</sub>",
+      "journal": "Physical Review Letters",
+      "date": "2018-02-22"
+    },
+    {
+      "doi": "10.1080/10448632.2017.1342483",
+      "title_html": "Triple Axis Resolution Workshop at MLZ Garching",
+      "journal": "Neutron News",
+      "date": "2017-07-03"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.95.064403",
+      "title_html": "Magnetic excitations of the charge stripe electrons below half doping in <math> <mrow> <msub> <mi>La</mi> <mrow> <mn>2</mn> <mo>−</mo> <mi>x</mi> </mrow> </msub> <msub> <mi>Sr</mi> <mi>x</mi> </msub> <msub> <mi>NiO</mi> <mn>4</mn> </msub> </mrow> </math> ( <math> <mi>x</mi> <mo> </mo> <mo>=</mo> <mo> </mo> <mn>0.45</mn> <mo>,</mo> <mo> </mo> <mn>0.4</mn> </math> )",
+      "journal": "Physical Review B",
+      "date": "2017-02-03"
+    },
+    {
+      "doi": "10.1038/NCOMMS12774",
+      "title_html": "Robust upward dispersion of the neutron spin resonance in the heavy fermion superconductor Ce1-xYbxCoIn5",
+      "journal": "Nature Communications",
+      "date": "2016-09-28"
+    },
+    {
+      "doi": "10.1016/J.NIMA.2016.06.004",
+      "title_html": "Experimental characterization of a prototype secondary spectrometer for vertically scattering multiple energy analysis at cold-neutron triple axis spectrometers",
+      "journal": "Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment",
+      "date": "2016-09-11"
+    },
+    {
+      "doi": "10.1016/J.PHYSB.2015.04.025",
+      "title_html": "Evolution of magnetism in Pd-substituted Ce2RhIn8 single crystals",
+      "journal": "Physica B: Condensed Matter",
+      "date": "2015-07"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.91.224419",
+      "title_html": "Neutron scattering study of magnetic order in single-crystalline CeCuAl3",
+      "journal": "Physical Review B",
+      "date": "2015-06-15"
+    },
+    {
+      "doi": "10.17815/JLSRF-1-35",
+      "title_html": "PANDA: Cold three axes spectrometer",
+      "journal": "Journal of Large-scale Research Facilities JLSRF",
+      "date": "2015-06-03"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.91.144404",
+      "title_html": "Magnetic structures in the magnetic phase diagram of Ho2RhIn8",
+      "journal": "Physical Review B",
+      "date": "2015-04-07"
+    },
+    {
+      "doi": "10.1088/1742-6596/592/1/012145",
+      "title_html": "BAMBUS: a new inelastic multiplexed neutron spectrometer for PANDA",
+      "journal": "Journal of Physics: Conference Series",
+      "date": "2015-03-18"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.91.024501",
+      "title_html": "Magnetic and structural transitions in La0.4Na0.6Fe2As2 single crystals",
+      "journal": "Physical Review B",
+      "date": "2015-01-05"
+    },
+    {
+      "doi": "10.13140/RG.2.1.4954.1202",
+      "title_html": "The Esmeralda suite for Laue diffraction data treatment",
+      "journal": "",
+      "date": "2015"
+    },
+    {
+      "doi": "10.1016/J.JALLCOM.2014.02.042",
+      "title_html": "High-field magnetization and magnetic phase diagrams in Nd2RhIn8 and Tb2RhIn8",
+      "journal": "Journal of Alloys and Compounds",
+      "date": "2014-06"
+    },
+    {
+      "doi": "10.1103/PHYSREVB.89.184409",
+      "title_html": "Magnetic structures of non-cerium analogues of heavy-fermion Ce2RhIn8: The case of Nd2RhIn8, Dy2RhIn8, and Er2RhIn8",
+      "journal": "Physical Review B",
+      "date": "2014-05-15"
+    },
+    {
+      "doi": "10.1016/J.INTERMET.2013.11.004",
+      "title_html": "Crystal structure and its stability in CeCuAl3 single crystal",
+      "journal": "Intermetallics",
+      "date": "2014-03"
+    },
+    {
+      "doi": "10.1016/J.SSC.2013.03.028",
+      "title_html": "Specific heat study of R2RhIn8 (R=Y, La, Lu) compounds",
+      "journal": "Solid State Communications",
+      "date": "2013-06"
+    },
+    {
+      "doi": "10.7566/JPSJS.82SA.SA026",
+      "title_html": "Optimizing Monochromatic Focusing on ThALES",
+      "journal": "Journal of the Physical Society of Japan",
+      "date": "2013"
+    },
+    {
+      "doi": "10.1088/0953-8984/24/20/206005",
+      "title_html": "Magnetic phase diagrams of R2RhIn8 (R = Tb, Dy, Ho, Er and Tm) compounds",
+      "journal": "Journal of Physics: Condensed Matter",
+      "date": "2012-05-23"
+    },
+    {
+      "doi": "10.1016/J.PHYSB.2011.10.048",
+      "title_html": "Structural and electronic properties of YPd5Al2",
+      "journal": "Physica B: Condensed Matter",
+      "date": "2012-01-15"
+    },
+    {
+      "doi": "10.1088/1742-6596/303/1/012115",
+      "title_html": "Frustrated magnetic structure of Y-substituted CePdAl studied by powder neutron diffraction",
+      "journal": "Journal of Physics: Conference Series",
+      "date": "2011-07-06"
+    },
+    {
+      "doi": "10.12693/APHYSPOLA.118.926",
+      "title_html": "Transition from Mixed-Valence to Trivalent Cerium State in Ce(Ni,Cu)Al Series",
+      "journal": "Acta Physica Polonica A",
+      "date": "2010-11"
+    },
+    {
+      "doi": "10.1016/J.PHYSB.2010.02.030",
+      "title_html": "Specific heat of a CeCu0.7Al3.3 single crystal",
+      "journal": "Physica B: Condensed Matter",
+      "date": "2010-05"
+    },
+    {
+      "doi": "10.1088/0953-8984/22/12/126002",
+      "title_html": "Specific-heat study of the Ce1-xYxPdAl system",
+      "journal": "Journal of Physics: Condensed Matter",
+      "date": "2010-03-31"
+    }
+  ]
+}
